@@ -1,0 +1,13 @@
+{
+  "name": "destiny-builder",
+  "version": "0.0.1",
+  "description": "A Destiny armor builder",
+  "main": "app.js",
+  "repository": "https://github.com/Dowdow/destiny-builder.git",
+  "author": "Léo Riera",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33"
+  }
+}
