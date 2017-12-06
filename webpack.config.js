@@ -1,13 +1,14 @@
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const APP_DIR = path.resolve(__dirname, 'client/app');
-const BUILD_DIR = path.resolve(__dirname, 'client/public');
+const BUILD_DIR = path.resolve(__dirname, 'client/build');
+const PUBLIC_DIR = path.resolve(__dirname, 'client/public');
+const SRC_DIR = path.resolve(__dirname, 'client/src');
 
-let config = {
+module.exports = {
   entry: {
-    javascript: APP_DIR + '/app.jsx',
+    javascript: SRC_DIR + '/index.js',
   },
   output: {
     path: BUILD_DIR,
@@ -25,7 +26,5 @@ let config = {
       }
     ]
   },
-  plugins: [new HtmlWebpackPlugin()]
+  plugins: [new HtmlWebpackPlugin({ template: `${PUBLIC_DIR}/index.html`, filename: 'index.html', inject: 'body' })]
 }
-
-module.exports = config
