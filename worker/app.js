@@ -1,34 +1,33 @@
 const mongo = require('mongodb');
 
 mongo.MongoClient.connect('mongodb://localhost/destiny', (err, db) => {
-    if (err) throw err;
+  if (err) throw err;
 
-    function getItems() {
+  function getItems() {
 
-    }
+  }
 
-    function createTitanGroups() {
+  function createTitanGroups() {
 
-    }
+  }
 
-    function createHunterGroups() {
+  function createHunterGroups() {
 
-    }
+  }
 
-    function createWarlockGroups() {
+  function createWarlockGroups() {
 
-    }
+  }
 
-    function createTitanBuilds() {
+  function createTitanBuilds() {
 
-    }
+  }
 
-    function createHunterBuilds() {
+  function createHunterBuilds() {
 
-    }
+  }
 
-    function createWarlockBuilds() {
+  function createWarlockBuilds() {
 
-    }
-
-});  
+  }
+});
