@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --hot --inline",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "work-json": "node worker/app.js json",
+    "work-items": "node worker/app.js items"
   },
   "dependencies": {
     "express": "^4.16.2",

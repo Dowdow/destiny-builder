@@ -1,34 +1,16 @@
-const mongo = require('mongodb');
+const json = require('./json');
+const items = require('./items');
 
-mongo.MongoClient.connect('mongodb://localhost/destiny', (err, db) => {
-    if (err) throw err;
-
-    function getItems() {
-
-    }
-
-    function createTitanGroups() {
-
-    }
-
-    function createHunterGroups() {
+if (process.argv.length > 2) {
+    switch (process.argv[2]) {
+        case 'json':
+            return json.retrieveJsons();
+        case 'items':
+            return items.saveItems();
+        default:
+            return console.log('Unknown function')
 
     }
-
-    function createWarlockGroups() {
-
-    }
-
-    function createTitanBuilds() {
-
-    }
-
-    function createHunterBuilds() {
-
-    }
-
-    function createWarlockBuilds() {
-
-    }
-
-});  
+} else {
+    console.log('No arguments');
+}
