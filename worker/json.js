@@ -1,4 +1,4 @@
-const https = require('https');
+const axios = require('axios');
 const fs = require('fs');
 
 const DESTINY_PLUMBING_URL = 'https://destiny.plumbing/index.json';
@@ -30,19 +30,20 @@ function createCacheDirectories() {
 
 function getJson(url, file) {
     return new Promise((resolve, reject) => {
-        https.get(url, (res) => {
-            let data = '';
-            res.on('data', (d) => {
-                data += d;
-            }).on('end', () => {
-                fs.writeFile(file, data, (err) => {
-                    if (err) reject(err);
-                    resolve();
-                });
+        axios.get(url)
+            .then(res => {
+                if (res.status === 200) {
+                    fs.writeFile(file, JSON.stringify(res.data), (err) => {
+                        if (err) reject(err);
+                        resolve();
+                    });
+                } else {
+                    reject(err);
+                }
+            })
+            .catch(err => {
+                reject(err);
             });
-        }).on('error', (err) => {
-            reject(err)
-        });
     });
 }
 
