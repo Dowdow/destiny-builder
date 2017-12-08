@@ -1,34 +1,11 @@
-const mongo = require('mongodb');
+const DatabaseManager = require('../lib/DatabaseManager');
 
-mongo.MongoClient.connect('mongodb://localhost/destiny', (err, db) => {
-    if (err) throw err;
+const dbManager = new DatabaseManager({
+    mongoURL: process.env.MONGO_URL
+});
 
-    function getItems() {
-
-    }
-
-    function createTitanGroups() {
-
-    }
-
-    function createHunterGroups() {
-
-    }
-
-    function createWarlockGroups() {
-
-    }
-
-    function createTitanBuilds() {
-
-    }
-
-    function createHunterBuilds() {
-
-    }
-
-    function createWarlockBuilds() {
-
-    }
-
-});  
+databaseManager.connect().then(() => {
+    console.log('Connections established!')
+}).catch((err) => {
+    console.log(`Oh no, there was an error connecting to the databases! Quick fix it: ${err}`);
+});

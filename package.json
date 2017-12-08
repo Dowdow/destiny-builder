@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.16.2",
     "mongodb": "^2.2.33",
+    "mongoose": "^4.13.6",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
