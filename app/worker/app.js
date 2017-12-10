@@ -1,11 +1,17 @@
-const DatabaseManager = require('../lib/DatabaseManager');
+const json = require('./json');
+const items = require('./items');
 
-const dbManager = new DatabaseManager({
-    mongoURL: process.env.MONGO_URL
-});
-
-databaseManager.connect().then(() => {
-    console.log('Connections established!')
-}).catch((err) => {
-    console.log(`Oh no, there was an error connecting to the databases! Quick fix it: ${err}`);
-});
+if (process.argv.length > 2) {
+  switch (process.argv[2]) {
+    case 'json':
+      json.retrieveJsons();
+      break;
+    case 'items':
+      items.saveItems();
+      break;
+    default:
+      console.log('Unknown function');
+  }
+} else {
+  console.log('No arguments');
+}

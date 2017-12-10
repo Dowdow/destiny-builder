@@ -1,28 +1,28 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 /**
- * Represents the Manager for our Databases. This class exposes methods to write, delete and modify data
+ * Represents the Manager for our Databases.
+ * This class exposes methods to write, delete and modify data
  * @class DatabaseManager
  */
 class DatabaseManager {
-
   /**
    * The constructor for DatabaseManager
    * @param {Object} params - The parameters containing connection strings to the Databases
    */
   constructor({ mongoURL }) {
-    this.mongoURL = mongoURL || process.env.MONGO_URL
+    this.mongoURL = mongoURL || process.env.MONGO_URL;
   }
 
   connectMongo() {
     return mongoose
       .connect(this.mongoURL, {
-        useMongoClient: true
+        useMongoClient: true,
       })
       .then(() => {
-        console.log("Mongo connection establised.");
+        console.log('Mongo connection establised.');
       });
   }
 
@@ -43,6 +43,8 @@ class DatabaseManager {
   createHunterBuilds() {}
 
   createWarlockBuilds() {}
+
+  saveItems() {}
 }
 
 module.exports = DatabaseManager;
