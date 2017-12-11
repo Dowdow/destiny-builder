@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const DESTINY_PLUMBING_URL = 'https://destiny.plumbing/index.json';
 
-const CACHE_DIR = 'worker/cache';
+const CACHE_DIR = 'app/worker/cache';
 const ARMOR_DIR = `${CACHE_DIR}/armor`;
 const WEAPON_DIR = `${CACHE_DIR}/weapon`;
 const MOD_DIR = `${CACHE_DIR}/mod`;
@@ -51,14 +51,14 @@ function readIndexJson() {
   fs.readFile(INDEX_FILE, (err, data) => {
     if (err) throw err;
     const json = JSON.parse(data);
-    for (const lang of Object.keys(json)) {
+    Object.keys(json).forEach((lang) => {
       if (LANG_SUPPORTED.includes(lang)) {
         getJson(json[lang].raw.DestinyStatDefinition, `${STAT_DIR}/${lang}.json`);
         getJson(json[lang].items.Armor, `${ARMOR_DIR}/${lang}.json`);
         getJson(json[lang].items.Weapon, `${WEAPON_DIR}/${lang}.json`);
         getJson(json[lang].items.Mod, `${MOD_DIR}/${lang}.json`);
       }
-    }
+    });
   });
 }
 

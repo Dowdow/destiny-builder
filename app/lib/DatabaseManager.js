@@ -29,22 +29,6 @@ class DatabaseManager {
   connect() {
     return Promise.all([this.connectMongo()]);
   }
-
-  getItems() {}
-
-  createTitanGroups() {}
-
-  createHunterGroups() {}
-
-  createWarlockGroups() {}
-
-  createTitanBuilds() {}
-
-  createHunterBuilds() {}
-
-  createWarlockBuilds() {}
-
-  saveItems() {}
 }
 
 module.exports = DatabaseManager;

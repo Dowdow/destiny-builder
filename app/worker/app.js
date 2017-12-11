@@ -7,7 +7,8 @@ if (process.argv.length > 2) {
       json.retrieveJsons();
       break;
     case 'items':
-      items.saveItems();
+      // items.saveStats();
+      items.saveArmors();
       break;
     default:
       console.log('Unknown function');
