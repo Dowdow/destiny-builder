@@ -1,6 +1,14 @@
 const fs = require('fs');
-const mongo = require('mongodb');
+const DatabaseManager = require('../lib/DatabaseManager');
+const dbManager = new DatabaseManager({
+  mongoURL: process.env.MONGO_URL,
+});
 
+dbManager.connect().then(() => {
+  console.log('Connections established!');
+}).catch((err) => {
+  console.log(`Oh no, there was an error connecting to the databases! Quick fix it: ${err}`);
+});
 
 const CACHE_DIR = 'app/worker/cache';
 const ARMOR_DIR = `${CACHE_DIR}/armor`;
@@ -10,11 +18,6 @@ const STAT_DIR = `${CACHE_DIR}/stat`;
 const SOCKET_STAT_HASH = 4076485920;
 
 const BUNGIE_ROOT = 'https://www.bungie.net';
-
-mongo.MongoClient.connect('mongodb://localhost/destiny', (err, db) => {
-  if (err) throw err;
-  db.close();
-});
 
 const stats = [];
 const mods = [];
