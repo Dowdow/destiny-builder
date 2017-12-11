@@ -1,5 +1,6 @@
 const fs = require('fs');
 const DatabaseManager = require('../lib/DatabaseManager');
+
 const dbManager = new DatabaseManager({
   mongoURL: process.env.MONGO_URL,
 });
