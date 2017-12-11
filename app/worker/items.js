@@ -55,7 +55,7 @@ function readArmorFile(file, lang) {
     const json = JSON.parse(data);
     Object.keys(json).forEach((id) => {
       const armor = json[id];
-      if (armor.displayProperties.name !== undefined) {
+      if (armor.displayProperties.name !== undefined && armor.inventory.tierType > 4) {
         const existingArmor = armors.find(element => element.id === id);
         if (existingArmor) {
           existingArmor.names[lang] = armor.displayProperties.name;
@@ -73,6 +73,9 @@ function readArmorFile(file, lang) {
           if (armor.displayProperties.hasIcon) {
             obj.img = `${BUNGIE_ROOT}${armor.displayProperties.icon}`;
           }
+          if (armor.screenshot !== undefined) {
+            obj.screenshot = `${BUNGIE_ROOT}${armor.screenshot}`;
+          }
           armors.push(obj);
         }
       }
@@ -83,6 +86,7 @@ function readArmorFile(file, lang) {
 module.exports = {
   saveStats: () => {
     fs.readdir(STAT_DIR, (err, files) => {
+      if (err) throw err;
       files.forEach((file) => {
         const lang = file.split('.')[0];
         readStatFile(file, lang);
@@ -91,6 +95,7 @@ module.exports = {
   },
   saveArmors: () => {
     fs.readdir(ARMOR_DIR, (err, files) => {
+      if (err) throw err;
       files.forEach((file) => {
         const lang = file.split('.')[0];
         readArmorFile(file, lang);
