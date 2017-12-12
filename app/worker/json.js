@@ -35,6 +35,7 @@ function getJson(url, file) {
         if (res.status === 200) {
           fs.writeFile(file, JSON.stringify(res.data), (err) => {
             if (err) reject(err);
+            console.log(`Save: ${file}`);
             resolve();
           });
         } else {
@@ -48,26 +49,36 @@ function getJson(url, file) {
 }
 
 function readIndexJson() {
-  fs.readFile(INDEX_FILE, (err, data) => {
-    if (err) throw err;
-    const json = JSON.parse(data);
-    Object.keys(json).forEach((lang) => {
-      if (LANG_SUPPORTED.includes(lang)) {
-        getJson(json[lang].raw.DestinyStatDefinition, `${STAT_DIR}/${lang}.json`);
-        getJson(json[lang].items.Armor, `${ARMOR_DIR}/${lang}.json`);
-        getJson(json[lang].items.Weapon, `${WEAPON_DIR}/${lang}.json`);
-        getJson(json[lang].items.Mod, `${MOD_DIR}/${lang}.json`);
-      }
+  return new Promise((resolve, reject) => {
+    fs.readFile(INDEX_FILE, (err, data) => {
+      if (err) reject(err);
+      const json = JSON.parse(data);
+      const promises = [];
+      Object.keys(json).forEach((lang) => {
+        if (LANG_SUPPORTED.includes(lang)) {
+          promises.push(getJson(json[lang].raw.DestinyStatDefinition, `${STAT_DIR}/${lang}.json`));
+          promises.push(getJson(json[lang].items.Armor, `${ARMOR_DIR}/${lang}.json`));
+          promises.push(getJson(json[lang].items.Weapon, `${WEAPON_DIR}/${lang}.json`));
+          promises.push(getJson(json[lang].items.Mod, `${MOD_DIR}/${lang}.json`));
+        }
+      });
+      Promise.all(promises).then(() => {
+        resolve();
+      });
     });
   });
 }
 
 module.exports = {
-  retrieveJsons: () => {
-    createCacheDirectories().then(() => {
-      getJson(DESTINY_PLUMBING_URL, INDEX_FILE)
-        .then(() => { readIndexJson(); })
-        .catch((err) => { throw err; });
-    });
-  },
+  retrieveJsons: () => new Promise((resolve, reject) => {
+    createCacheDirectories()
+      .then(() => {
+        getJson(DESTINY_PLUMBING_URL, INDEX_FILE)
+          .then(() => { readIndexJson().then(() => resolve()); })
+          .catch((err) => { reject(err); });
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  }),
 };
