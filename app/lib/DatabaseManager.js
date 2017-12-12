@@ -119,7 +119,6 @@ class DatabaseManager {
    * @param {Array} armors
    */
   saveArmors(armors) {
-    console.log(armors);
     return new Promise((resolve, reject) => {
       const promises = [];
       armors.forEach((element) => {
