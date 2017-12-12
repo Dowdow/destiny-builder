@@ -1,106 +1,11 @@
 require('dotenv').config();
 
 const mongoose = require('mongoose');
+const Armor = require('../models/armor-schema');
+const Mod = require('../models/mod-schema');
+const Stat = require('../models/stat-schema');
 
-/** Stat Schema */
-const statSchema = new mongoose.Schema({
-  descriptions: {
-    de: String,
-    en: String,
-    'es-mx': String,
-    es: String,
-    fr: String,
-    it: String,
-    ja: String,
-    pl: String,
-    'pt-br': String,
-    ru: String,
-    'zh-cht': String,
-  },
-  hash: String,
-  img: String,
-  names: {
-    de: String,
-    en: String,
-    'es-mx': String,
-    es: String,
-    fr: String,
-    it: String,
-    ja: String,
-    pl: String,
-    'pt-br': String,
-    ru: String,
-    'zh-cht': String,
-  },
-});
-
-/** Mod Schema */
-const modSchema = new mongoose.Schema({
-  descriptions: {
-    de: String,
-    en: String,
-    'es-mx': String,
-    es: String,
-    fr: String,
-    it: String,
-    ja: String,
-    pl: String,
-    'pt-br': String,
-    ru: String,
-    'zh-cht': String,
-  },
-  hash: String,
-  img: String,
-  names: {
-    de: String,
-    en: String,
-    'es-mx': String,
-    es: String,
-    fr: String,
-    it: String,
-    ja: String,
-    pl: String,
-    'pt-br': String,
-    ru: String,
-    'zh-cht': String,
-  },
-  type: String,
-});
-
-/** Armor Schema */
-const armorSchema = new mongoose.Schema({
-  defense: Number,
-  descriptions: {
-    de: String,
-    en: String,
-    'es-mx': String,
-    es: String,
-    fr: String,
-    it: String,
-    ja: String,
-    pl: String,
-    'pt-br': String,
-    ru: String,
-    'zh-cht': String,
-  },
-  hash: String,
-  img: String,
-  names: {
-    de: String,
-    en: String,
-    'es-mx': String,
-    es: String,
-    fr: String,
-    it: String,
-    ja: String,
-    pl: String,
-    'pt-br': String,
-    ru: String,
-    'zh-cht': String,
-  },
-  power: Number,
-  screenshot: String,
-});
+mongoose.Promise = global.Promise;
 
 /**
  * Represents the Manager for our Databases.
@@ -116,13 +21,13 @@ class DatabaseManager {
     this.mongoURL = mongoURL || process.env.MONGO_URL;
 
     /** Stat Model */
-    this.Stat = mongoose.model('Stat', statSchema);
+    this.Stat = Stat;
 
     /** Mod Model */
-    this.Mod = mongoose.model('Mod', modSchema);
+    this.Mod = Mod;
 
     /** Armor Model */
-    this.Armor = mongoose.model('Armor', armorSchema);
+    this.Armor = Armor;
   }
 
   connectMongo() {
