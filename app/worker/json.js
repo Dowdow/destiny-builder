@@ -12,22 +12,55 @@ const INDEX_FILE = `${CACHE_DIR}/index.json`;
 
 const LANG_SUPPORTED = ['en', 'fr', 'es', 'de', 'it', 'ja', 'pt-br', 'es-mx', 'ru', 'pl', 'zh-cht'];
 
-function createCacheDirectories() {
-  return new Promise((resolve) => {
-    fs.mkdir(CACHE_DIR, () => {
-      fs.mkdir(ARMOR_DIR, () => {
-        fs.mkdir(WEAPON_DIR, () => {
-          fs.mkdir(MOD_DIR, () => {
-            fs.mkdir(STAT_DIR, () => {
-              resolve();
-            });
-          });
-        });
-      });
+/**
+ * Create a directory
+ * @param {String} dir
+ */
+function makeDirectory(dir) {
+  return new Promise((resolve, reject) => {
+    fs.mkdir(dir, (err) => {
+      if (err) reject(err);
+      else resolve();
     });
   });
 }
 
+/**
+ * Create all cache directories
+ */
+async function createCacheDirectories() {
+  try {
+    await makeDirectory(CACHE_DIR);
+    await makeDirectory(STAT_DIR);
+    await makeDirectory(MOD_DIR);
+    await makeDirectory(ARMOR_DIR);
+    await makeDirectory(WEAPON_DIR);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+/**
+ * Get the id of the index file
+ */
+function getIndexId() {
+  return new Promise((resolve, reject) => {
+    fs.readFile(INDEX_FILE, (err, data) => {
+      if (err || data === undefined) {
+        reject(err);
+      } else {
+        const json = JSON.parse(data);
+        resolve(json.id);
+      }
+    });
+  });
+}
+
+/**
+ * Retrieve and save a json file in the cache directory
+ * @param {String} url
+ * @param {String} file
+ */
 function getJson(url, file) {
   return new Promise((resolve, reject) => {
     axios.get(url)
@@ -48,6 +81,9 @@ function getJson(url, file) {
   });
 }
 
+/**
+ * Exploit the index file
+ */
 function readIndexJson() {
   return new Promise((resolve, reject) => {
     fs.readFile(INDEX_FILE, (err, data) => {
@@ -70,15 +106,19 @@ function readIndexJson() {
 }
 
 module.exports = {
-  retrieveJsons: () => new Promise((resolve, reject) => {
-    createCacheDirectories()
-      .then(() => {
-        getJson(DESTINY_PLUMBING_URL, INDEX_FILE)
-          .then(() => { readIndexJson().then(() => resolve()); })
-          .catch((err) => { reject(err); });
-      })
-      .catch((err) => {
-        reject(err);
-      });
+  retrieveJsons: () => new Promise(async (resolve, reject) => {
+    let oldId = 0;
+    try {
+      oldId = await getIndexId();
+    } catch (err) { console.log('No previous index file.'); }
+    await createCacheDirectories();
+    await getJson(DESTINY_PLUMBING_URL, INDEX_FILE);
+    const newId = await getIndexId();
+    if (oldId === newId) {
+      reject(new Error('Already up to date !'));
+    } else {
+      await readIndexJson();
+      resolve();
+    }
   }),
 };
