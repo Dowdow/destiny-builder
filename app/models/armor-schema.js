@@ -18,6 +18,7 @@ const armorSchema = new mongoose.Schema({
   },
   hash: String,
   img: String,
+  mobility: Number,
   names: {
     de: String,
     en: String,
@@ -32,7 +33,10 @@ const armorSchema = new mongoose.Schema({
     'zh-cht': String,
   },
   power: Number,
+  recovery: Number,
+  resilience: Number,
   screenshot: String,
+  mods: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Mod' }],
 });
 
 module.exports = mongoose.model('armor', armorSchema);

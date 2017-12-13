@@ -13,10 +13,16 @@ dbManager.connect().then(() => {
 
 const CACHE_DIR = 'app/worker/cache';
 const ARMOR_DIR = `${CACHE_DIR}/armor`;
-const WEAPON_DIR = `${CACHE_DIR}/weapon`;
+// const WEAPON_DIR = `${CACHE_DIR}/weapon`;
 const MOD_DIR = `${CACHE_DIR}/mod`;
 const STAT_DIR = `${CACHE_DIR}/stat`;
-const SOCKET_STAT_HASH = 4076485920;
+
+const HASH_SOCKET_STAT = 4076485920;
+const HASH_STAT_DEFENSE = 3897883278;
+const HASH_STAT_POWER = 1935470627;
+const HASH_STAT_MOBILITY = 2996146975;
+const HASH_STAT_RESILIENCE = 392767087;
+const HASH_STAT_RECOVERY = 1943323491;
 
 const BUNGIE_ROOT = 'https://www.bungie.net';
 
@@ -141,16 +147,45 @@ function readArmorFile(file, lang) {
             if (armor.sourceData !== undefined && armor.sourceData.sources !== undefined) {
               obj.defense = 0;
               obj.power = 0;
+              obj.mobility = 0;
+              obj.resilience = 0;
+              obj.recovery = 0;
               armor.sourceData.sources.forEach((level) => {
-                if (level.computedStats[3897883278] !== undefined) {
-                  if (level.computedStats[3897883278].value > obj.defense) {
-                    obj.defense = level.computedStats[3897883278].value;
+                if (level.computedStats[HASH_STAT_DEFENSE] !== undefined) {
+                  if (level.computedStats[HASH_STAT_DEFENSE].value > obj.defense) {
+                    obj.defense = level.computedStats[HASH_STAT_DEFENSE].value;
                   }
                 }
-                if (level.computedStats[1935470627] !== undefined) {
-                  if (level.computedStats[1935470627].value > obj.power) {
-                    obj.power = level.computedStats[1935470627].value;
+                if (level.computedStats[HASH_STAT_POWER] !== undefined) {
+                  if (level.computedStats[HASH_STAT_POWER].value > obj.power) {
+                    obj.power = level.computedStats[HASH_STAT_POWER].value;
                   }
+                }
+                if (level.computedStats[HASH_STAT_MOBILITY] !== undefined) {
+                  if (level.computedStats[HASH_STAT_MOBILITY].value > obj.mobility) {
+                    obj.mobility = level.computedStats[HASH_STAT_MOBILITY].value;
+                  }
+                }
+                if (level.computedStats[HASH_STAT_RESILIENCE] !== undefined) {
+                  if (level.computedStats[HASH_STAT_RESILIENCE].value > obj.resilience) {
+                    obj.resilience = level.computedStats[HASH_STAT_RESILIENCE].value;
+                  }
+                }
+                if (level.computedStats[HASH_STAT_RECOVERY] !== undefined) {
+                  if (level.computedStats[HASH_STAT_RECOVERY].value > obj.recovery) {
+                    obj.recovery = level.computedStats[HASH_STAT_RECOVERY].value;
+                  }
+                }
+              });
+            }
+            if (armor.sockets !== undefined && armor.sockets.socketEntries) {
+              obj.mods = [];
+              armor.sockets.socketEntries.forEach((socket) => {
+                if (socket.socketTypeHash === HASH_SOCKET_STAT && socket.reusablePlugItems !== undefined) {
+                  socket.reusablePlugItems.forEach(async (modHash) => {
+                    const mod = await dbManager.findModByHash(modHash.plugItemHash);
+                    obj.mods.push(mod._id);
+                  });
                 }
               });
             }
@@ -165,9 +200,10 @@ function readArmorFile(file, lang) {
 
 module.exports = {
   saveStats: () => new Promise((resolve, reject) => {
-    fs.readdir(STAT_DIR, (err, files) => {
+    fs.readdir(STAT_DIR, async (err, files) => {
       if (err) reject(err);
       else {
+        await dbManager.removeAllStats();
         const promises = [];
         files.forEach((file) => {
           const lang = file.split('.')[0];
@@ -185,9 +221,10 @@ module.exports = {
     });
   }),
   saveMods: () => new Promise((resolve, reject) => {
-    fs.readdir(MOD_DIR, (err, files) => {
+    fs.readdir(MOD_DIR, async (err, files) => {
       if (err) reject(err);
       else {
+        await dbManager.removeAllMods();
         const promises = [];
         files.forEach((file) => {
           const lang = file.split('.')[0];
@@ -205,9 +242,10 @@ module.exports = {
     });
   }),
   saveArmors: () => new Promise((resolve, reject) => {
-    fs.readdir(ARMOR_DIR, (err, files) => {
+    fs.readdir(ARMOR_DIR, async (err, files) => {
       if (err) reject(err);
       else {
+        await dbManager.removeAllArmors();
         const promises = [];
         files.forEach((file) => {
           const lang = file.split('.')[0];
