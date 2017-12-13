@@ -36,7 +36,7 @@ async function createCacheDirectories() {
     await makeDirectory(ARMOR_DIR);
     await makeDirectory(WEAPON_DIR);
   } catch (err) {
-    console.log(err);
+    console.log('Cache directories cannot be created or already exists.');
   }
 }
 
