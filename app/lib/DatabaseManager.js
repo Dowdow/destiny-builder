@@ -85,6 +85,31 @@ class DatabaseManager {
   }
 
   /**
+   * Find one Stat by hash
+   * @param {String} hash
+   */
+  findStatByHash(hash) {
+    return new Promise((resolve, reject) => {
+      this.Stat.findOne({ hash }, (err, res) => {
+        if (err) reject(err);
+        else resolve(res);
+      });
+    });
+  }
+
+  /**
+   * Remove all Stat documents
+   */
+  removeAllStats() {
+    return new Promise((resolve, reject) => {
+      this.Stat.remove({}, (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+  }
+
+  /**
    * Save an array of Mod
    * @param {Array} mods
    */
@@ -115,6 +140,31 @@ class DatabaseManager {
   }
 
   /**
+   * Find one Mod by hash
+   * @param {String} hash
+   */
+  findModByHash(hash) {
+    return new Promise((resolve, reject) => {
+      this.Mod.findOne({ hash }, (err, res) => {
+        if (err) reject(err);
+        else resolve(res);
+      });
+    });
+  }
+
+  /**
+   * Remove all Mod documents
+   */
+  removeAllMods() {
+    return new Promise((resolve, reject) => {
+      this.Mod.remove({}, (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+  }
+
+  /**
    * Save an array of Armor
    * @param {Array} armors
    */
@@ -140,6 +190,31 @@ class DatabaseManager {
       a.save((err, res) => {
         if (err) reject(err);
         else resolve(res);
+      });
+    });
+  }
+
+  /**
+   * Find one Armor by hash
+   * @param {String} hash
+   */
+  findArmorByHash(hash) {
+    return new Promise((resolve, reject) => {
+      this.Armor.findOne({ hash }, (err, res) => {
+        if (err) reject(err);
+        else resolve(res);
+      });
+    });
+  }
+
+  /**
+   * Remove all Armor documents
+   */
+  removeAllArmors() {
+    return new Promise((resolve, reject) => {
+      this.Armor.remove({}, (err) => {
+        if (err) reject(err);
+        else resolve();
       });
     });
   }
