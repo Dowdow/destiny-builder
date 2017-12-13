@@ -18,6 +18,7 @@ const MOD_DIR = `${CACHE_DIR}/mod`;
 const STAT_DIR = `${CACHE_DIR}/stat`;
 
 const HASH_SOCKET_STAT = 4076485920;
+const HASH_FAT_SOCKET_STAT = 3497077129;
 const HASH_STAT_DEFENSE = 3897883278;
 const HASH_STAT_POWER = 1935470627;
 const HASH_STAT_MOBILITY = 2996146975;
@@ -112,6 +113,54 @@ function readModFile(file, lang) {
 }
 
 /**
+ * Extract all stats from a fat Mod
+ * @param {String} hash
+ */
+function extractStatsFromMod(hash) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const mod = await dbManager.findModByHash(hash);
+      console.log(mod);
+      const modStats = {
+        mobility: 0,
+        resilience: 0,
+        recovery: 0,
+      };
+      const promises = [];
+      if (mod.investmentStats !== undefined) {
+        mod.investmentStats.forEach((stat) => {
+          console.log(stat);
+          promises.push(new Promise((elResolve) => {
+            switch (stat.statTypeHash) {
+              case HASH_STAT_MOBILITY: {
+                modStats.mobility += stat.value;
+                break;
+              }
+              case HASH_STAT_RESILIENCE: {
+                modStats.resilience += stat.value;
+                break;
+              }
+              case HASH_STAT_RECOVERY: {
+                modStats.recovery += stat.value;
+                break;
+              }
+              default:
+                break;
+            }
+            elResolve();
+          }));
+        });
+      }
+      await Promise.all(promises);
+      // console.log(modStats);
+      resolve(modStats);
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+/**
  * Read the armors files and build Armor objects
  * @param {String} file
  * @param {String} lang
@@ -137,19 +186,16 @@ function readArmorFile(file, lang) {
               descriptions: {
                 [lang]: armor.displayProperties.description,
               },
+              img: armor.displayProperties.hasIcon ? `${BUNGIE_ROOT}${armor.displayProperties.icon}` : '',
+              screenshot: armor.screenshot !== undefined ? `${BUNGIE_ROOT}${armor.screenshot}` : '',
+              defense: 0,
+              power: 0,
+              mobility: 0,
+              resilience: 0,
+              recovery: 0,
+              mods: [],
             };
-            if (armor.displayProperties.hasIcon) {
-              obj.img = `${BUNGIE_ROOT}${armor.displayProperties.icon}`;
-            }
-            if (armor.screenshot !== undefined) {
-              obj.screenshot = `${BUNGIE_ROOT}${armor.screenshot}`;
-            }
             if (armor.sourceData !== undefined && armor.sourceData.sources !== undefined) {
-              obj.defense = 0;
-              obj.power = 0;
-              obj.mobility = 0;
-              obj.resilience = 0;
-              obj.recovery = 0;
               armor.sourceData.sources.forEach((level) => {
                 if (level.computedStats[HASH_STAT_DEFENSE] !== undefined) {
                   if (level.computedStats[HASH_STAT_DEFENSE].value > obj.defense) {
@@ -179,8 +225,19 @@ function readArmorFile(file, lang) {
               });
             }
             if (armor.sockets !== undefined && armor.sockets.socketEntries) {
-              obj.mods = [];
               armor.sockets.socketEntries.forEach((socket) => {
+                if (socket.socketTypeHash === HASH_FAT_SOCKET_STAT && socket.reusablePlugItems !== undefined) {
+                  socket.reusablePlugItems.forEach(async (modHash) => {
+                    try {
+                      const newStats = await extractStatsFromMod(modHash.plugItemHash);
+                      obj.mobility += newStats.mobility;
+                      obj.resilience += newStats.resilience;
+                      obj.recovery += newStats.recovery;
+                    } catch (modErr) {
+                      // console.log(modErr);
+                    }
+                  });
+                }
                 if (socket.socketTypeHash === HASH_SOCKET_STAT && socket.reusablePlugItems !== undefined) {
                   socket.reusablePlugItems.forEach(async (modHash) => {
                     const mod = await dbManager.findModByHash(modHash.plugItemHash);
