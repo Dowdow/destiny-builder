@@ -79,7 +79,7 @@ class DatabaseManager {
       const s = new this.Stat(stat);
       s.save((err, res) => {
         if (err) reject(err);
-        resolve(res);
+        else resolve(res);
       });
     });
   }
@@ -109,7 +109,7 @@ class DatabaseManager {
       const m = new this.Mod(mod);
       m.save((err, res) => {
         if (err) reject(err);
-        resolve(res);
+        else resolve(res);
       });
     });
   }
@@ -139,7 +139,7 @@ class DatabaseManager {
       const a = new this.Armor(armor);
       a.save((err, res) => {
         if (err) reject(err);
-        resolve(res);
+        else resolve(res);
       });
     });
   }

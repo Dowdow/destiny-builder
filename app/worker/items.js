@@ -24,6 +24,11 @@ const stats = [];
 const mods = [];
 const armors = [];
 
+/**
+ * Read the stats files and build Stat objects
+ * @param {String} file
+ * @param {String} lang
+ */
 function readStatFile(file, lang) {
   return new Promise((resolve, reject) => {
     fs.readFile(`${STAT_DIR}/${file}`, (err, data) => {
@@ -58,6 +63,11 @@ function readStatFile(file, lang) {
   });
 }
 
+/**
+ * Read the mods files and build Mod objects
+ * @param {String} file
+ * @param {String} lang
+ */
 function readModFile(file, lang) {
   return new Promise((resolve, reject) => {
     fs.readFile(`${MOD_DIR}/${file}`, (err, data) => {
@@ -95,6 +105,11 @@ function readModFile(file, lang) {
   });
 }
 
+/**
+ * Read the armors files and build Armor objects
+ * @param {String} file
+ * @param {String} lang
+ */
 function readArmorFile(file, lang) {
   return new Promise((resolve, reject) => {
     fs.readFile(`${ARMOR_DIR}/${file}`, (err, data) => {
@@ -152,57 +167,62 @@ module.exports = {
   saveStats: () => new Promise((resolve, reject) => {
     fs.readdir(STAT_DIR, (err, files) => {
       if (err) reject(err);
-      const promises = [];
-      files.forEach((file) => {
-        const lang = file.split('.')[0];
-        promises.push(readStatFile(file, lang));
-      });
-      Promise.all(promises).then(() => {
-        dbManager.saveStats(stats)
-          .then(() => {
+      else {
+        const promises = [];
+        files.forEach((file) => {
+          const lang = file.split('.')[0];
+          promises.push(readStatFile(file, lang));
+        });
+        Promise.all(promises).then(async () => {
+          try {
+            await dbManager.saveStats(stats);
             resolve();
-          })
-          .catch((pErr) => {
+          } catch (pErr) {
             console.log(`An error occured while saving the stats ${pErr}`);
-          });
-      });
+          }
+        });
+      }
     });
   }),
   saveMods: () => new Promise((resolve, reject) => {
     fs.readdir(MOD_DIR, (err, files) => {
       if (err) reject(err);
-      const promises = [];
-      files.forEach((file) => {
-        const lang = file.split('.')[0];
-        promises.push(readModFile(file, lang));
-      });
-      Promise.all(promises).then(() => {
-        dbManager.saveMods(mods)
-          .then(() => {
+      else {
+        const promises = [];
+        files.forEach((file) => {
+          const lang = file.split('.')[0];
+          promises.push(readModFile(file, lang));
+        });
+        Promise.all(promises).then(async () => {
+          try {
+            await dbManager.saveMods(mods);
             resolve();
-          }).catch((pErr) => {
+          } catch (pErr) {
             console.log(`An error occured while saving the mods ${pErr}`);
-          });
-      });
+          }
+        });
+      }
     });
   }),
   saveArmors: () => new Promise((resolve, reject) => {
     fs.readdir(ARMOR_DIR, (err, files) => {
       if (err) reject(err);
-      const promises = [];
-      files.forEach((file) => {
-        const lang = file.split('.')[0];
-        promises.push(readArmorFile(file, lang));
-      });
-      Promise.all(promises).then(() => {
-        dbManager.saveArmors(armors)
-          .then(() => {
-            dbManager.disconnect();
+      else {
+        const promises = [];
+        files.forEach((file) => {
+          const lang = file.split('.')[0];
+          promises.push(readArmorFile(file, lang));
+        });
+        Promise.all(promises).then(async () => {
+          try {
+            await dbManager.saveArmors(armors);
+            await dbManager.disconnect();
             resolve();
-          }).catch((pErr) => {
+          } catch (pErr) {
             console.log(`An error occured while saving the armors ${pErr}`);
-          });
-      });
+          }
+        });
+      }
     });
   }),
 };
