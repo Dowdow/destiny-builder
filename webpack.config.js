@@ -1,8 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const combineLoaders = require('webpack-combine-loaders');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname, 'client/build');
 const PUBLIC_DIR = path.resolve(__dirname, 'client/public');

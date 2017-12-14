@@ -22,7 +22,9 @@ class ArmorList extends Component {
     return (
       <div>
         <h1>Armors</h1>
-        {this.state.armors.map(armor => <Armor key={armor._id} {...armor} />)}
+        <div className="ArmorList">
+          {this.state.armors.map(armor => <Armor key={armor._id} {...armor} />)}
+        </div>
       </div>
     );
   }
