@@ -32,16 +32,15 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract(
-          'style-loader',
-          combineLoaders([{
+        use: [
+          { loader: 'style-loader' },
+          {
             loader: 'css-loader',
-            query: {
-              modules: false,
-              localIdentName: '[name]__[local]--[hash:base64:5]',
+            options: {
+              localIndentName: '[path][name]__[local]--[hash:base64:5]',
             },
-          }]),
-        ),
+          },
+        ],
       },
     ],
   },
@@ -51,6 +50,5 @@ module.exports = {
       filename: 'index.html',
       inject: 'body',
     }),
-    new ExtractTextPlugin('styles.css'),
   ],
 };
