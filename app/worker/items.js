@@ -5,12 +5,6 @@ const dbManager = new DatabaseManager({
   mongoURL: process.env.MONGO_URL,
 });
 
-dbManager.connect().then(() => {
-  console.log('Connections established!');
-}).catch((err) => {
-  console.log(`Oh no, there was an error connecting to the databases! Quick fix it: ${err}`);
-});
-
 const CACHE_DIR = 'app/worker/cache';
 const ARMOR_DIR = `${CACHE_DIR}/armor`;
 // const WEAPON_DIR = `${CACHE_DIR}/weapon`;
@@ -18,6 +12,7 @@ const MOD_DIR = `${CACHE_DIR}/mod`;
 const STAT_DIR = `${CACHE_DIR}/stat`;
 
 const HASH_SOCKET_STAT = 4076485920;
+const HASH_FAT_SOCKET_STAT = 3497077129;
 const HASH_STAT_DEFENSE = 3897883278;
 const HASH_STAT_POWER = 1935470627;
 const HASH_STAT_MOBILITY = 2996146975;
@@ -79,7 +74,7 @@ function readModFile(file, lang) {
     fs.readFile(`${MOD_DIR}/${file}`, (err, data) => {
       if (err) reject(err);
       const json = JSON.parse(data);
-      Object.keys(json).forEach((id) => {
+      Object.keys(json).forEach(async (id) => {
         const mod = json[id];
         if (mod.displayProperties.name !== undefined) {
           const existingMod = mods.find(element => element.hash === id);
@@ -95,6 +90,9 @@ function readModFile(file, lang) {
               descriptions: {
                 [lang]: mod.displayProperties.description,
               },
+              mobility: 0,
+              resilience: 0,
+              recovery: 0,
             };
             if (mod.displayProperties.hasIcon) {
               obj.img = `${BUNGIE_ROOT}${mod.displayProperties.icon}`;
@@ -102,6 +100,31 @@ function readModFile(file, lang) {
             if (mod.plug.plugCategoryIdentifier !== undefined) {
               obj.type = mod.plug.plugCategoryIdentifier;
             }
+            const promises = [];
+            if (mod.investmentStats !== undefined) {
+              mod.investmentStats.forEach((stat) => {
+                promises.push(new Promise((elResolve) => {
+                  switch (stat.statTypeHash) {
+                    case HASH_STAT_MOBILITY: {
+                      obj.mobility += stat.value;
+                      break;
+                    }
+                    case HASH_STAT_RESILIENCE: {
+                      obj.resilience += stat.value;
+                      break;
+                    }
+                    case HASH_STAT_RECOVERY: {
+                      obj.recovery += stat.value;
+                      break;
+                    }
+                    default:
+                      break;
+                  }
+                  elResolve();
+                }));
+              });
+            }
+            await Promise.all(promises);
             mods.push(obj);
           }
         }
@@ -137,19 +160,16 @@ function readArmorFile(file, lang) {
               descriptions: {
                 [lang]: armor.displayProperties.description,
               },
+              img: armor.displayProperties.hasIcon ? `${BUNGIE_ROOT}${armor.displayProperties.icon}` : '',
+              screenshot: armor.screenshot !== undefined ? `${BUNGIE_ROOT}${armor.screenshot}` : '',
+              defense: 0,
+              power: 0,
+              mobility: 0,
+              resilience: 0,
+              recovery: 0,
+              mods: [],
             };
-            if (armor.displayProperties.hasIcon) {
-              obj.img = `${BUNGIE_ROOT}${armor.displayProperties.icon}`;
-            }
-            if (armor.screenshot !== undefined) {
-              obj.screenshot = `${BUNGIE_ROOT}${armor.screenshot}`;
-            }
             if (armor.sourceData !== undefined && armor.sourceData.sources !== undefined) {
-              obj.defense = 0;
-              obj.power = 0;
-              obj.mobility = 0;
-              obj.resilience = 0;
-              obj.recovery = 0;
               armor.sourceData.sources.forEach((level) => {
                 if (level.computedStats[HASH_STAT_DEFENSE] !== undefined) {
                   if (level.computedStats[HASH_STAT_DEFENSE].value > obj.defense) {
@@ -179,8 +199,19 @@ function readArmorFile(file, lang) {
               });
             }
             if (armor.sockets !== undefined && armor.sockets.socketEntries) {
-              obj.mods = [];
               armor.sockets.socketEntries.forEach((socket) => {
+                if (socket.socketTypeHash === HASH_FAT_SOCKET_STAT && socket.reusablePlugItems !== undefined) {
+                  socket.reusablePlugItems.forEach(async (modHash) => {
+                    try {
+                      const fatMod = await dbManager.findModByHash(modHash.plugItemHash);
+                      obj.mobility += fatMod.mobility;
+                      obj.resilience += fatMod.resilience;
+                      obj.recovery += fatMod.recovery;
+                    } catch (modErr) {
+                      console.log(modErr);
+                    }
+                  });
+                }
                 if (socket.socketTypeHash === HASH_SOCKET_STAT && socket.reusablePlugItems !== undefined) {
                   socket.reusablePlugItems.forEach(async (modHash) => {
                     const mod = await dbManager.findModByHash(modHash.plugItemHash);
@@ -199,7 +230,12 @@ function readArmorFile(file, lang) {
 }
 
 module.exports = {
-  saveStats: () => new Promise((resolve, reject) => {
+  saveStats: () => new Promise(async (resolve, reject) => {
+    try {
+      await dbManager.connect();
+    } catch (err) {
+      reject(err);
+    }
     fs.readdir(STAT_DIR, async (err, files) => {
       if (err) reject(err);
       else {
@@ -212,6 +248,7 @@ module.exports = {
         Promise.all(promises).then(async () => {
           try {
             await dbManager.saveStats(stats);
+            await dbManager.disconnect();
             resolve();
           } catch (pErr) {
             console.log(`An error occured while saving the stats ${pErr}`);
@@ -220,7 +257,12 @@ module.exports = {
       }
     });
   }),
-  saveMods: () => new Promise((resolve, reject) => {
+  saveMods: () => new Promise(async (resolve, reject) => {
+    try {
+      await dbManager.connect();
+    } catch (err) {
+      reject(err);
+    }
     fs.readdir(MOD_DIR, async (err, files) => {
       if (err) reject(err);
       else {
@@ -233,6 +275,7 @@ module.exports = {
         Promise.all(promises).then(async () => {
           try {
             await dbManager.saveMods(mods);
+            await dbManager.disconnect();
             resolve();
           } catch (pErr) {
             console.log(`An error occured while saving the mods ${pErr}`);
@@ -241,7 +284,12 @@ module.exports = {
       }
     });
   }),
-  saveArmors: () => new Promise((resolve, reject) => {
+  saveArmors: () => new Promise(async (resolve, reject) => {
+    try {
+      await dbManager.connect();
+    } catch (err) {
+      reject(err);
+    }
     fs.readdir(ARMOR_DIR, async (err, files) => {
       if (err) reject(err);
       else {

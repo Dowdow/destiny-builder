@@ -17,6 +17,7 @@ const modSchema = new mongoose.Schema({
   },
   hash: String,
   img: String,
+  mobility: Number,
   names: {
     de: String,
     en: String,
@@ -30,6 +31,8 @@ const modSchema = new mongoose.Schema({
     ru: String,
     'zh-cht': String,
   },
+  recovery: Number,
+  resilience: Number,
   type: String,
 });
 
