@@ -1,8 +1,14 @@
 require('dotenv').config();
-
 const express = require('express');
 
 const app = express();
+// A mettre uniquement en dev
+app.all('*', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+  next();
+});
+app.use(express.static(`${__dirname}/../client/build`));
 
 const DatabaseManager = require('./lib/DatabaseManager');
 
@@ -17,7 +23,14 @@ dbManager.connect().then(() => {
 });
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.sendFile('../client/index.html');
+});
+
+app.get('/armors', (req, res) => {
+  dbManager.Armor.find({}, (err, armors) => {
+    if (err) res.send(err);
+    res.send(armors);
+  });
 });
 
 app.listen(3000, () => {

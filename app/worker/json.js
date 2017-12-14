@@ -62,22 +62,21 @@ function getIndexId() {
  * @param {String} file
  */
 function getJson(url, file) {
-  return new Promise((resolve, reject) => {
-    axios.get(url)
-      .then((res) => {
-        if (res.status === 200) {
-          fs.writeFile(file, JSON.stringify(res.data), (err) => {
-            if (err) reject(err);
-            console.log(`Save: ${file}`);
-            resolve();
-          });
-        } else {
-          reject();
-        }
-      })
-      .catch((err) => {
-        reject(err);
-      });
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await axios.get(url);
+      if (res.status === 200) {
+        fs.writeFile(file, JSON.stringify(res.data), (err) => {
+          if (err) reject(err);
+          console.log(`Save: ${file}`);
+          resolve();
+        });
+      } else {
+        reject();
+      }
+    } catch (err) {
+      reject(err);
+    }
   });
 }
 
