@@ -27,6 +27,20 @@ module.exports = {
         exclude: /node_modules/,
         loaders: ['babel-loader'],
       },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: !!isDev,
+              localIndentName: '[path][name]__[local]--[hash:base64:5]',
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [

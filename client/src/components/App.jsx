@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+import ArmorList from './ArmorList';
+import '../css/App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <h1> Destiny 2 Build Generator </h1>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <div className="App">
+    <h1>Destiny 2 Build Generator</h1>
+    <ArmorList />
+  </div>
+);
 
 export default App;
