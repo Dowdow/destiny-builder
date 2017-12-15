@@ -8,6 +8,7 @@ const dbManager = new DatabaseManager({
 const CACHE_DIR = 'app/worker/cache';
 const ARMOR_DIR = `${CACHE_DIR}/armor`;
 // const WEAPON_DIR = `${CACHE_DIR}/weapon`;
+const BUCKET_DIR = `${CACHE_DIR}/bucket`;
 const MOD_DIR = `${CACHE_DIR}/mod`;
 const STAT_DIR = `${CACHE_DIR}/stat`;
 
@@ -23,6 +24,7 @@ const BUNGIE_ROOT = 'https://www.bungie.net';
 
 const stats = [];
 const mods = [];
+const buckets = [];
 const armors = [];
 
 /**
@@ -37,7 +39,7 @@ function readStatFile(file, lang) {
       const json = JSON.parse(data);
       Object.keys(json).forEach((id) => {
         const stat = json[id];
-        if (stat.displayProperties.name !== undefined) {
+        if (stat.displayProperties.name !== '') {
           const existingStat = stats.find(element => element.hash === id);
           if (existingStat) {
             existingStat.names[lang] = stat.displayProperties.name;
@@ -76,7 +78,7 @@ function readModFile(file, lang) {
       const json = JSON.parse(data);
       Object.keys(json).forEach(async (id) => {
         const mod = json[id];
-        if (mod.displayProperties.name !== undefined) {
+        if (mod.displayProperties.name !== '') {
           const existingMod = mods.find(element => element.hash === id);
           if (existingMod) {
             existingMod.names[lang] = mod.displayProperties.name;
@@ -135,6 +137,42 @@ function readModFile(file, lang) {
 }
 
 /**
+ * Read the buckets files and build Bucket objects
+ * @param {String} file
+ * @param {String} lang
+ */
+function readBucketFile(file, lang) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(`${BUCKET_DIR}/${file}`, (err, data) => {
+      if (err) reject(err);
+      const json = JSON.parse(data);
+      Object.keys(json).forEach((id) => {
+        const bucket = json[id];
+        if (bucket.displayProperties.name !== '') {
+          const existingBucket = buckets.find(element => element.hash === id);
+          if (existingBucket) {
+            existingBucket.names[lang] = bucket.displayProperties.name;
+            existingBucket.descriptions[lang] = bucket.displayProperties.description;
+          } else {
+            const obj = {
+              hash: id,
+              names: {
+                [lang]: bucket.displayProperties.name,
+              },
+              descriptions: {
+                [lang]: bucket.displayProperties.description,
+              },
+            };
+            buckets.push(obj);
+          }
+        }
+      });
+      resolve();
+    });
+  });
+}
+
+/**
  * Read the armors files and build Armor objects
  * @param {String} file
  * @param {String} lang
@@ -146,7 +184,7 @@ function readArmorFile(file, lang) {
       const json = JSON.parse(data);
       Object.keys(json).forEach((id) => {
         const armor = json[id];
-        if (armor.displayProperties.name !== undefined && armor.inventory.tierType > 4) {
+        if (armor.displayProperties.name !== '' && armor.inventory.tierType > 4) {
           const existingArmor = armors.find(element => element.hash === id);
           if (existingArmor) {
             existingArmor.names[lang] = armor.displayProperties.name;
@@ -162,6 +200,7 @@ function readArmorFile(file, lang) {
               },
               img: armor.displayProperties.hasIcon ? `${BUNGIE_ROOT}${armor.displayProperties.icon}` : '',
               screenshot: armor.screenshot !== undefined ? `${BUNGIE_ROOT}${armor.screenshot}` : '',
+              tier: armor.inventory.tierType,
               defense: 0,
               power: 0,
               mobility: 0,
@@ -279,6 +318,33 @@ module.exports = {
             resolve();
           } catch (pErr) {
             console.log(`An error occured while saving the mods ${pErr}`);
+          }
+        });
+      }
+    });
+  }),
+  saveBuckets: () => new Promise(async (resolve, reject) => {
+    try {
+      await dbManager.connect();
+    } catch (err) {
+      reject(err);
+    }
+    fs.readdir(BUCKET_DIR, async (err, files) => {
+      if (err) reject(err);
+      else {
+        await dbManager.removeAllBuckets();
+        const promises = [];
+        files.forEach((file) => {
+          const lang = file.split('.')[0];
+          promises.push(readBucketFile(file, lang));
+        });
+        Promise.all(promises).then(async () => {
+          try {
+            await dbManager.saveBuckets(buckets);
+            await dbManager.disconnect();
+            resolve();
+          } catch (pErr) {
+            console.log(`An error occured while saving the buckets ${pErr}`);
           }
         });
       }

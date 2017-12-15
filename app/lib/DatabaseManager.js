@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Armor = require('../models/armor-schema');
 const Mod = require('../models/mod-schema');
 const Stat = require('../models/stat-schema');
+const Bucket = require('../models/bucket-schema');
 
 mongoose.Promise = global.Promise;
 
@@ -28,6 +29,9 @@ class DatabaseManager {
 
     /** Armor Model */
     this.Armor = Armor;
+
+    /** Bucket Model */
+    this.Bucket = Bucket;
   }
 
   connectMongo() {
@@ -158,6 +162,61 @@ class DatabaseManager {
   removeAllMods() {
     return new Promise((resolve, reject) => {
       this.Mod.remove({}, (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+  }
+
+  /**
+   * Save and array of Bucket
+   * @param {Array} buckets
+   */
+  saveBuckets(buckets) {
+    return new Promise((resolve, reject) => {
+      const promises = [];
+      buckets.forEach((element) => {
+        promises.push(this.saveBucket(element));
+      });
+      Promise.all(promises)
+        .then(() => resolve())
+        .catch(err => reject(err));
+    });
+  }
+
+  /**
+   * Save a Bucket object
+   * @param {Bucket} bucket
+   */
+  saveBucket(bucket) {
+    return new Promise((resolve, reject) => {
+      const b = new this.Bucket(bucket);
+      b.save((err, res) => {
+        if (err) reject(err);
+        else resolve(res);
+      });
+    });
+  }
+
+  /**
+   * Find one Bucket by hash
+   * @param {String} hash
+   */
+  findBucketByHash(hash) {
+    return new Promise((resolve, reject) => {
+      this.Bucket.findOne({ hash }, (err, res) => {
+        if (err) reject(err);
+        else resolve(res);
+      });
+    });
+  }
+
+  /**
+   * Remove all Bucket documents
+   */
+  removeAllBuckets() {
+    return new Promise((resolve, reject) => {
+      this.Bucket.remove({}, (err) => {
         if (err) reject(err);
         else resolve();
       });

@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
-/** Armor Schema */
-const armorSchema = new mongoose.Schema({
-  defense: Number,
+/** Mod Bucket */
+const bucketSchema = new mongoose.Schema({
   descriptions: {
     de: String,
     en: String,
@@ -17,8 +16,6 @@ const armorSchema = new mongoose.Schema({
     'zh-cht': String,
   },
   hash: String,
-  img: String,
-  mobility: Number,
   names: {
     de: String,
     en: String,
@@ -32,12 +29,7 @@ const armorSchema = new mongoose.Schema({
     ru: String,
     'zh-cht': String,
   },
-  power: Number,
-  recovery: Number,
-  resilience: Number,
-  screenshot: String,
-  tier: Number,
-  mods: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Mod' }],
 });
 
-module.exports = mongoose.model('armor', armorSchema);
+module.exports = mongoose.model('bucket', bucketSchema);
+

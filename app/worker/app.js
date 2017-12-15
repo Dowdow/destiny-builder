@@ -21,6 +21,12 @@ async function main() {
     console.log(`An error occured when trying to build mods objects.\n${err}`);
   }
   try {
+    await items.saveBuckets();
+    console.log('Buckets successfully saved !');
+  } catch (err) {
+    console.log(`An error occured when trying to build buckets objects.\n${err}`);
+  }
+  try {
     await items.saveArmors();
     console.log('Amors successfully saved !');
     // await items.saveWeapons();

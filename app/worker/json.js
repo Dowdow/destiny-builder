@@ -6,6 +6,7 @@ const DESTINY_PLUMBING_URL = 'https://destiny.plumbing/index.json';
 const CACHE_DIR = 'app/worker/cache';
 const ARMOR_DIR = `${CACHE_DIR}/armor`;
 const WEAPON_DIR = `${CACHE_DIR}/weapon`;
+const BUCKET_DIR = `${CACHE_DIR}/bucket`;
 const MOD_DIR = `${CACHE_DIR}/mod`;
 const STAT_DIR = `${CACHE_DIR}/stat`;
 const INDEX_FILE = `${CACHE_DIR}/index.json`;
@@ -33,6 +34,7 @@ async function createCacheDirectories() {
     await makeDirectory(CACHE_DIR);
     await makeDirectory(STAT_DIR);
     await makeDirectory(MOD_DIR);
+    await makeDirectory(BUCKET_DIR);
     await makeDirectory(ARMOR_DIR);
     await makeDirectory(WEAPON_DIR);
   } catch (err) {
@@ -92,6 +94,7 @@ function readIndexJson() {
       Object.keys(json).forEach((lang) => {
         if (LANG_SUPPORTED.includes(lang)) {
           promises.push(getJson(json[lang].raw.DestinyStatDefinition, `${STAT_DIR}/${lang}.json`));
+          promises.push(getJson(json[lang].raw.DestinyInventoryBucketDefinition, `${BUCKET_DIR}/${lang}.json`));
           promises.push(getJson(json[lang].items.Armor, `${ARMOR_DIR}/${lang}.json`));
           promises.push(getJson(json[lang].items.Weapon, `${WEAPON_DIR}/${lang}.json`));
           promises.push(getJson(json[lang].items.Mod, `${MOD_DIR}/${lang}.json`));
