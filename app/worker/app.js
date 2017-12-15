@@ -1,5 +1,8 @@
 const json = require('./json');
-const items = require('./items');
+const stats = require('./stats');
+const mods = require('./mods');
+const buckets = require('./buckets');
+const armors = require('./armors');
 
 async function main() {
   try {
@@ -9,25 +12,25 @@ async function main() {
     console.log(`An error occured when trying to get jsons files.\n${err}`);
   }
   try {
-    await items.saveStats();
+    await stats.saveStats();
     console.log('Stats successfully saved !');
   } catch (err) {
     console.log(`An error occured when trying to build stats objects.\n${err}`);
   }
   try {
-    await items.saveMods();
+    await mods.saveMods();
     console.log('Mods successfully saved !');
   } catch (err) {
     console.log(`An error occured when trying to build mods objects.\n${err}`);
   }
   try {
-    await items.saveBuckets();
+    await buckets.saveBuckets();
     console.log('Buckets successfully saved !');
   } catch (err) {
     console.log(`An error occured when trying to build buckets objects.\n${err}`);
   }
   try {
-    await items.saveArmors();
+    await armors.saveArmors();
     console.log('Amors successfully saved !');
     // await items.saveWeapons();
   } catch (err) {

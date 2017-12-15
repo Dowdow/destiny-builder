@@ -37,6 +37,7 @@ const armorSchema = new mongoose.Schema({
   resilience: Number,
   screenshot: String,
   tier: Number,
+  bucket: { type: mongoose.Schema.Types.ObjectId, ref: 'Bucket' },
   mods: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Mod' }],
 });
 
