@@ -90,28 +90,23 @@ module.exports = {
   saveMods: () => new Promise(async (resolve, reject) => {
     try {
       await dbManager.connect();
+      fs.readdir(MOD_DIR, async (err, files) => {
+        if (err) reject(err);
+        else {
+          await dbManager.removeAllMods();
+          const promises = [];
+          files.forEach((file) => {
+            const lang = file.split('.')[0];
+            promises.push(readModFile(file, lang));
+          });
+          await Promise.all(promises);
+          await dbManager.saveMods(mods);
+          await dbManager.disconnect();
+          resolve();
+        }
+      });
     } catch (err) {
       reject(err);
     }
-    fs.readdir(MOD_DIR, async (err, files) => {
-      if (err) reject(err);
-      else {
-        await dbManager.removeAllMods();
-        const promises = [];
-        files.forEach((file) => {
-          const lang = file.split('.')[0];
-          promises.push(readModFile(file, lang));
-        });
-        Promise.all(promises).then(async () => {
-          try {
-            await dbManager.saveMods(mods);
-            await dbManager.disconnect();
-            resolve();
-          } catch (pErr) {
-            console.log(`An error occured while saving the mods ${pErr}`);
-          }
-        });
-      }
-    });
   }),
 };

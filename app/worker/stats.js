@@ -55,28 +55,23 @@ module.exports = {
   saveStats: () => new Promise(async (resolve, reject) => {
     try {
       await dbManager.connect();
+      fs.readdir(STAT_DIR, async (err, files) => {
+        if (err) reject(err);
+        else {
+          await dbManager.removeAllStats();
+          const promises = [];
+          files.forEach((file) => {
+            const lang = file.split('.')[0];
+            promises.push(readStatFile(file, lang));
+          });
+          await Promise.all(promises);
+          await dbManager.saveStats(stats);
+          await dbManager.disconnect();
+          resolve();
+        }
+      });
     } catch (err) {
       reject(err);
     }
-    fs.readdir(STAT_DIR, async (err, files) => {
-      if (err) reject(err);
-      else {
-        await dbManager.removeAllStats();
-        const promises = [];
-        files.forEach((file) => {
-          const lang = file.split('.')[0];
-          promises.push(readStatFile(file, lang));
-        });
-        Promise.all(promises).then(async () => {
-          try {
-            await dbManager.saveStats(stats);
-            await dbManager.disconnect();
-            resolve();
-          } catch (pErr) {
-            console.log(`An error occured while saving the stats ${pErr}`);
-          }
-        });
-      }
-    });
   }),
 };
