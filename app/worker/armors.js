@@ -84,7 +84,7 @@ function parseArmor(armor, id, lang) {
       });
     }
     if (armor.inventory.bucketTypeHash !== undefined) {
-      const bucket = cacheBuckets.find(element => element.hash === armor.inventory.bucketTypeHash);
+      const bucket = cacheBuckets.find(element => element.hash === `${armor.inventory.bucketTypeHash}`);
       if (bucket !== undefined) {
         obj.bucket = bucket._id;
       }
