@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/armors', (req, res) => {
-  dbManager.Armor.find({}, (err, armors) => {
+  dbManager.Armor.find({ tier: 6 }, (err, armors) => {
     if (err) res.send(err);
     res.send(armors);
   });

@@ -1,8 +1,8 @@
 import React from 'react';
+import '../css/Armor.css';
 
 const Armor = props => (
-  <div>
-    <h6>{props.names.fr}</h6>
+  <div className="Armor">
     <img src={props.img} alt={props.names.fr} />
   </div>
 );

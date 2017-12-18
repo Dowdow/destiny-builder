@@ -12,7 +12,8 @@
     "eslint-watch": "onchange '**/*.{js,jsx}' -- eslint --fix {{changed}}",
     "start": "webpack-dev-server --hot --inline",
     "build": "webpack -p",
-    "work": "node app/worker/app.js"
+    "work": "node app/worker/app.js",
+    "server": "node app/app.js"
   },
   "dependencies": {
     "axios": "^0.17.1",
