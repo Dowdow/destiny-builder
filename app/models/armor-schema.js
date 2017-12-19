@@ -41,4 +41,4 @@ const armorSchema = new mongoose.Schema({
   mods: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Mod' }],
 });
 
-module.exports = mongoose.model('armor', armorSchema);
+module.exports = mongoose.model('Armor', armorSchema);

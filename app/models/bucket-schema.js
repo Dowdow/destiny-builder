@@ -31,5 +31,5 @@ const bucketSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('bucket', bucketSchema);
+module.exports = mongoose.model('Bucket', bucketSchema);
 

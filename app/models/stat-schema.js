@@ -32,5 +32,5 @@ const statSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('stats', statSchema);
+module.exports = mongoose.model('Stat', statSchema);
 

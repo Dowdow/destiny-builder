@@ -36,5 +36,5 @@ const modSchema = new mongoose.Schema({
   type: String,
 });
 
-module.exports = mongoose.model('mod', modSchema);
+module.exports = mongoose.model('Mod', modSchema);
 

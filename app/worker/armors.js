@@ -20,8 +20,7 @@ const BUNGIE_ROOT = 'https://www.bungie.net';
 
 const armors = [];
 
-const cacheFatMods = [];
-const cacheMods = [];
+let cacheMods = [];
 let cacheBuckets = [];
 
 /**
@@ -93,45 +92,19 @@ function parseArmor(armor, id, lang) {
       armor.sockets.socketEntries.forEach((socket) => {
         if (socket.socketTypeHash === HASH_FAT_SOCKET_STAT && socket.reusablePlugItems !== undefined) {
           socket.reusablePlugItems.forEach(async (modHash) => {
-            const existingFatMod = cacheFatMods.find(element => element.hash === modHash.plugItemHash);
+            const existingFatMod = cacheMods.find(element => element.hash === `${modHash.plugItemHash}`);
             if (existingFatMod) {
               obj.mobility += existingFatMod.mobility;
               obj.resilience += existingFatMod.resilience;
               obj.recovery += existingFatMod.recovery;
-            } else {
-              try {
-                const fatMod = await dbManager.findModByHash(modHash.plugItemHash);
-                cacheFatMods.push({
-                  hash: fatMod.hash,
-                  mobility: fatMod.mobility,
-                  resilience: fatMod.resilience,
-                  recovery: fatMod.recovery,
-                });
-                obj.mobility += fatMod.mobility;
-                obj.resilience += fatMod.resilience;
-                obj.recovery += fatMod.recovery;
-              } catch (fatModErr) {
-                console.log(fatModErr);
-              }
             }
           });
         }
         if (socket.socketTypeHash === HASH_SOCKET_STAT && socket.reusablePlugItems !== undefined) {
           socket.reusablePlugItems.forEach(async (modHash) => {
-            const existingMod = cacheMods.find(element => element.hash === modHash.plugItemHash);
+            const existingMod = cacheMods.find(element => element.hash === `${modHash.plugItemHash}`);
             if (existingMod) {
               obj.mods.push(existingMod._id);
-            } else {
-              try {
-                const mod = await dbManager.findModByHash(modHash.plugItemHash);
-                cacheMods.push({
-                  hash: mod.hash,
-                  _id: mod._id,
-                });
-                obj.mods.push(mod._id);
-              } catch (modErr) {
-                console.log(modErr);
-              }
             }
           });
         }
@@ -172,6 +145,7 @@ module.exports = {
         if (err) reject(err);
         else {
           await dbManager.removeAllArmors();
+          cacheMods = await dbManager.Mod.find({});
           cacheBuckets = await dbManager.Bucket.find({});
           const promises = [];
           files.forEach((file) => {

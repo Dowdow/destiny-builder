@@ -27,11 +27,11 @@ class DatabaseManager {
     /** Mod Model */
     this.Mod = Mod;
 
-    /** Armor Model */
-    this.Armor = Armor;
-
     /** Bucket Model */
     this.Bucket = Bucket;
+
+    /** Armor Model */
+    this.Armor = Armor;
   }
 
   connectMongo() {
