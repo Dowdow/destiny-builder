@@ -161,6 +161,19 @@ class DatabaseManager {
   }
 
   /**
+   * Find one Class by class id
+   * @param {Number} classId
+   */
+  findClassByClassId(classId) {
+    return new Promise((resolve, reject) => {
+      this.Class.findOne({ class: parseInt(classId, 10) }, (err, res) => {
+        if (err) reject(err);
+        else resolve(res);
+      });
+    });
+  }
+
+  /**
    * Remove all Class documents
    */
   removeAllClasses() {

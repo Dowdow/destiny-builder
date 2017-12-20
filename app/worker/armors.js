@@ -83,7 +83,7 @@ function parseArmor(armor, id, lang) {
         }
       });
     }
-    if (armor.classType) {
+    if (armor.classType !== undefined) {
       const classObj = cacheClasses.find(element => element.class === armor.classType);
       if (classObj !== undefined) {
         obj.class = classObj._id;
