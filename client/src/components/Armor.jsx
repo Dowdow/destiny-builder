@@ -21,7 +21,11 @@ class Armor extends Component {
       <div className="Armor">
         <img src={this.props.img} alt={this.props.names.fr} onClick={this.handleClick} />
         {this.state.show ?
-          <div className="ArmorModal" onClick={this.handleClick}>Modal</div>
+          <div className="ArmorModal" onClick={this.handleClick}>
+            <div className="ArmorModal_content">
+              <h1>{this.props.names.fr}</h1>
+            </div>
+          </div>
         : ''}
       </div>
     );
