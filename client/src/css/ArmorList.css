@@ -1,6 +1,42 @@
 .ArmorList {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ArmorList .filter {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+}
+
+.ArmorList .filter div {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+.ArmorList .filter label {
+    color: #ffffff8c;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.ArmorList .filter select {
+    border: none;
+    font-size: 16px;
+}
+
+.ArmorList .list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+@media screen and (max-width: 1024px) {
+    .ArmorList {
+        width: 100%;
+    }
 }

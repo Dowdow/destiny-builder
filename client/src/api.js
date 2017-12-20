@@ -16,11 +16,11 @@ async function getAllArmors() {
   });
 }
 
-async function getArmorsByFilter(classObj, typeObj, tierObj) {
-  console.log(classObj, typeObj, tierObj);
+async function getArmorsByFilter(filters) {
   return new Promise(async (resolve, reject) => {
     try {
-      const res = await fetch(`${host}/armors?class=${classObj}&type=${typeObj}&tier=${tierObj}`);
+      const query = Object.keys(filters).map(k => `${encodeURIComponent(k)}=${encodeURIComponent(filters[k])}`).join('&');
+      const res = await fetch(`${host}/armors?${query}`);
       if (res.status === 200) {
         const json = await res.json();
         resolve(json);
