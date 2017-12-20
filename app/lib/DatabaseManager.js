@@ -3,6 +3,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const Armor = require('../models/armor-schema');
 const Mod = require('../models/mod-schema');
+const ClassModel = require('../models/class-schema');
 const Stat = require('../models/stat-schema');
 const Bucket = require('../models/bucket-schema');
 
@@ -23,6 +24,9 @@ class DatabaseManager {
 
     /** Stat Model */
     this.Stat = Stat;
+
+    /** Class Model */
+    this.Class = ClassModel;
 
     /** Mod Model */
     this.Mod = Mod;
@@ -107,6 +111,61 @@ class DatabaseManager {
   removeAllStats() {
     return new Promise((resolve, reject) => {
       this.Stat.remove({}, (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+  }
+
+  /**
+   * Save and array of Class
+   * @param {Array} classes
+   */
+  saveClasses(classes) {
+    return new Promise((resolve, reject) => {
+      const promises = [];
+      classes.forEach((element) => {
+        promises.push(this.saveClass(element));
+      });
+      Promise.all(promises)
+        .then(() => resolve())
+        .catch(err => reject(err));
+    });
+  }
+
+  /**
+   * Save a Class object
+   * @param {Class} class
+   */
+  saveClass(classObj) {
+    return new Promise((resolve, reject) => {
+      const c = new this.Class(classObj);
+      c.save((err, res) => {
+        if (err) reject(err);
+        else resolve(res);
+      });
+    });
+  }
+
+  /**
+   * Find one Class by hash
+   * @param {String} hash
+   */
+  findClassByHash(hash) {
+    return new Promise((resolve, reject) => {
+      this.Class.findOne({ hash }, (err, res) => {
+        if (err) reject(err);
+        else resolve(res);
+      });
+    });
+  }
+
+  /**
+   * Remove all Class documents
+   */
+  removeAllClasses() {
+    return new Promise((resolve, reject) => {
+      this.Class.remove({}, (err) => {
         if (err) reject(err);
         else resolve();
       });

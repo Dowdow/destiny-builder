@@ -1,5 +1,6 @@
 const json = require('./json');
 const stats = require('./stats');
+const classes = require('./classes');
 const mods = require('./mods');
 const buckets = require('./buckets');
 const armors = require('./armors');
@@ -16,6 +17,12 @@ async function main() {
     console.log('Stats successfully saved !');
   } catch (err) {
     console.log(`An error occured when trying to build stats objects.\n${err}`);
+  }
+  try {
+    await classes.saveClasses();
+    console.log('Classes successfully saved !');
+  } catch (err) {
+    console.log(`An error occured when trying to build classes objects.\n${err}`);
   }
   try {
     await mods.saveMods();
