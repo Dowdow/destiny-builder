@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
 
 app.get('/armors', (req, res) => {
   dbManager.Armor.find({ tier: 6 })
+    .populate('class')
     .populate('bucket')
     .populate('mods')
     .exec((err, armors) => {

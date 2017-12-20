@@ -4,11 +4,12 @@ const fs = require('fs');
 const DESTINY_PLUMBING_URL = 'https://destiny.plumbing/index.json';
 
 const CACHE_DIR = 'app/worker/cache';
+const STAT_DIR = `${CACHE_DIR}/stat`;
+const CLASS_DIR = `${CACHE_DIR}/class`;
+const MOD_DIR = `${CACHE_DIR}/mod`;
+const BUCKET_DIR = `${CACHE_DIR}/bucket`;
 const ARMOR_DIR = `${CACHE_DIR}/armor`;
 const WEAPON_DIR = `${CACHE_DIR}/weapon`;
-const BUCKET_DIR = `${CACHE_DIR}/bucket`;
-const MOD_DIR = `${CACHE_DIR}/mod`;
-const STAT_DIR = `${CACHE_DIR}/stat`;
 const INDEX_FILE = `${CACHE_DIR}/index.json`;
 
 const LANG_SUPPORTED = ['en', 'fr', 'es', 'de', 'it', 'ja', 'pt-br', 'es-mx', 'ru', 'pl', 'zh-cht'];
@@ -33,6 +34,7 @@ async function createCacheDirectories() {
   try {
     await makeDirectory(CACHE_DIR);
     await makeDirectory(STAT_DIR);
+    await makeDirectory(CLASS_DIR);
     await makeDirectory(MOD_DIR);
     await makeDirectory(BUCKET_DIR);
     await makeDirectory(ARMOR_DIR);
@@ -94,10 +96,11 @@ function readIndexJson() {
       Object.keys(json).forEach((lang) => {
         if (LANG_SUPPORTED.includes(lang)) {
           promises.push(getJson(json[lang].raw.DestinyStatDefinition, `${STAT_DIR}/${lang}.json`));
+          promises.push(getJson(json[lang].raw.DestinyClassDefinition, `${CLASS_DIR}/${lang}.json`));
+          promises.push(getJson(json[lang].items.Mod, `${MOD_DIR}/${lang}.json`));
           promises.push(getJson(json[lang].raw.DestinyInventoryBucketDefinition, `${BUCKET_DIR}/${lang}.json`));
           promises.push(getJson(json[lang].items.Armor, `${ARMOR_DIR}/${lang}.json`));
           promises.push(getJson(json[lang].items.Weapon, `${WEAPON_DIR}/${lang}.json`));
-          promises.push(getJson(json[lang].items.Mod, `${MOD_DIR}/${lang}.json`));
         }
       });
       Promise.all(promises).then(() => {

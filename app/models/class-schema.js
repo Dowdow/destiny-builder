@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 
-/** Bucket Schema */
-const bucketSchema = new mongoose.Schema({
-  descriptions: {
+/** Class Schema */
+const classSchema = new mongoose.Schema({
+  hash: String,
+  class: Number,
+  names: {
     de: String,
     en: String,
     'es-mx': String,
@@ -15,8 +17,20 @@ const bucketSchema = new mongoose.Schema({
     ru: String,
     'zh-cht': String,
   },
-  hash: String,
-  names: {
+  males: {
+    de: String,
+    en: String,
+    'es-mx': String,
+    es: String,
+    fr: String,
+    it: String,
+    ja: String,
+    pl: String,
+    'pt-br': String,
+    ru: String,
+    'zh-cht': String,
+  },
+  females: {
     de: String,
     en: String,
     'es-mx': String,
@@ -31,5 +45,5 @@ const bucketSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Bucket', bucketSchema);
+module.exports = mongoose.model('Class', classSchema);
 

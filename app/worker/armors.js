@@ -20,6 +20,7 @@ const BUNGIE_ROOT = 'https://www.bungie.net';
 
 const armors = [];
 
+let cacheClasses = [];
 let cacheMods = [];
 let cacheBuckets = [];
 
@@ -81,6 +82,12 @@ function parseArmor(armor, id, lang) {
           }
         }
       });
+    }
+    if (armor.classType) {
+      const classObj = cacheClasses.find(element => element.class === armor.classType);
+      if (classObj !== undefined) {
+        obj.class = classObj._id;
+      }
     }
     if (armor.inventory.bucketTypeHash !== undefined) {
       const bucket = cacheBuckets.find(element => element.hash === `${armor.inventory.bucketTypeHash}`);
@@ -145,6 +152,7 @@ module.exports = {
         if (err) reject(err);
         else {
           await dbManager.removeAllArmors();
+          cacheClasses = await dbManager.Class.find({});
           cacheMods = await dbManager.Mod.find({});
           cacheBuckets = await dbManager.Bucket.find({});
           const promises = [];
