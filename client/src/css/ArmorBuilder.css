@@ -1,0 +1,25 @@
+.ArmorBuilder {
+    padding-bottom: 20px;
+}
+
+.ArmorBuilder section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ArmorBuilder section h2 {
+    margin: 0;
+    text-align: center;
+    color: #ffffff8c
+}
+
+.ArmorBuilder_armors {
+    width: 70%;
+}
+
+.ArmorBuilder_stats {
+    width: 40%;
+}

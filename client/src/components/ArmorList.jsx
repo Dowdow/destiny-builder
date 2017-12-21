@@ -174,7 +174,7 @@ class ArmorList extends Component {
             <select onChange={this.handleChangeType}>
               <option value="all">All</option>
               <option value="helmet">Helmet</option>
-              <option value="shoulder">Shoulder</option>
+              <option value="gauntlet">Gauntlet</option>
               <option value="chest">Chest</option>
               <option value="legs">Legs</option>
               <option value="classitem">Class item</option>
@@ -191,7 +191,7 @@ class ArmorList extends Component {
           </div>
           <div>
             <label>Mobility</label>
-            <select onChange={this.handleChangeMobility}>
+            <select name="mobility" onChange={this.handleChangeMobility}>
               <option value="all">All</option>
               <option value="0">0</option>
               <option value="1">1</option>
@@ -218,7 +218,7 @@ class ArmorList extends Component {
           </div>
         </section>
         <section className="list">
-          {this.state.armors.map(armor => <Armor key={armor._id} {...armor} />)}
+          {this.state.armors.map(armor => <Armor key={armor._id} armor={armor} equipItem={this.props.equipItem} />)}
         </section>
       </div>
     );

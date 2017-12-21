@@ -1,10 +1,13 @@
 .Armor {
-    border: 5px solid #ffffff;
     margin: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
 }
 
-.Armor img {
+.Armor_img {
     display: block;
+    border: 5px solid #ffffff;
 }
 
 .ArmorModal {}
