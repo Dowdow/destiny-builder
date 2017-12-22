@@ -34,8 +34,10 @@ class App extends Component {
       chest: item.bucket.hash === TYPE_CHEST ? item : prevState.chest,
       legs: item.bucket.hash === TYPE_LEG ? item : prevState.legs,
       classArmor: item.bucket.hash === TYPE_CLASS_ITEM ? item : prevState.classArmor,
+      mobility: prevState.mobility + item.mobility,
+      resilience: prevState.resilience + item.resilience,
+      recovery: prevState.recovery + item.recovery,
     }));
-    this.rebuildStats();
   }
 
   handleUnequipItem(item) {
@@ -45,39 +47,10 @@ class App extends Component {
       chest: item.bucket.hash === TYPE_CHEST ? null : prevState.chest,
       legs: item.bucket.hash === TYPE_LEG ? null : prevState.legs,
       classArmor: item.bucket.hash === TYPE_CLASS_ITEM ? null : prevState.classArmor,
+      mobility: prevState.mobility - item.mobility,
+      resilience: prevState.resilience - item.resilience,
+      recovery: prevState.recovery - item.recovery,
     }));
-    this.rebuildStats();
-  }
-
-  rebuildStats() {
-    let mobility = 0;
-    let resilience = 0;
-    let recovery = 0;
-    if (this.state.helmet !== null) {
-      mobility += this.state.helmet.mobility;
-      resilience += this.state.helmet.resilience;
-      recovery += this.state.helmet.recovery;
-    }
-    if (this.state.gauntlet !== null) {
-      mobility += this.state.gauntlet.mobility;
-      resilience += this.state.gauntlet.resilience;
-      recovery += this.state.gauntlet.recovery;
-    }
-    if (this.state.chest !== null) {
-      mobility += this.state.chest.mobility;
-      resilience += this.state.chest.resilience;
-      recovery += this.state.chest.recovery;
-    }
-    if (this.state.legs !== null) {
-      mobility += this.state.legs.mobility;
-      resilience += this.state.legs.resilience;
-      recovery += this.state.legs.recovery;
-    }
-    this.setState({
-      mobility,
-      resilience,
-      recovery,
-    });
   }
 
   render() {

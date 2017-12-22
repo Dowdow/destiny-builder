@@ -2,6 +2,17 @@
     padding-bottom: 20px;
 }
 
+.ArmorBuilder_empty {
+    margin: 5px;
+}
+
+.ArmorBuilder_empty img {
+    border: 5px solid #ffffff;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .ArmorBuilder section {
     display: flex;
     flex-direction: row;
@@ -20,6 +31,12 @@
     width: 70%;
 }
 
+.ArmorBuilder_armors > div {
+    display: flex;
+    flex-direction: column;
+}
+
 .ArmorBuilder_stats {
+    margin-top: 10px;
     width: 40%;
 }

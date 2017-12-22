@@ -40,15 +40,10 @@ class ArmorList extends Component {
       resilience: this.state.resilience,
       recovery: this.state.recovery,
     });
-    this.setState(prevState => ({
+    this.setState({
       class: classValue,
-      type: prevState.type,
-      tier: prevState.tier,
-      mobility: prevState.mobility,
-      resilience: prevState.resilience,
-      recovery: prevState.recovery,
       armors,
-    }));
+    });
   }
 
   async handleChangeType(event) {
@@ -61,15 +56,10 @@ class ArmorList extends Component {
       resilience: this.state.resilience,
       recovery: this.state.recovery,
     });
-    this.setState(prevState => ({
-      class: prevState.class,
+    this.setState({
       type: typeValue,
-      tier: prevState.tier,
-      mobility: prevState.mobility,
-      resilience: prevState.resilience,
-      recovery: prevState.recovery,
       armors,
-    }));
+    });
   }
 
   async handleChangeTier(event) {
@@ -82,15 +72,10 @@ class ArmorList extends Component {
       resilience: this.state.resilience,
       recovery: this.state.recovery,
     });
-    this.setState(prevState => ({
-      class: prevState.class,
-      type: prevState.type,
+    this.setState({
       tier: tierValue,
-      mobility: prevState.mobility,
-      resilience: prevState.resilience,
-      recovery: prevState.recovery,
       armors,
-    }));
+    });
   }
 
   async handleChangeMobility(event) {
@@ -103,15 +88,10 @@ class ArmorList extends Component {
       resilience: this.state.resilience,
       recovery: this.state.recovery,
     });
-    this.setState(prevState => ({
-      class: prevState.class,
-      type: prevState.type,
-      tier: prevState.tier,
+    this.setState({
       mobility: mobilityValue,
-      resilience: prevState.resilience,
-      recovery: prevState.recovery,
       armors,
-    }));
+    });
   }
 
   async handleChangeResilience(event) {
@@ -124,15 +104,10 @@ class ArmorList extends Component {
       resilience: resilienceValue,
       recovery: this.state.recovery,
     });
-    this.setState(prevState => ({
-      class: prevState.class,
-      type: prevState.type,
-      tier: prevState.tier,
-      mobility: prevState.mobility,
+    this.setState({
       resilience: resilienceValue,
-      recovery: prevState.recovery,
       armors,
-    }));
+    });
   }
 
   async handleChangeRecovery(event) {
@@ -145,15 +120,10 @@ class ArmorList extends Component {
       resilience: this.state.resilience,
       recovery: recoveryValue,
     });
-    this.setState(prevState => ({
-      class: prevState.class,
-      type: prevState.type,
-      tier: prevState.tier,
-      mobility: prevState.mobility,
-      resilience: prevState.resilience,
+    this.setState({
       recovery: recoveryValue,
       armors,
-    }));
+    });
   }
 
   render() {

@@ -2,16 +2,9 @@ import React, { Component } from 'react';
 import Armor from '../components/Armor';
 import '../css/ArmorBuilder.css';
 
-class ArmorBuilder extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      mobility: 0,
-      resilience: 0,
-      recovery: 0,
-    };
-  }
+const EMPTY_SLOT = 'https://www.bungie.net/common/destiny2_content/icons/a6bd6251c114762042b4c4231bd7505c.png';
 
+class ArmorBuilder extends Component {
   handleUnequip() {
     this.props.unequipItem();
   }
@@ -22,23 +15,38 @@ class ArmorBuilder extends Component {
         <section className="ArmorBuilder_armors">
           <div>
             <h2>Helmet</h2>
-            { this.props.build.helmet !== null ? <Armor armor={this.props.build.helmet} /> : <img /> }
+            { this.props.build.helmet !== null ? <Armor armor={this.props.build.helmet} /> :
+            <div className="ArmorBuilder_empty">
+              <img src={EMPTY_SLOT} alt="Empty" />
+            </div> }
           </div>
           <div>
             <h2>Gauntlet</h2>
-            { this.props.build.gauntlet !== null ? <Armor armor={this.props.build.gauntlet} /> : <img /> }
+            { this.props.build.gauntlet !== null ? <Armor armor={this.props.build.gauntlet} /> :
+            <div className="ArmorBuilder_empty">
+              <img src={EMPTY_SLOT} alt="Empty" />
+            </div> }
           </div>
           <div>
             <h2>Chest</h2>
-            { this.props.build.chest !== null ? <Armor armor={this.props.build.chest} /> : <img /> }
+            { this.props.build.chest !== null ? <Armor armor={this.props.build.chest} /> :
+            <div className="ArmorBuilder_empty">
+              <img src={EMPTY_SLOT} alt="Empty" />
+            </div> }
           </div>
           <div>
             <h2>Legs</h2>
-            { this.props.build.legs !== null ? <Armor armor={this.props.build.legs} /> : <img /> }
+            { this.props.build.legs !== null ? <Armor armor={this.props.build.legs} /> :
+            <div className="ArmorBuilder_empty">
+              <img src={EMPTY_SLOT} alt="Empty" />
+            </div> }
           </div>
           <div>
             <h2>Class Armor</h2>
-            { this.props.build.classArmor !== null ? <Armor armor={this.props.build.classArmor} /> : <img /> }
+            { this.props.build.classArmor !== null ? <Armor armor={this.props.build.classArmor} /> :
+            <div className="ArmorBuilder_empty">
+              <img src={EMPTY_SLOT} alt="Empty" />
+            </div> }
           </div>
         </section>
         <section className="ArmorBuilder_stats">
