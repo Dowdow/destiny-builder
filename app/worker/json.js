@@ -103,27 +103,36 @@ function readIndexJson() {
           promises.push(getJson(json[lang].items.Weapon, `${WEAPON_DIR}/${lang}.json`));
         }
       });
-      Promise.all(promises).then(() => {
-        resolve();
-      });
+      Promise.all(promises)
+        .then(() => {
+          resolve();
+        })
+        .catch((pErr) => {
+          console.log(pErr);
+          reject(pErr);
+        });
     });
   });
 }
 
 module.exports = {
   retrieveJsons: () => new Promise(async (resolve, reject) => {
-    let oldId = 0;
     try {
-      oldId = await getIndexId();
-    } catch (err) { console.log('No previous index file.'); }
-    await createCacheDirectories();
-    await getJson(DESTINY_PLUMBING_URL, INDEX_FILE);
-    const newId = await getIndexId();
-    if (oldId === newId) {
-      reject(new Error('Already up to date !'));
-    } else {
-      await readIndexJson();
-      resolve();
+      let oldId = 0;
+      try {
+        oldId = await getIndexId();
+      } catch (err) { console.log('No previous index file.'); }
+      await createCacheDirectories();
+      await getJson(DESTINY_PLUMBING_URL, INDEX_FILE);
+      const newId = await getIndexId();
+      if (oldId === newId) {
+        resolve('Already up to date !');
+      } else {
+        await readIndexJson();
+        resolve();
+      }
+    } catch (err) {
+      reject(err);
     }
   }),
 };

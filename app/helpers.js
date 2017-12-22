@@ -3,7 +3,7 @@ const CLASS_HUNTER = 1;
 const CLASS_WARLOCK = 2;
 
 const TYPE_HELMET = '3448274439';
-const TYPE_SHOULDER = '3551918588';
+const TYPE_GAUNTLET = '3551918588';
 const TYPE_CHEST = '14239492';
 const TYPE_LEG = '20886954';
 const TYPE_CLASS_ITEM = '1585787867';
@@ -41,8 +41,8 @@ module.exports = {
           case 'helmet':
             typeFilter = TYPE_HELMET;
             break;
-          case 'shoulder':
-            typeFilter = TYPE_SHOULDER;
+          case 'gauntlet':
+            typeFilter = TYPE_GAUNTLET;
             break;
           case 'chest':
             typeFilter = TYPE_CHEST;

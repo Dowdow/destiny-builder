@@ -40,15 +40,10 @@ class ArmorList extends Component {
       resilience: this.state.resilience,
       recovery: this.state.recovery,
     });
-    this.setState(prevState => ({
+    this.setState({
       class: classValue,
-      type: prevState.type,
-      tier: prevState.tier,
-      mobility: prevState.mobility,
-      resilience: prevState.resilience,
-      recovery: prevState.recovery,
       armors,
-    }));
+    });
   }
 
   async handleChangeType(event) {
@@ -61,15 +56,10 @@ class ArmorList extends Component {
       resilience: this.state.resilience,
       recovery: this.state.recovery,
     });
-    this.setState(prevState => ({
-      class: prevState.class,
+    this.setState({
       type: typeValue,
-      tier: prevState.tier,
-      mobility: prevState.mobility,
-      resilience: prevState.resilience,
-      recovery: prevState.recovery,
       armors,
-    }));
+    });
   }
 
   async handleChangeTier(event) {
@@ -82,15 +72,10 @@ class ArmorList extends Component {
       resilience: this.state.resilience,
       recovery: this.state.recovery,
     });
-    this.setState(prevState => ({
-      class: prevState.class,
-      type: prevState.type,
+    this.setState({
       tier: tierValue,
-      mobility: prevState.mobility,
-      resilience: prevState.resilience,
-      recovery: prevState.recovery,
       armors,
-    }));
+    });
   }
 
   async handleChangeMobility(event) {
@@ -103,15 +88,10 @@ class ArmorList extends Component {
       resilience: this.state.resilience,
       recovery: this.state.recovery,
     });
-    this.setState(prevState => ({
-      class: prevState.class,
-      type: prevState.type,
-      tier: prevState.tier,
+    this.setState({
       mobility: mobilityValue,
-      resilience: prevState.resilience,
-      recovery: prevState.recovery,
       armors,
-    }));
+    });
   }
 
   async handleChangeResilience(event) {
@@ -124,15 +104,10 @@ class ArmorList extends Component {
       resilience: resilienceValue,
       recovery: this.state.recovery,
     });
-    this.setState(prevState => ({
-      class: prevState.class,
-      type: prevState.type,
-      tier: prevState.tier,
-      mobility: prevState.mobility,
+    this.setState({
       resilience: resilienceValue,
-      recovery: prevState.recovery,
       armors,
-    }));
+    });
   }
 
   async handleChangeRecovery(event) {
@@ -145,15 +120,10 @@ class ArmorList extends Component {
       resilience: this.state.resilience,
       recovery: recoveryValue,
     });
-    this.setState(prevState => ({
-      class: prevState.class,
-      type: prevState.type,
-      tier: prevState.tier,
-      mobility: prevState.mobility,
-      resilience: prevState.resilience,
+    this.setState({
       recovery: recoveryValue,
       armors,
-    }));
+    });
   }
 
   render() {
@@ -174,7 +144,7 @@ class ArmorList extends Component {
             <select onChange={this.handleChangeType}>
               <option value="all">All</option>
               <option value="helmet">Helmet</option>
-              <option value="shoulder">Shoulder</option>
+              <option value="gauntlet">Gauntlet</option>
               <option value="chest">Chest</option>
               <option value="legs">Legs</option>
               <option value="classitem">Class item</option>
@@ -191,7 +161,7 @@ class ArmorList extends Component {
           </div>
           <div>
             <label>Mobility</label>
-            <select onChange={this.handleChangeMobility}>
+            <select name="mobility" onChange={this.handleChangeMobility}>
               <option value="all">All</option>
               <option value="0">0</option>
               <option value="1">1</option>
@@ -218,7 +188,7 @@ class ArmorList extends Component {
           </div>
         </section>
         <section className="list">
-          {this.state.armors.map(armor => <Armor key={armor._id} {...armor} />)}
+          {this.state.armors.map(armor => <Armor key={armor._id} armor={armor} equipItem={this.props.equipItem} />)}
         </section>
       </div>
     );
