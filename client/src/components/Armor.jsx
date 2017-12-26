@@ -9,6 +9,7 @@ class Armor extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleEquipItem = this.handleEquipItem.bind(this);
+    this.handleUnequipItem = this.handleUnequipItem.bind(this);
   }
 
   handleClick() {
@@ -20,6 +21,11 @@ class Armor extends Component {
   handleEquipItem() {
     this.handleClick();
     this.props.equipItem(this.props.armor);
+  }
+
+  handleUnequipItem() {
+    this.handleClick();
+    this.props.unequipItem(this.props.armor);
   }
 
   render() {
@@ -48,6 +54,7 @@ class Armor extends Component {
                 </div>
                 <img className="ArmorModalContent_screenshot" src={this.props.armor.screenshot} alt={this.props.armor.names.fr} />
                 {this.props.equipItem ? <button onClick={this.handleEquipItem}>Equip</button> : ''}
+                {this.props.unequipItem ? <button onClick={this.handleUnequipItem}>Unequip</button> : ''}
               </div>
             </div>
           </div>

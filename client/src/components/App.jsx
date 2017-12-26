@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import ArmorBuilder from './ArmorBuilder';
 import ArmorList from './ArmorList';
 import '../css/App.css';
-import ArmorBuilder from './ArmorBuilder';
 
 const TYPE_HELMET = '3448274439';
 const TYPE_GAUNTLET = '3551918588';
@@ -19,9 +19,6 @@ class App extends Component {
       chest: null,
       legs: null,
       classArmor: null,
-      mobility: 0,
-      resilience: 0,
-      recovery: 0,
     };
     this.handleEquipItem = this.handleEquipItem.bind(this);
     this.handleUnequipItem = this.handleUnequipItem.bind(this);
@@ -34,9 +31,6 @@ class App extends Component {
       chest: item.bucket.hash === TYPE_CHEST ? item : prevState.chest,
       legs: item.bucket.hash === TYPE_LEG ? item : prevState.legs,
       classArmor: item.bucket.hash === TYPE_CLASS_ITEM ? item : prevState.classArmor,
-      mobility: prevState.mobility + item.mobility,
-      resilience: prevState.resilience + item.resilience,
-      recovery: prevState.recovery + item.recovery,
     }));
   }
 
@@ -47,9 +41,6 @@ class App extends Component {
       chest: item.bucket.hash === TYPE_CHEST ? null : prevState.chest,
       legs: item.bucket.hash === TYPE_LEG ? null : prevState.legs,
       classArmor: item.bucket.hash === TYPE_CLASS_ITEM ? null : prevState.classArmor,
-      mobility: prevState.mobility - item.mobility,
-      resilience: prevState.resilience - item.resilience,
-      recovery: prevState.recovery - item.recovery,
     }));
   }
 
