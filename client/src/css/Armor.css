@@ -31,7 +31,7 @@
     margin-left: auto;
     margin-right: auto;
     background: white;
-    z-index: 10px;
+    z-index: 10;
 }
 
 .ArmorModalContent_header {

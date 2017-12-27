@@ -1,0 +1,36 @@
+.ModList {
+    margin: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.ModList_img {
+    display: block;
+    border: 5px solid #ffffff;
+}
+
+.ModListModal {}
+
+.ModListModal_background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000000;
+    opacity: 0.8;
+}
+
+.ModListModal_content {
+    position: fixed;
+    width: 50%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 10;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

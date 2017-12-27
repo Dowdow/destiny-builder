@@ -11,7 +11,7 @@
   "scripts": {
     "eslint-watch": "onchange '**/*.{js,jsx}' -- eslint --fix {{changed}}",
     "start": "webpack-dev-server --hot --inline",
-    "build": "webpack -p",
+    "build": "webpack",
     "work": "node app/worker/app.js",
     "server": "node app/app.js"
   },
@@ -31,7 +31,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.7",
-    "eslint": "^4.13.1",
+    "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",

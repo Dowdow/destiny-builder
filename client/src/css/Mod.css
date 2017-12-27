@@ -1,0 +1,34 @@
+.Mod {
+    margin: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.Mod_img {
+    display: block;
+    border: 5px solid #ffffff;
+}
+
+.Mod_tooltip {
+    position: absolute;
+    visibility: hidden;
+    background-color: #000000;
+    color: white;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+
+.Mod_tooltip h4 {
+    margin: 0;
+    padding: 5px;
+    text-align: center;
+}
+
+.Mod_tooltip p {
+    margin: 0;
+}
+
+.Mod:hover .Mod_tooltip {
+    visibility: visible;
+}

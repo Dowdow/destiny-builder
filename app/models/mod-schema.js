@@ -33,6 +33,7 @@ const modSchema = new mongoose.Schema({
   },
   recovery: Number,
   resilience: Number,
+  tier: Number,
   type: String,
 });
 

@@ -8,7 +8,14 @@ const TYPE_GAUNTLET = '3551918588';
 const TYPE_CHEST = '14239492';
 const TYPE_LEG = '20886954';
 const TYPE_CLASS_ITEM = '1585787867';
-const TYPE_GHOST = '4023194814';
+
+const MOD_HEAD = 'enhancements.head';
+const MOD_GAUNTLET = 'enhancements.arms';
+const MOD_CHEST = 'enhancements.chest';
+const MOD_LEG = 'enhancements.legs';
+const MOD_CLASS_ITEM_TITAN = 'enhancements.class_titan';
+const MOD_CLASS_ITEM_HUNTER = 'enhancements.class_hunter';
+const MOD_CLASS_ITEM_WARLOCK = 'enhancements.class_warlock';
 
 class App extends Component {
   constructor(props) {
@@ -19,9 +26,16 @@ class App extends Component {
       chest: null,
       legs: null,
       classArmor: null,
+      helmetMod: null,
+      gauntletMod: null,
+      chestMod: null,
+      legsMod: null,
+      classArmorMod: null,
     };
     this.handleEquipItem = this.handleEquipItem.bind(this);
     this.handleUnequipItem = this.handleUnequipItem.bind(this);
+    this.handleEquipMod = this.handleEquipMod.bind(this);
+    this.handleUnequipMod = this.handleUnequipMod.bind(this);
   }
 
   handleEquipItem(item) {
@@ -44,11 +58,36 @@ class App extends Component {
     }));
   }
 
+  handleEquipMod(mod) {
+    this.setState(prevState => ({
+      helmetMod: mod.type === MOD_HEAD ? mod : prevState.helmetMod,
+      gauntletMod: mod.type === MOD_GAUNTLET ? mod : prevState.gauntletMod,
+      chestMod: mod.type === MOD_CHEST ? mod : prevState.chestMod,
+      legsMod: mod.type === MOD_LEG ? mod : prevState.legsMod,
+      classArmorMod: [MOD_CLASS_ITEM_TITAN, MOD_CLASS_ITEM_HUNTER, MOD_CLASS_ITEM_WARLOCK].includes(mod.type) ? mod : prevState.classArmorMod,
+    }));
+  }
+
+  handleUnequipMod(mod) {
+    this.setState(prevState => ({
+      helmetMod: mod.type === MOD_HEAD ? null : prevState.helmetMod,
+      gauntletMod: mod.type === MOD_GAUNTLET ? null : prevState.gauntletMod,
+      chestMod: mod.type === MOD_CHEST ? null : prevState.chestMod,
+      legsMod: mod.type === MOD_LEG ? null : prevState.legsMod,
+      classArmorMod: [MOD_CLASS_ITEM_TITAN, MOD_CLASS_ITEM_HUNTER, MOD_CLASS_ITEM_WARLOCK].includes(mod.type) ? null : prevState.classArmorMod,
+    }));
+  }
+
   render() {
     return (
       <div className="App">
         <h1>Destiny 2 Build Generator</h1>
-        <ArmorBuilder build={this.state} unequipItem={this.handleUnequipItem} />
+        <ArmorBuilder
+          build={this.state}
+          unequipItem={this.handleUnequipItem}
+          equipMod={this.handleEquipMod}
+          unequipMod={this.handleUnequipMod}
+        />
         <ArmorList equipItem={this.handleEquipItem} />
       </div>
     );

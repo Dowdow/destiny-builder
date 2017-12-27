@@ -45,6 +45,7 @@ function readModFile(file, lang) {
               mobility: 0,
               resilience: 0,
               recovery: 0,
+              tier: mod.inventory.tierType,
             };
             if (mod.displayProperties.hasIcon) {
               obj.img = `${BUNGIE_ROOT}${mod.displayProperties.icon}`;

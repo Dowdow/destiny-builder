@@ -9,11 +9,20 @@ const TYPE_LEG = '20886954';
 const TYPE_CLASS_ITEM = '1585787867';
 const TYPE_GHOST = '4023194814';
 
+const MOD_HEAD = 'enhancements.head';
+const MOD_GAUNTLET = 'enhancements.arms';
+const MOD_CHEST = 'enhancements.chest';
+const MOD_LEG = 'enhancements.legs';
+const MOD_CLASS_ITEM_TITAN = 'enhancements.class_titan';
+const MOD_CLASS_ITEM_HUNTER = 'enhancements.class_hunter';
+const MOD_CLASS_ITEM_WARLOCK = 'enhancements.class_warlock';
+const MOD_UNIVERSAL = 'enhancements.universal';
+
 const TIER_LEGENDARY = 5;
 const TIER_EXOTIC = 6;
 
 module.exports = {
-  buildQuery: (params, dbManager) => new Promise(async (resolve, reject) => {
+  buildQueryArmor: (params, dbManager) => new Promise(async (resolve, reject) => {
     try {
       const query = {};
       if (params.class && params.class !== 'all') {
@@ -82,6 +91,54 @@ module.exports = {
       }
       if (params.recovery !== undefined && params.recovery !== 'all') {
         query.recovery = params.recovery;
+      }
+      resolve(query);
+    } catch (err) {
+      reject(err);
+    }
+  }),
+  buildQueryMod: params => new Promise((resolve, reject) => {
+    try {
+      const query = {};
+      if (params.type && params.type !== 'all') {
+        switch (params.type) {
+          case 'helmet':
+            query.type = MOD_HEAD;
+            break;
+          case 'gauntlet':
+            query.type = MOD_GAUNTLET;
+            break;
+          case 'chest':
+            query.type = MOD_CHEST;
+            break;
+          case 'legs':
+            query.type = MOD_LEG;
+            break;
+          case 'classitem_titan':
+            query.type = MOD_CLASS_ITEM_TITAN;
+            break;
+          case 'classitem_hunter':
+            query.type = MOD_CLASS_ITEM_HUNTER;
+            break;
+          case 'classitem_warlock':
+            query.type = MOD_CLASS_ITEM_WARLOCK;
+            break;
+          case 'universal':
+            query.type = MOD_UNIVERSAL;
+            break;
+          default:
+        }
+      }
+      if (params.tier && params.tier !== 'all') {
+        switch (params.tier) {
+          case 'legendary':
+            query.tier = TIER_LEGENDARY;
+            break;
+          case 'exotic':
+            query.tier = TIER_EXOTIC;
+            break;
+          default:
+        }
       }
       resolve(query);
     } catch (err) {

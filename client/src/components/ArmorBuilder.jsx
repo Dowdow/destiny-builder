@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Armor from '../components/Armor';
+import ModList from './ModList';
 import '../css/ArmorBuilder.css';
 
-const EMPTY_SLOT = 'https://www.bungie.net/common/destiny2_content/icons/a6bd6251c114762042b4c4231bd7505c.png';
 let mobility = 0;
 let resilience = 0;
 let recovery = 0;
@@ -37,6 +37,31 @@ class ArmorBuilder extends Component {
       resilience += this.props.build.classArmor.resilience;
       recovery += this.props.build.classArmor.recovery;
     }
+    if (this.props.build.helmetMod) {
+      mobility += this.props.build.helmetMod.mobility;
+      resilience += this.props.build.helmetMod.resilience;
+      recovery += this.props.build.helmetMod.recovery;
+    }
+    if (this.props.build.gauntletMod) {
+      mobility += this.props.build.gauntletMod.mobility;
+      resilience += this.props.build.gauntletMod.resilience;
+      recovery += this.props.build.gauntletMod.recovery;
+    }
+    if (this.props.build.chestMod) {
+      mobility += this.props.build.chestMod.mobility;
+      resilience += this.props.build.chestMod.resilience;
+      recovery += this.props.build.chestMod.recovery;
+    }
+    if (this.props.build.legsMod) {
+      mobility += this.props.build.legsMod.mobility;
+      resilience += this.props.build.legsMod.resilience;
+      recovery += this.props.build.legsMod.recovery;
+    }
+    if (this.props.build.classArmorMod) {
+      mobility += this.props.build.classArmorMod.mobility;
+      resilience += this.props.build.classArmorMod.resilience;
+      recovery += this.props.build.classArmorMod.recovery;
+    }
   }
 
   render() {
@@ -46,38 +71,58 @@ class ArmorBuilder extends Component {
         <section className="ArmorBuilder_armors">
           <div>
             <h2>Helmet</h2>
-            {this.props.build.helmet !== null ? <Armor armor={this.props.build.helmet} unequipItem={this.props.unequipItem} /> :
-            <div className="ArmorBuilder_empty">
-              <img src={EMPTY_SLOT} alt="Empty" />
-            </div>}
+            <Armor armor={this.props.build.helmet} unequipItem={this.props.unequipItem} />
+            <ModList
+              mod={this.props.build.helmetMod}
+              equipMod={this.props.equipMod}
+              unequipMod={this.props.unequipMod}
+              type="helmet"
+              tier="legendary"
+            />
           </div>
           <div>
             <h2>Gauntlet</h2>
-            {this.props.build.gauntlet !== null ? <Armor armor={this.props.build.gauntlet} unequipItem={this.props.unequipItem} /> :
-            <div className="ArmorBuilder_empty">
-              <img src={EMPTY_SLOT} alt="Empty" />
-            </div>}
+            <Armor armor={this.props.build.gauntlet} unequipItem={this.props.unequipItem} />
+            <ModList
+              mod={this.props.build.gauntletMod}
+              equipMod={this.props.equipMod}
+              unequipMod={this.props.unequipMod}
+              type="gauntlet"
+              tier="legendary"
+            />
           </div>
           <div>
             <h2>Chest</h2>
-            {this.props.build.chest !== null ? <Armor armor={this.props.build.chest} unequipItem={this.props.unequipItem} /> :
-            <div className="ArmorBuilder_empty">
-              <img src={EMPTY_SLOT} alt="Empty" />
-            </div>}
+            <Armor armor={this.props.build.chest} unequipItem={this.props.unequipItem} />
+            <ModList
+              mod={this.props.build.chestMod}
+              equipMod={this.props.equipMod}
+              unequipMod={this.props.unequipMod}
+              type="chest"
+              tier="legendary"
+            />
           </div>
           <div>
             <h2>Legs</h2>
-            {this.props.build.legs !== null ? <Armor armor={this.props.build.legs} unequipItem={this.props.unequipItem} /> :
-            <div className="ArmorBuilder_empty">
-              <img src={EMPTY_SLOT} alt="Empty" />
-            </div>}
+            <Armor armor={this.props.build.legs} unequipItem={this.props.unequipItem} />
+            <ModList
+              mod={this.props.build.legsMod}
+              equipMod={this.props.equipMod}
+              unequipMod={this.props.unequipMod}
+              type="legs"
+              tier="legendary"
+            />
           </div>
           <div>
             <h2>Class Armor</h2>
-            {this.props.build.classArmor !== null ? <Armor armor={this.props.build.classArmor} unequipItem={this.props.unequipItem} /> :
-            <div className="ArmorBuilder_empty">
-              <img src={EMPTY_SLOT} alt="Empty" />
-            </div>}
+            <Armor armor={this.props.build.classArmor} unequipItem={this.props.unequipItem} />
+            <ModList
+              mod={this.props.build.classArmorMod}
+              equipMod={this.props.equipMod}
+              unequipMod={this.props.unequipMod}
+              type="classitem_hunter"
+              tier="legendary"
+            />
           </div>
         </section>
         <section className="ArmorBuilder_stats">

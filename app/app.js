@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 
 app.get('/armors', async (req, res) => {
   try {
-    const query = await helpers.buildQuery(req.query, dbManager);
+    const query = await helpers.buildQueryArmor(req.query, dbManager);
     dbManager.Armor.find(query)
       .populate('class')
       .populate('bucket')
@@ -31,6 +31,18 @@ app.get('/armors', async (req, res) => {
         if (err) res.send([]);
         else res.send(armors);
       });
+  } catch (err) {
+    res.send([]);
+  }
+});
+
+app.get('/mods', async (req, res) => {
+  try {
+    const query = await helpers.buildQueryMod(req.query);
+    dbManager.Mod.find(query, (err, mods) => {
+      if (err) res.send([]);
+      else res.send(mods);
+    });
   } catch (err) {
     res.send([]);
   }
