@@ -101,33 +101,38 @@ module.exports = {
     try {
       const query = {};
       if (params.type && params.type !== 'all') {
-        switch (params.type) {
-          case 'helmet':
-            query.type = MOD_HEAD;
-            break;
-          case 'gauntlet':
-            query.type = MOD_GAUNTLET;
-            break;
-          case 'chest':
-            query.type = MOD_CHEST;
-            break;
-          case 'legs':
-            query.type = MOD_LEG;
-            break;
-          case 'classitem_titan':
-            query.type = MOD_CLASS_ITEM_TITAN;
-            break;
-          case 'classitem_hunter':
-            query.type = MOD_CLASS_ITEM_HUNTER;
-            break;
-          case 'classitem_warlock':
-            query.type = MOD_CLASS_ITEM_WARLOCK;
-            break;
-          case 'universal':
-            query.type = MOD_UNIVERSAL;
-            break;
-          default:
-        }
+        const paramTypeArray = params.type.split(':');
+        const typeArray = [];
+        paramTypeArray.forEach((param) => {
+          switch (param) {
+            case 'helmet':
+              typeArray.push(MOD_HEAD);
+              break;
+            case 'gauntlet':
+              typeArray.push(MOD_GAUNTLET);
+              break;
+            case 'chest':
+              typeArray.push(MOD_CHEST);
+              break;
+            case 'legs':
+              typeArray.push(MOD_LEG);
+              break;
+            case 'classitem_titan':
+              typeArray.push(MOD_CLASS_ITEM_TITAN);
+              break;
+            case 'classitem_hunter':
+              typeArray.push(MOD_CLASS_ITEM_HUNTER);
+              break;
+            case 'classitem_warlock':
+              typeArray.push(MOD_CLASS_ITEM_WARLOCK);
+              break;
+            case 'universal':
+              typeArray.push(MOD_UNIVERSAL);
+              break;
+            default:
+          }
+        });
+        query.type = { $in: typeArray };
       }
       if (params.tier && params.tier !== 'all') {
         switch (params.tier) {

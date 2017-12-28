@@ -22,6 +22,14 @@ class ModList extends Component {
     });
   }
 
+  async componentWillReceiveProps(nextProps) {
+    const mods = await getModsByFilter({ type: nextProps.type, tier: nextProps.tier });
+    this.setState({
+      show: false,
+      mods,
+    });
+  }
+
   handleClick() {
     this.setState(prevState => ({
       show: !prevState.show,

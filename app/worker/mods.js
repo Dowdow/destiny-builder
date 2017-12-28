@@ -14,9 +14,9 @@ const HASH_STAT_RECOVERY = 1943323491;
 const HASH_STAT_POWER = 1935470627;
 const HASH_STAT_DEFENSE = 3897883278;
 
-const HASH_PERK_MOBILITY = 3278655932;
-const HASH_PERK_RESILIENCE = 227873623;
-const HASH_PERK_RECOVERY = 1000952204;
+const HASH_PERK_MOBILITY = [3278655932, 933234384];
+const HASH_PERK_RESILIENCE = [227873623, 3385050492];
+const HASH_PERK_RECOVERY = [1000952204, 4160249919];
 
 const BUNGIE_ROOT = 'https://www.bungie.net';
 
@@ -96,21 +96,14 @@ function readModFile(file, lang) {
             if (mod.perks !== undefined) {
               mod.perks.forEach((perk) => {
                 promises.push(new Promise((elResolve) => {
-                  switch (perk.perkHash) {
-                    case HASH_PERK_MOBILITY: {
-                      obj.mobility += 1;
-                      break;
-                    }
-                    case HASH_PERK_RESILIENCE: {
-                      obj.resilience += 1;
-                      break;
-                    }
-                    case HASH_PERK_RECOVERY: {
-                      obj.recovery += 1;
-                      break;
-                    }
-                    default:
-                      break;
+                  if (HASH_PERK_MOBILITY.includes(perk.perkHash)) {
+                    obj.mobility += 1;
+                  }
+                  if (HASH_PERK_RESILIENCE.includes(perk.perkHash)) {
+                    obj.resilience += 1;
+                  }
+                  if (HASH_PERK_RECOVERY.includes(perk.perkHash)) {
+                    obj.recovery += 1;
                   }
                   elResolve();
                 }));

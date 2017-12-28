@@ -8,6 +8,41 @@ let resilience = 0;
 let recovery = 0;
 
 class ArmorBuilder extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      typeClassArmor: 'classitem_titan:classitem_hunter:classitem_warlock',
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.build.classArmor) {
+      switch (nextProps.build.classArmor.class.class) {
+        case 0:
+          this.setState({
+            typeClassArmor: 'classitem_titan',
+          });
+          break;
+        case 1:
+          this.setState({
+            typeClassArmor: 'classitem_hunter',
+          });
+          break;
+        case 2:
+          this.setState({
+            typeClassArmor: 'classitem_warlock',
+          });
+          break;
+        default:
+      }
+    } else {
+      this.setState({
+        typeClassArmor: 'classitem_titan:classitem_hunter:classitem_warlock',
+      });
+    }
+  }
+
+
   buildStats() {
     mobility = 0;
     resilience = 0;
@@ -120,7 +155,7 @@ class ArmorBuilder extends Component {
               mod={this.props.build.classArmorMod}
               equipMod={this.props.equipMod}
               unequipMod={this.props.unequipMod}
-              type="classitem_hunter"
+              type={this.state.typeClassArmor}
               tier="legendary"
             />
           </div>

@@ -45,6 +45,7 @@ class App extends Component {
       chest: item.bucket.hash === TYPE_CHEST ? item : prevState.chest,
       legs: item.bucket.hash === TYPE_LEG ? item : prevState.legs,
       classArmor: item.bucket.hash === TYPE_CLASS_ITEM ? item : prevState.classArmor,
+      classArmorMod: item.bucket.hash === TYPE_CLASS_ITEM ? null : prevState.classArmorMod,
     }));
   }
 
@@ -55,6 +56,7 @@ class App extends Component {
       chest: item.bucket.hash === TYPE_CHEST ? null : prevState.chest,
       legs: item.bucket.hash === TYPE_LEG ? null : prevState.legs,
       classArmor: item.bucket.hash === TYPE_CLASS_ITEM ? null : prevState.classArmor,
+      classArmorMod: item.bucket.hash === TYPE_CLASS_ITEM ? null : prevState.classArmorMod,
     }));
   }
 
