@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 /** Mod Schema */
 const modSchema = new mongoose.Schema({
+  defense: Number,
   descriptions: {
     de: String,
     en: String,
@@ -31,6 +32,7 @@ const modSchema = new mongoose.Schema({
     ru: String,
     'zh-cht': String,
   },
+  power: Number,
   recovery: Number,
   resilience: Number,
   tier: Number,
