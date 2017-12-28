@@ -37,6 +37,11 @@ class ArmorBuilder extends Component {
     ArmorBuilder.buildStat(nextProps.build.chestMod);
     ArmorBuilder.buildStat(nextProps.build.legsMod);
     ArmorBuilder.buildStat(nextProps.build.classArmorMod);
+    ArmorBuilder.buildStat(nextProps.build.helmetMiniMod);
+    ArmorBuilder.buildStat(nextProps.build.gauntletMiniMod);
+    ArmorBuilder.buildStat(nextProps.build.chestMiniMod);
+    ArmorBuilder.buildStat(nextProps.build.legsMiniMod);
+    ArmorBuilder.buildStat(nextProps.build.classArmorMiniMod);
     if (nextProps.build.classArmor) {
       switch (nextProps.build.classArmor.class.class) {
         case 0:
@@ -63,65 +68,37 @@ class ArmorBuilder extends Component {
     }
   }
 
+  renderArmorBuilderEntry(title, armor, mod, miniMod, type, tier) {
+    return (
+      <div>
+        <h2>{title}</h2>
+        <Armor
+          armor={armor}
+          miniMod={miniMod}
+          unequipItem={this.props.unequipItem}
+          equipMiniMod={this.props.equipMiniMod}
+          mods
+        />
+        <ModList
+          mod={mod}
+          equipMod={this.props.equipMod}
+          unequipMod={this.props.unequipMod}
+          type={type}
+          tier={tier}
+        />
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="ArmorBuilder">
         <section className="ArmorBuilder_armors">
-          <div>
-            <h2>Helmet</h2>
-            <Armor armor={this.props.build.helmet} unequipItem={this.props.unequipItem} />
-            <ModList
-              mod={this.props.build.helmetMod}
-              equipMod={this.props.equipMod}
-              unequipMod={this.props.unequipMod}
-              type="helmet"
-              tier="legendary"
-            />
-          </div>
-          <div>
-            <h2>Gauntlet</h2>
-            <Armor armor={this.props.build.gauntlet} unequipItem={this.props.unequipItem} />
-            <ModList
-              mod={this.props.build.gauntletMod}
-              equipMod={this.props.equipMod}
-              unequipMod={this.props.unequipMod}
-              type="gauntlet"
-              tier="legendary"
-            />
-          </div>
-          <div>
-            <h2>Chest</h2>
-            <Armor armor={this.props.build.chest} unequipItem={this.props.unequipItem} />
-            <ModList
-              mod={this.props.build.chestMod}
-              equipMod={this.props.equipMod}
-              unequipMod={this.props.unequipMod}
-              type="chest"
-              tier="legendary"
-            />
-          </div>
-          <div>
-            <h2>Legs</h2>
-            <Armor armor={this.props.build.legs} unequipItem={this.props.unequipItem} />
-            <ModList
-              mod={this.props.build.legsMod}
-              equipMod={this.props.equipMod}
-              unequipMod={this.props.unequipMod}
-              type="legs"
-              tier="legendary"
-            />
-          </div>
-          <div>
-            <h2>Class Armor</h2>
-            <Armor armor={this.props.build.classArmor} unequipItem={this.props.unequipItem} />
-            <ModList
-              mod={this.props.build.classArmorMod}
-              equipMod={this.props.equipMod}
-              unequipMod={this.props.unequipMod}
-              type={this.state.typeClassArmor}
-              tier="legendary"
-            />
-          </div>
+          {this.renderArmorBuilderEntry('Helmet', this.props.build.helmet, this.props.build.helmetMod, this.props.build.helmetMiniMod, 'helmet', 'legendary')}
+          {this.renderArmorBuilderEntry('Gauntlet', this.props.build.gauntlet, this.props.build.gauntletMod, this.props.build.gauntletMiniMod, 'gauntlet', 'legendary')}
+          {this.renderArmorBuilderEntry('Chest', this.props.build.chest, this.props.build.chestMod, this.props.build.chestMiniMod, 'chest', 'legendary')}
+          {this.renderArmorBuilderEntry('Legs', this.props.build.legs, this.props.build.legsMod, this.props.build.legsMiniMod, 'legs', 'legendary')}
+          {this.renderArmorBuilderEntry('Class Armor', this.props.build.classArmor, this.props.build.classArmorMod, this.props.build.classArmorMiniMod, this.state.typeClassArmor, 'legendary')}
         </section>
         <section className="ArmorBuilder_stats">
           <h2>Mobility {mobility}</h2>

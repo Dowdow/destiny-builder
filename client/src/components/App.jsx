@@ -31,11 +31,18 @@ class App extends Component {
       chestMod: null,
       legsMod: null,
       classArmorMod: null,
+      helmetMiniMod: null,
+      gauntletMiniMod: null,
+      chestMiniMod: null,
+      legsMiniMod: null,
+      classArmorMiniMod: null,
+
     };
     this.handleEquipItem = this.handleEquipItem.bind(this);
     this.handleUnequipItem = this.handleUnequipItem.bind(this);
     this.handleEquipMod = this.handleEquipMod.bind(this);
     this.handleUnequipMod = this.handleUnequipMod.bind(this);
+    this.handleEquipMiniMod = this.handleEquipMiniMod.bind(this);
   }
 
   handleEquipItem(item) {
@@ -46,6 +53,11 @@ class App extends Component {
       legs: item.bucket.hash === TYPE_LEG ? item : prevState.legs,
       classArmor: item.bucket.hash === TYPE_CLASS_ITEM ? item : prevState.classArmor,
       classArmorMod: item.bucket.hash === TYPE_CLASS_ITEM ? null : prevState.classArmorMod,
+      helmetMiniMod: item.bucket.hash === TYPE_HELMET ? null : prevState.helmetMiniMod,
+      gauntletMiniMod: item.bucket.hash === TYPE_GAUNTLET ? null : prevState.gauntletMiniMod,
+      chestMiniMod: item.bucket.hash === TYPE_CHEST ? null : prevState.chestMiniMod,
+      legsMiniMod: item.bucket.hash === TYPE_LEG ? null : prevState.legsMiniMod,
+      classArmorMiniMod: item.bucket.hash === TYPE_CLASS_ITEM ? null : prevState.classArmorMiniMod,
     }));
   }
 
@@ -57,6 +69,11 @@ class App extends Component {
       legs: item.bucket.hash === TYPE_LEG ? null : prevState.legs,
       classArmor: item.bucket.hash === TYPE_CLASS_ITEM ? null : prevState.classArmor,
       classArmorMod: item.bucket.hash === TYPE_CLASS_ITEM ? null : prevState.classArmorMod,
+      helmetMiniMod: item.bucket.hash === TYPE_HELMET ? null : prevState.helmetMiniMod,
+      gauntletMiniMod: item.bucket.hash === TYPE_GAUNTLET ? null : prevState.gauntletMiniMod,
+      chestMiniMod: item.bucket.hash === TYPE_CHEST ? null : prevState.chestMiniMod,
+      legsMiniMod: item.bucket.hash === TYPE_LEG ? null : prevState.legsMiniMod,
+      classArmorMiniMod: item.bucket.hash === TYPE_CLASS_ITEM ? null : prevState.classArmorMiniMod,
     }));
   }
 
@@ -80,6 +97,16 @@ class App extends Component {
     }));
   }
 
+  handleEquipMiniMod(miniMod) {
+    this.setState(prevState => ({
+      helmetMiniMod: miniMod.hash === TYPE_HELMET ? miniMod : prevState.helmetMiniMod,
+      gauntletMiniMod: miniMod.hash === TYPE_GAUNTLET ? miniMod : prevState.gauntletMiniMod,
+      chestMiniMod: miniMod.hash === TYPE_CHEST ? miniMod : prevState.chestMiniMod,
+      legsMiniMod: miniMod.hash === TYPE_LEG ? miniMod : prevState.legsMiniMod,
+      classArmorMiniMod: miniMod.hash === TYPE_CLASS_ITEM ? miniMod : prevState.classArmorMiniMod,
+    }));
+  }
+
   render() {
     return (
       <div className="App">
@@ -89,6 +116,7 @@ class App extends Component {
           unequipItem={this.handleUnequipItem}
           equipMod={this.handleEquipMod}
           unequipMod={this.handleUnequipMod}
+          equipMiniMod={this.handleEquipMiniMod}
         />
         <ArmorList equipItem={this.handleEquipItem} />
       </div>

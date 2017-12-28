@@ -2,12 +2,41 @@
     margin: 5px;
     margin-left: auto;
     margin-right: auto;
-    cursor: pointer;
 }
 
 .Armor_img {
     display: block;
     border: 5px solid #ffffff;
+    cursor: pointer;
+}
+
+.ArmorMods {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.ArmorMods div {
+    box-sizing: border-box;
+    border: 1px solid white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.ArmorMods img {
+    display: block;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid white;
+    border-radius: 50%;
+}
+
+.ArmorMods_selected {
+    background-color: #ceae33;
 }
 
 .ArmorModal {}
@@ -115,7 +144,7 @@
     outline: none;
 }
 
-.ArmorModalContent_screenshot{
+.ArmorModalContent_screenshot {
     display: block;
     padding: 10px;
     margin-left: auto;

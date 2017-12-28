@@ -12,6 +12,7 @@ class Armor extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleEquipItem = this.handleEquipItem.bind(this);
     this.handleUnequipItem = this.handleUnequipItem.bind(this);
+    this.handleEquipMiniMod = this.handleEquipMiniMod.bind(this);
   }
 
   handleClick() {
@@ -30,11 +31,47 @@ class Armor extends Component {
     this.props.unequipItem(this.props.armor);
   }
 
+  handleEquipMiniMod(mod) {
+    this.props.equipMiniMod({
+      _id: mod._id,
+      hash: this.props.armor.bucket.hash,
+      mobility: mod.mobility,
+      resilience: mod.resilience,
+      recovery: mod.recovery,
+    });
+  }
+
   render() {
+    const emptyMods = (
+      <div className="ArmorMods">
+        <div />
+        <div />
+      </div>
+    );
     if (this.props.armor !== null) {
+      let mods = '';
+      if (this.props.mods) {
+        if (this.props.armor.mods.length > 0) {
+          mods = (
+            <div className="ArmorMods">
+              {this.props.armor.mods.map(mod =>
+                (<img
+                  key={mod._id}
+                  src={mod.img}
+                  alt={mod.names.fr}
+                  className={this.props.miniMod && this.props.miniMod._id === mod._id ? 'ArmorMods_selected' : ''}
+                  onClick={() => this.handleEquipMiniMod(mod)}
+                />))}
+            </div>
+          );
+        } else {
+          mods = emptyMods;
+        }
+      }
       return (
         <div className="Armor">
           <img className="Armor_img" src={this.props.armor.img} alt={this.props.armor.names.fr} onClick={this.handleClick} />
+          {mods}
           {this.state.show ?
             <div className="ArmorModal">
               <div className="ArmorModal_background" onClick={this.handleClick} />
@@ -68,6 +105,7 @@ class Armor extends Component {
     return (
       <div className="Armor">
         <img className="Armor_img" src={EMPTY_SLOT} alt="Empty" />
+        {this.props.mods ? emptyMods : ''}
       </div>);
   }
 }
