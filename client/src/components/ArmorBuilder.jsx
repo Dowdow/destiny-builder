@@ -8,6 +8,14 @@ let resilience = 0;
 let recovery = 0;
 
 class ArmorBuilder extends Component {
+  static buildStat(prop) {
+    if (prop) {
+      mobility += prop.mobility;
+      resilience += prop.resilience;
+      recovery += prop.recovery;
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -16,6 +24,19 @@ class ArmorBuilder extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    mobility = 0;
+    resilience = 0;
+    recovery = 0;
+    ArmorBuilder.buildStat(nextProps.build.helmet);
+    ArmorBuilder.buildStat(nextProps.build.gauntlet);
+    ArmorBuilder.buildStat(nextProps.build.chest);
+    ArmorBuilder.buildStat(nextProps.build.legs);
+    ArmorBuilder.buildStat(nextProps.build.classArmor);
+    ArmorBuilder.buildStat(nextProps.build.helmetMod);
+    ArmorBuilder.buildStat(nextProps.build.gauntletMod);
+    ArmorBuilder.buildStat(nextProps.build.chestMod);
+    ArmorBuilder.buildStat(nextProps.build.legsMod);
+    ArmorBuilder.buildStat(nextProps.build.classArmorMod);
     if (nextProps.build.classArmor) {
       switch (nextProps.build.classArmor.class.class) {
         case 0:
@@ -42,65 +63,7 @@ class ArmorBuilder extends Component {
     }
   }
 
-
-  buildStats() {
-    mobility = 0;
-    resilience = 0;
-    recovery = 0;
-    if (this.props.build.helmet) {
-      mobility += this.props.build.helmet.mobility;
-      resilience += this.props.build.helmet.resilience;
-      recovery += this.props.build.helmet.recovery;
-    }
-    if (this.props.build.gauntlet) {
-      mobility += this.props.build.gauntlet.mobility;
-      resilience += this.props.build.gauntlet.resilience;
-      recovery += this.props.build.gauntlet.recovery;
-    }
-    if (this.props.build.chest) {
-      mobility += this.props.build.chest.mobility;
-      resilience += this.props.build.chest.resilience;
-      recovery += this.props.build.chest.recovery;
-    }
-    if (this.props.build.legs) {
-      mobility += this.props.build.legs.mobility;
-      resilience += this.props.build.legs.resilience;
-      recovery += this.props.build.legs.recovery;
-    }
-    if (this.props.build.classArmor) {
-      mobility += this.props.build.classArmor.mobility;
-      resilience += this.props.build.classArmor.resilience;
-      recovery += this.props.build.classArmor.recovery;
-    }
-    if (this.props.build.helmetMod) {
-      mobility += this.props.build.helmetMod.mobility;
-      resilience += this.props.build.helmetMod.resilience;
-      recovery += this.props.build.helmetMod.recovery;
-    }
-    if (this.props.build.gauntletMod) {
-      mobility += this.props.build.gauntletMod.mobility;
-      resilience += this.props.build.gauntletMod.resilience;
-      recovery += this.props.build.gauntletMod.recovery;
-    }
-    if (this.props.build.chestMod) {
-      mobility += this.props.build.chestMod.mobility;
-      resilience += this.props.build.chestMod.resilience;
-      recovery += this.props.build.chestMod.recovery;
-    }
-    if (this.props.build.legsMod) {
-      mobility += this.props.build.legsMod.mobility;
-      resilience += this.props.build.legsMod.resilience;
-      recovery += this.props.build.legsMod.recovery;
-    }
-    if (this.props.build.classArmorMod) {
-      mobility += this.props.build.classArmorMod.mobility;
-      resilience += this.props.build.classArmorMod.resilience;
-      recovery += this.props.build.classArmorMod.recovery;
-    }
-  }
-
   render() {
-    this.buildStats();
     return (
       <div className="ArmorBuilder">
         <section className="ArmorBuilder_armors">

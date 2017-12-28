@@ -15,12 +15,7 @@ class ArmorList extends Component {
       recovery: 'all',
       armors: [],
     };
-    this.handleChangeClass = this.handleChangeClass.bind(this);
-    this.handleChangeType = this.handleChangeType.bind(this);
-    this.handleChangeTier = this.handleChangeTier.bind(this);
-    this.handleChangeMobility = this.handleChangeMobility.bind(this);
-    this.handleChangeResilience = this.handleChangeResilience.bind(this);
-    this.handleChangeRecovery = this.handleChangeRecovery.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   async componentWillMount() {
@@ -30,100 +25,26 @@ class ArmorList extends Component {
     });
   }
 
-  async handleChangeClass(event) {
-    const classValue = event.target.value;
+  async handleChange(event) {
+    const selectName = event.target.name;
+    const selectValue = event.target.value;
     const armors = await getArmorsByFilter({
-      class: classValue,
-      type: this.state.type,
-      tier: this.state.tier,
-      mobility: this.state.mobility,
-      resilience: this.state.resilience,
-      recovery: this.state.recovery,
+      class: selectName === 'class' ? selectValue : this.state.class,
+      type: selectName === 'type' ? selectValue : this.state.type,
+      tier: selectName === 'tier' ? selectValue : this.state.tier,
+      mobility: selectName === 'mobility' ? selectValue : this.state.mobility,
+      resilience: selectName === 'resilience' ? selectValue : this.state.resilience,
+      recovery: selectName === 'recovery' ? selectValue : this.state.recovery,
     });
-    this.setState({
-      class: classValue,
+    this.setState(prevState => ({
+      class: selectName === 'class' ? selectValue : prevState.class,
+      type: selectName === 'type' ? selectValue : prevState.type,
+      tier: selectName === 'tier' ? selectValue : prevState.tier,
+      mobility: selectName === 'mobility' ? selectValue : prevState.mobility,
+      resilience: selectName === 'resilience' ? selectValue : prevState.resilience,
+      recovery: selectName === 'recovery' ? selectValue : prevState.recovery,
       armors,
-    });
-  }
-
-  async handleChangeType(event) {
-    const typeValue = event.target.value;
-    const armors = await getArmorsByFilter({
-      class: this.state.class,
-      type: typeValue,
-      tier: this.state.tier,
-      mobility: this.state.mobility,
-      resilience: this.state.resilience,
-      recovery: this.state.recovery,
-    });
-    this.setState({
-      type: typeValue,
-      armors,
-    });
-  }
-
-  async handleChangeTier(event) {
-    const tierValue = event.target.value;
-    const armors = await getArmorsByFilter({
-      class: this.state.class,
-      type: this.state.type,
-      tier: tierValue,
-      mobility: this.state.mobility,
-      resilience: this.state.resilience,
-      recovery: this.state.recovery,
-    });
-    this.setState({
-      tier: tierValue,
-      armors,
-    });
-  }
-
-  async handleChangeMobility(event) {
-    const mobilityValue = event.target.value;
-    const armors = await getArmorsByFilter({
-      class: this.state.class,
-      type: this.state.type,
-      tier: this.state.tier,
-      mobility: mobilityValue,
-      resilience: this.state.resilience,
-      recovery: this.state.recovery,
-    });
-    this.setState({
-      mobility: mobilityValue,
-      armors,
-    });
-  }
-
-  async handleChangeResilience(event) {
-    const resilienceValue = event.target.value;
-    const armors = await getArmorsByFilter({
-      class: this.state.class,
-      type: this.state.type,
-      tier: this.state.tier,
-      mobility: this.state.mobility,
-      resilience: resilienceValue,
-      recovery: this.state.recovery,
-    });
-    this.setState({
-      resilience: resilienceValue,
-      armors,
-    });
-  }
-
-  async handleChangeRecovery(event) {
-    const recoveryValue = event.target.value;
-    const armors = await getArmorsByFilter({
-      class: this.state.class,
-      type: this.state.type,
-      tier: this.state.tier,
-      mobility: this.state.mobility,
-      resilience: this.state.resilience,
-      recovery: recoveryValue,
-    });
-    this.setState({
-      recovery: recoveryValue,
-      armors,
-    });
+    }));
   }
 
   render() {
@@ -132,7 +53,7 @@ class ArmorList extends Component {
         <section className="filter">
           <div>
             <label>Class</label>
-            <select onChange={this.handleChangeClass}>
+            <select name="class" onChange={this.handleChange}>
               <option value="all">All</option>
               <option value="titan">Titan</option>
               <option value="hunter">Hunter</option>
@@ -141,7 +62,7 @@ class ArmorList extends Component {
           </div>
           <div>
             <label>Type</label>
-            <select onChange={this.handleChangeType}>
+            <select name="type" onChange={this.handleChange}>
               <option value="all">All</option>
               <option value="helmet">Helmet</option>
               <option value="gauntlet">Gauntlet</option>
@@ -153,7 +74,7 @@ class ArmorList extends Component {
           </div>
           <div>
             <label>Tier</label>
-            <select onChange={this.handleChangeTier}>
+            <select name="tier" onChange={this.handleChange}>
               <option value="all">All</option>
               <option value="legendary">Legendary</option>
               <option value="exotic">Exotic</option>
@@ -161,7 +82,7 @@ class ArmorList extends Component {
           </div>
           <div>
             <label>Mobility</label>
-            <select name="mobility" onChange={this.handleChangeMobility}>
+            <select name="mobility" onChange={this.handleChange}>
               <option value="all">All</option>
               <option value="0">0</option>
               <option value="1">1</option>
@@ -170,7 +91,7 @@ class ArmorList extends Component {
           </div>
           <div>
             <label>Resilience</label>
-            <select onChange={this.handleChangeResilience}>
+            <select name="resilience" onChange={this.handleChange}>
               <option value="all">All</option>
               <option value="0">0</option>
               <option value="1">1</option>
@@ -179,7 +100,7 @@ class ArmorList extends Component {
           </div>
           <div>
             <label>Recovery</label>
-            <select onChange={this.handleChangeRecovery}>
+            <select name="recovery" onChange={this.handleChange}>
               <option value="all">All</option>
               <option value="0">0</option>
               <option value="1">1</option>
