@@ -48,6 +48,7 @@ module.exports = {
       template: `${PUBLIC_DIR}/index.html`,
       filename: 'index.html',
       inject: 'body',
+      favicon: `${PUBLIC_DIR}/favicon.png`,
     }),
   ],
 };
