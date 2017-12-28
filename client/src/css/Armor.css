@@ -32,6 +32,7 @@
     margin-right: auto;
     background: white;
     z-index: 10;
+    cursor: default;
 }
 
 .ArmorModalContent_header {
@@ -95,6 +96,23 @@
     padding-right: 10px;
     padding-bottom: 10px;
     color: rgba(255, 255, 255, .8) !important;
+}
+
+.ArmorModalContent_body button {
+    display: block;
+    border: 0;
+    border-radius: 3px;
+    padding: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #000000d2;
+    background-color: #ffffff;
+    outline: none;
 }
 
 .ArmorModalContent_screenshot{

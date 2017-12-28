@@ -55,9 +55,9 @@ class Armor extends Component {
                   <div>
                     {this.props.armor.mods.map(mod => (<img key={mod._id} className="ArmorModalContent_mod" src={mod.img} alt={mod.names.fr} />))}
                   </div>
-                  <img className="ArmorModalContent_screenshot" src={this.props.armor.screenshot} alt={this.props.armor.names.fr} />
                   {this.props.equipItem ? <button onClick={this.handleEquipItem}>Equip</button> : ''}
                   {this.props.unequipItem ? <button onClick={this.handleUnequipItem}>Unequip</button> : ''}
+                  <img className="ArmorModalContent_screenshot" src={this.props.armor.screenshot} alt={this.props.armor.names.fr} />
                 </div>
               </div>
             </div>
