@@ -79,7 +79,7 @@ class Armor extends Component {
                 <div className={`ArmorModalContent_header ${this.props.armor.tier === 6 ? 'exotic' : 'legendary'}`}>
                   <h2>{this.props.armor.names.fr}</h2>
                   <h3>{this.props.armor.bucket.names.fr}</h3>
-                  <h4>Exotic</h4>
+                  <h4>{this.props.armor.tier === 6 ? 'Exotic' : 'Legendary'}</h4>
                 </div>
                 <div className="ArmorModalContent_body">
                   <h3><span>{this.props.armor.defense}</span> DEFENSE &nbsp;<span>{this.props.armor.power}</span> POWER</h3>
