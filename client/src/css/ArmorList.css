@@ -9,6 +9,8 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .ArmorList .filter div {
@@ -37,6 +39,6 @@
 
 @media screen and (max-width: 1024px) {
     .ArmorList {
-        width: 100%;
+        width: 95%;
     }
 }

@@ -35,3 +35,16 @@
     justify-content: space-around;
     flex-wrap: wrap;
 }
+
+@media screen and (max-width: 1024px) {
+    .ModListModal_content {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .ModListModal_content {
+        position: absolute;
+        top: 50px;
+    }
+}

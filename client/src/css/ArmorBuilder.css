@@ -31,12 +31,45 @@
     width: 70%;
 }
 
-.ArmorBuilder_armors>div {
+.ArmorBuilder_armors>div>div {
     display: flex;
     flex-direction: column;
 }
 
 .ArmorBuilder_stats {
+    flex-wrap: wrap;
     margin-top: 10px;
     width: 40%;
+}
+
+.ArmorBuilder_stats h2 {
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}
+
+@media screen and (max-width: 1024px) {
+    .ArmorBuilder_armors {
+        width: 100%;
+    }
+    .ArmorBuilder_stats {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .ArmorBuilder section {
+        flex-wrap: wrap;
+    }
+    .ArmorBuilder_armors>div {
+        margin-top: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .ArmorBuilder_armors>div>div {
+        flex-direction: row;
+        align-items: center;
+        max-width: 287px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }

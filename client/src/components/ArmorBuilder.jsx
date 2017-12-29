@@ -72,20 +72,22 @@ class ArmorBuilder extends Component {
     return (
       <div>
         <h2>{title}</h2>
-        <Armor
-          armor={armor}
-          miniMod={miniMod}
-          unequipItem={this.props.unequipItem}
-          equipMiniMod={this.props.equipMiniMod}
-          mods
-        />
-        <ModList
-          mod={mod}
-          equipMod={this.props.equipMod}
-          unequipMod={this.props.unequipMod}
-          type={type}
-          tier={tier}
-        />
+        <div>
+          <Armor
+            armor={armor}
+            miniMod={miniMod}
+            unequipItem={this.props.unequipItem}
+            equipMiniMod={this.props.equipMiniMod}
+            mods
+          />
+          <ModList
+            mod={mod}
+            equipMod={this.props.equipMod}
+            unequipMod={this.props.unequipMod}
+            type={type}
+            tier={tier}
+          />
+        </div>
       </div>
     );
   }
