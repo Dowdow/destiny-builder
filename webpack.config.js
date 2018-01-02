@@ -10,9 +10,10 @@ const SRC_DIR = path.resolve(__dirname, 'client/src');
 const isDev = process.argv.indexOf('-p') === -1;
 
 module.exports = {
-  entry: {
-    javascript: `${SRC_DIR}/index.js`,
-  },
+  entry: [
+    'babel-polyfill',
+    `${SRC_DIR}/index.js`,
+  ],
   output: {
     path: BUILD_DIR,
     filename: `bundle${isDev ? '' : '.[chunkhash]'}.js`,
