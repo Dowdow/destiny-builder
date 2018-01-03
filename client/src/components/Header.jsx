@@ -12,19 +12,25 @@ class Header extends Component {
     this.props.changeLanguage(lang);
   }
 
+  renderButtonLanguage(lang) {
+    return (
+      <button className={this.props.lang === lang ? 'selected' : ''} onClick={() => this.handleChangeLanguage(lang)}>{lang}</button>
+    );
+  }
+
   render() {
     return (
       <header>
         <h1><FormattedMessage id="nav.title" defaultMessage="Destiny 2 Build Generator" /></h1>
         <div>
-          <button onClick={() => this.handleChangeLanguage('de')}>DE</button>
-          <button onClick={() => this.handleChangeLanguage('en')}>EN</button>
-          <button onClick={() => this.handleChangeLanguage('es')}>ES</button>
-          <button onClick={() => this.handleChangeLanguage('fr')}>FR</button>
-          <button onClick={() => this.handleChangeLanguage('it')}>IT</button>
-          <button onClick={() => this.handleChangeLanguage('ja')}>JA</button>
-          <button onClick={() => this.handleChangeLanguage('pl')}>PL</button>
-          <button onClick={() => this.handleChangeLanguage('ru')}>RU</button>
+          {this.renderButtonLanguage('de')}
+          {this.renderButtonLanguage('en')}
+          {this.renderButtonLanguage('es')}
+          {this.renderButtonLanguage('fr')}
+          {this.renderButtonLanguage('it')}
+          {this.renderButtonLanguage('ja')}
+          {this.renderButtonLanguage('pl')}
+          {this.renderButtonLanguage('ru')}
         </div>
       </header>
     );

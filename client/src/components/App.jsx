@@ -3,6 +3,8 @@ import { IntlProvider } from 'react-intl';
 import Header from './Header';
 import ArmorBuilder from './ArmorBuilder';
 import ArmorList from './ArmorList';
+import Footer from './Footer';
+import { getUserLanguage } from '../utils/language';
 import messages from '../utils/messages';
 import {
   TYPE_HELMET,
@@ -24,7 +26,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lang: 'en',
+      lang: getUserLanguage(),
       helmet: null,
       gauntlet: null,
       chest: null,
@@ -122,7 +124,7 @@ class App extends Component {
     return (
       <IntlProvider locale={this.state.lang} messages={messages[this.state.lang]}>
         <div className="App">
-          <Header changeLanguage={this.handleChangeLanguage} />
+          <Header lang={this.state.lang} changeLanguage={this.handleChangeLanguage} />
           <ArmorBuilder
             lang={this.state.lang}
             build={this.state}
@@ -132,6 +134,7 @@ class App extends Component {
             equipMiniMod={this.handleEquipMiniMod}
           />
           <ArmorList lang={this.state.lang} equipItem={this.handleEquipItem} />
+          <Footer />
         </div>
       </IntlProvider>
     );

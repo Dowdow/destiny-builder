@@ -29,6 +29,12 @@ header div button {
     color: #ffffff8c;
     outline: none;
     cursor: pointer;
+    text-transform: uppercase;
+}
+
+header .selected {
+    background: #ffffff8c;
+    color: #2c2b2b;
 }
 
 @media screen and (max-width: 768px) {

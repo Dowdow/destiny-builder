@@ -55,36 +55,66 @@ class ArmorList extends Component {
           <div>
             <label><FormattedMessage id="filter.class" defaultMessage="Class" /></label>
             <select name="class" onChange={this.handleChange}>
-              <option value="all"><FormattedMessage id="filter.all" defaultMessage="All" /></option>
-              <option value="titan"><FormattedMessage id="class.titan" defaultMessage="Titan" /></option>
-              <option value="hunter"><FormattedMessage id="class.hunter" defaultMessage="Hunter" /></option>
-              <option value="warlock"><FormattedMessage id="class.warlock" defaultMessage="Warlock" /></option>
+              <FormattedMessage id="filter.all" defaultMessage="All">
+                {message => <option value="all">{message}</option>}
+              </FormattedMessage>
+              <FormattedMessage id="class.titan" defaultMessage="Titan">
+                {message => <option value="titan">{message}</option>}
+              </FormattedMessage>
+              <FormattedMessage id="class.hunter" defaultMessage="Hunter">
+                {message => <option value="hunter">{message}</option>}
+              </FormattedMessage>
+              <FormattedMessage id="class.warlock" defaultMessage="Warlock">
+                {message => <option value="warlock">{message}</option>}
+              </FormattedMessage>
             </select>
           </div>
           <div>
             <label><FormattedMessage id="filter.type" defaultMessage="Type" /></label>
             <select name="type" onChange={this.handleChange}>
-              <option value="all"><FormattedMessage id="filter.all" defaultMessage="All" /></option>
-              <option value="helmet"><FormattedMessage id="build.helmet" defaultMessage="Helmet" /></option>
-              <option value="gauntlet"><FormattedMessage id="build.gauntlets" defaultMessage="Gauntlets" /></option>
-              <option value="chest"><FormattedMessage id="build.chest" defaultMessage="Chest Armor" /></option>
-              <option value="legs"><FormattedMessage id="build.legs" defaultMessage="Leg Armor" /></option>
-              <option value="classitem"><FormattedMessage id="build.classArmor" defaultMessage="Class Armor" /></option>
-              <option value="ghost"><FormattedMessage id="build.ghost" defaultMessage="Ghost" /></option>
+              <FormattedMessage id="filter.all" defaultMessage="All">
+                {message => <option value="all">{message}</option>}
+              </FormattedMessage>
+              <FormattedMessage id="build.helmet" defaultMessage="Helmet">
+                {message => <option value="helmet">{message}</option>}
+              </FormattedMessage>
+              <FormattedMessage id="build.gauntlets" defaultMessage="Gauntlets">
+                {message => <option value="gauntlet">{message}</option>}
+              </FormattedMessage>
+              <FormattedMessage id="build.chest" defaultMessage="Chest Armor">
+                {message => <option value="chest">{message}</option>}
+              </FormattedMessage>
+              <FormattedMessage id="build.legs" defaultMessage="Leg Armor">
+                {message => <option value="legs">{message}</option>}
+              </FormattedMessage>
+              <FormattedMessage id="build.classArmor" defaultMessage="Class Armor">
+                {message => <option value="classitem">{message}</option>}
+              </FormattedMessage>
+              <FormattedMessage id="build.ghost" defaultMessage="Ghost">
+                {message => <option value="ghost">{message}</option>}
+              </FormattedMessage>
             </select>
           </div>
           <div>
             <label><FormattedMessage id="filter.tier" defaultMessage="Tier" /></label>
             <select name="tier" onChange={this.handleChange}>
-              <option value="all"><FormattedMessage id="filter.all" defaultMessage="All" /></option>
-              <option value="legendary"><FormattedMessage id="tier.legendary" defaultMessage="Legendary" /></option>
-              <option value="exotic"><FormattedMessage id="tier.exotic" defaultMessage="Exotic" /></option>
+              <FormattedMessage id="filter.all" defaultMessage="All">
+                {message => <option value="all">{message}</option>}
+              </FormattedMessage>
+              <FormattedMessage id="tier.legendary" defaultMessage="Legendary">
+                {message => <option value="legendary">{message}</option>}
+              </FormattedMessage>
+              <FormattedMessage id="tier.exotic" defaultMessage="Exotic">
+                {message => <option value="exotic">{message}</option>}
+              </FormattedMessage>
             </select>
           </div>
           <div>
             <label><FormattedMessage id="stat.mobility" defaultMessage="Mobility" /></label>
             <select name="mobility" onChange={this.handleChange}>
-              <option value="all"><FormattedMessage id="filter.all" defaultMessage="All" /></option>
+              <FormattedMessage id="filter.all" defaultMessage="All">
+                {message => <option value="all">{message}</option>}
+              </FormattedMessage>
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -93,7 +123,9 @@ class ArmorList extends Component {
           <div>
             <label><FormattedMessage id="stat.resilience" defaultMessage="Resilience" /></label>
             <select name="resilience" onChange={this.handleChange}>
-              <option value="all"><FormattedMessage id="filter.all" defaultMessage="All" /></option>
+              <FormattedMessage id="filter.all" defaultMessage="All">
+                {message => <option value="all">{message}</option>}
+              </FormattedMessage>
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -102,7 +134,9 @@ class ArmorList extends Component {
           <div>
             <label><FormattedMessage id="stat.recovery" defaultMessage="Recovery" /></label>
             <select name="recovery" onChange={this.handleChange}>
-              <option value="all"><FormattedMessage id="filter.all" defaultMessage="All" /></option>
+              <FormattedMessage id="filter.all" defaultMessage="All">
+                {message => <option value="all">{message}</option>}
+              </FormattedMessage>
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
