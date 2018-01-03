@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
+import { IntlProvider } from 'react-intl';
+import Header from './Header';
 import ArmorBuilder from './ArmorBuilder';
 import ArmorList from './ArmorList';
+import messages from '../utils/messages';
+import {
+  TYPE_HELMET,
+  TYPE_GAUNTLET,
+  TYPE_CHEST,
+  TYPE_LEG,
+  TYPE_CLASS_ITEM,
+  MOD_HEAD,
+  MOD_GAUNTLET,
+  MOD_CHEST,
+  MOD_LEG,
+  MOD_CLASS_ITEM_TITAN,
+  MOD_CLASS_ITEM_HUNTER,
+  MOD_CLASS_ITEM_WARLOCK,
+} from '../utils/const';
 import '../css/App.css';
-
-const TYPE_HELMET = '3448274439';
-const TYPE_GAUNTLET = '3551918588';
-const TYPE_CHEST = '14239492';
-const TYPE_LEG = '20886954';
-const TYPE_CLASS_ITEM = '1585787867';
-
-const MOD_HEAD = 'enhancements.head';
-const MOD_GAUNTLET = 'enhancements.arms';
-const MOD_CHEST = 'enhancements.chest';
-const MOD_LEG = 'enhancements.legs';
-const MOD_CLASS_ITEM_TITAN = 'enhancements.class_titan';
-const MOD_CLASS_ITEM_HUNTER = 'enhancements.class_hunter';
-const MOD_CLASS_ITEM_WARLOCK = 'enhancements.class_warlock';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      lang: 'en',
       helmet: null,
       gauntlet: null,
       chest: null,
@@ -38,11 +42,18 @@ class App extends Component {
       classArmorMiniMod: null,
 
     };
+    this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
     this.handleEquipItem = this.handleEquipItem.bind(this);
     this.handleUnequipItem = this.handleUnequipItem.bind(this);
     this.handleEquipMod = this.handleEquipMod.bind(this);
     this.handleUnequipMod = this.handleUnequipMod.bind(this);
     this.handleEquipMiniMod = this.handleEquipMiniMod.bind(this);
+  }
+
+  handleChangeLanguage(lang) {
+    this.setState({
+      lang,
+    });
   }
 
   handleEquipItem(item) {
@@ -109,17 +120,20 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <h1>Destiny 2 Build Generator</h1>
-        <ArmorBuilder
-          build={this.state}
-          unequipItem={this.handleUnequipItem}
-          equipMod={this.handleEquipMod}
-          unequipMod={this.handleUnequipMod}
-          equipMiniMod={this.handleEquipMiniMod}
-        />
-        <ArmorList equipItem={this.handleEquipItem} />
-      </div>
+      <IntlProvider locale={this.state.lang} messages={messages[this.state.lang]}>
+        <div className="App">
+          <Header changeLanguage={this.handleChangeLanguage} />
+          <ArmorBuilder
+            lang={this.state.lang}
+            build={this.state}
+            unequipItem={this.handleUnequipItem}
+            equipMod={this.handleEquipMod}
+            unequipMod={this.handleUnequipMod}
+            equipMiniMod={this.handleEquipMiniMod}
+          />
+          <ArmorList lang={this.state.lang} equipItem={this.handleEquipItem} />
+        </div>
+      </IntlProvider>
     );
   }
 }

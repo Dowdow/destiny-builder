@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
 import Armor from '../components/Armor';
 import ModList from './ModList';
 import '../css/ArmorBuilder.css';
@@ -68,12 +69,13 @@ class ArmorBuilder extends Component {
     }
   }
 
-  renderArmorBuilderEntry(title, armor, mod, miniMod, type, tier) {
+  renderArmorBuilderEntry(id, title, armor, mod, miniMod, type, tier) {
     return (
       <div>
-        <h2>{title}</h2>
+        <h2><FormattedMessage id={id} defaultMessage={title} /></h2>
         <div>
           <Armor
+            lang={this.props.lang}
             armor={armor}
             miniMod={miniMod}
             unequipItem={this.props.unequipItem}
@@ -81,6 +83,7 @@ class ArmorBuilder extends Component {
             mods
           />
           <ModList
+            lang={this.props.lang}
             mod={mod}
             equipMod={this.props.equipMod}
             unequipMod={this.props.unequipMod}
@@ -96,16 +99,16 @@ class ArmorBuilder extends Component {
     return (
       <div className="ArmorBuilder">
         <section className="ArmorBuilder_armors">
-          {this.renderArmorBuilderEntry('Helmet', this.props.build.helmet, this.props.build.helmetMod, this.props.build.helmetMiniMod, 'helmet', 'legendary')}
-          {this.renderArmorBuilderEntry('Gauntlet', this.props.build.gauntlet, this.props.build.gauntletMod, this.props.build.gauntletMiniMod, 'gauntlet', 'legendary')}
-          {this.renderArmorBuilderEntry('Chest', this.props.build.chest, this.props.build.chestMod, this.props.build.chestMiniMod, 'chest', 'legendary')}
-          {this.renderArmorBuilderEntry('Legs', this.props.build.legs, this.props.build.legsMod, this.props.build.legsMiniMod, 'legs', 'legendary')}
-          {this.renderArmorBuilderEntry('Class Armor', this.props.build.classArmor, this.props.build.classArmorMod, this.props.build.classArmorMiniMod, this.state.typeClassArmor, 'legendary')}
+          {this.renderArmorBuilderEntry('build.helmet', 'Helmet', this.props.build.helmet, this.props.build.helmetMod, this.props.build.helmetMiniMod, 'helmet', 'legendary')}
+          {this.renderArmorBuilderEntry('build.gauntlets', 'Gauntlets', this.props.build.gauntlet, this.props.build.gauntletMod, this.props.build.gauntletMiniMod, 'gauntlet', 'legendary')}
+          {this.renderArmorBuilderEntry('build.chest', 'Chest Armor', this.props.build.chest, this.props.build.chestMod, this.props.build.chestMiniMod, 'chest', 'legendary')}
+          {this.renderArmorBuilderEntry('build.legs', 'Leg Armor', this.props.build.legs, this.props.build.legsMod, this.props.build.legsMiniMod, 'legs', 'legendary')}
+          {this.renderArmorBuilderEntry('build.classArmor', 'Class Armor', this.props.build.classArmor, this.props.build.classArmorMod, this.props.build.classArmorMiniMod, this.state.typeClassArmor, 'legendary')}
         </section>
         <section className="ArmorBuilder_stats">
-          <h2>Mobility {mobility}</h2>
-          <h2>Resilience {resilience}</h2>
-          <h2>Recovery {recovery}</h2>
+          <h2><FormattedMessage id="stat.mobility" defaultMessage="Mobility" /> {mobility}</h2>
+          <h2><FormattedMessage id="stat.resilience" defaultMessage="Resilience" /> {resilience}</h2>
+          <h2><FormattedMessage id="stat.recovery" defaultMessage="Recovery" /> {recovery}</h2>
         </section>
       </div>
     );

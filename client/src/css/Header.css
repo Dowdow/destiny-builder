@@ -1,0 +1,45 @@
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background: #202020;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+header h1 {
+    margin: 0;
+    color: #ffffff8c;
+    width: 100%;
+    align-self: center;
+}
+
+header div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 50%;
+    align-self: center;
+}
+
+header div button {
+    font-size: 20px;
+    border: 0;
+    background: #2c2b2b;
+    color: #ffffff8c;
+    outline: none;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        flex-direction: column;
+        margin-bottom: 0;
+    }
+    header h1 {
+        margin-bottom: 10px;
+    }
+    header div {
+        width: 100%;
+    }
+}

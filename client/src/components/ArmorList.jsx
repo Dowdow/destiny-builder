@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
 import Armor from './Armor';
-import { getAllArmors, getArmorsByFilter } from '../api';
+import { getAllArmors, getArmorsByFilter } from '../utils/api';
 import '../css/ArmorList.css';
 
 class ArmorList extends Component {
@@ -52,56 +53,56 @@ class ArmorList extends Component {
       <div className="ArmorList">
         <section className="filter">
           <div>
-            <label>Class</label>
+            <label><FormattedMessage id="filter.class" defaultMessage="Class" /></label>
             <select name="class" onChange={this.handleChange}>
-              <option value="all">All</option>
-              <option value="titan">Titan</option>
-              <option value="hunter">Hunter</option>
-              <option value="warlock">Warlock</option>
+              <option value="all"><FormattedMessage id="filter.all" defaultMessage="All" /></option>
+              <option value="titan"><FormattedMessage id="class.titan" defaultMessage="Titan" /></option>
+              <option value="hunter"><FormattedMessage id="class.hunter" defaultMessage="Hunter" /></option>
+              <option value="warlock"><FormattedMessage id="class.warlock" defaultMessage="Warlock" /></option>
             </select>
           </div>
           <div>
-            <label>Type</label>
+            <label><FormattedMessage id="filter.type" defaultMessage="Type" /></label>
             <select name="type" onChange={this.handleChange}>
-              <option value="all">All</option>
-              <option value="helmet">Helmet</option>
-              <option value="gauntlet">Gauntlet</option>
-              <option value="chest">Chest</option>
-              <option value="legs">Legs</option>
-              <option value="classitem">Class item</option>
-              <option value="ghost">Ghost</option>
+              <option value="all"><FormattedMessage id="filter.all" defaultMessage="All" /></option>
+              <option value="helmet"><FormattedMessage id="build.helmet" defaultMessage="Helmet" /></option>
+              <option value="gauntlet"><FormattedMessage id="build.gauntlets" defaultMessage="Gauntlets" /></option>
+              <option value="chest"><FormattedMessage id="build.chest" defaultMessage="Chest Armor" /></option>
+              <option value="legs"><FormattedMessage id="build.legs" defaultMessage="Leg Armor" /></option>
+              <option value="classitem"><FormattedMessage id="build.classArmor" defaultMessage="Class Armor" /></option>
+              <option value="ghost"><FormattedMessage id="build.ghost" defaultMessage="Ghost" /></option>
             </select>
           </div>
           <div>
-            <label>Tier</label>
+            <label><FormattedMessage id="filter.tier" defaultMessage="Tier" /></label>
             <select name="tier" onChange={this.handleChange}>
-              <option value="all">All</option>
-              <option value="legendary">Legendary</option>
-              <option value="exotic">Exotic</option>
+              <option value="all"><FormattedMessage id="filter.all" defaultMessage="All" /></option>
+              <option value="legendary"><FormattedMessage id="tier.legendary" defaultMessage="Legendary" /></option>
+              <option value="exotic"><FormattedMessage id="tier.exotic" defaultMessage="Exotic" /></option>
             </select>
           </div>
           <div>
-            <label>Mobility</label>
+            <label><FormattedMessage id="stat.mobility" defaultMessage="Mobility" /></label>
             <select name="mobility" onChange={this.handleChange}>
-              <option value="all">All</option>
+              <option value="all"><FormattedMessage id="filter.all" defaultMessage="All" /></option>
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
             </select>
           </div>
           <div>
-            <label>Resilience</label>
+            <label><FormattedMessage id="stat.resilience" defaultMessage="Resilience" /></label>
             <select name="resilience" onChange={this.handleChange}>
-              <option value="all">All</option>
+              <option value="all"><FormattedMessage id="filter.all" defaultMessage="All" /></option>
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
             </select>
           </div>
           <div>
-            <label>Recovery</label>
+            <label><FormattedMessage id="stat.recovery" defaultMessage="Recovery" /></label>
             <select name="recovery" onChange={this.handleChange}>
-              <option value="all">All</option>
+              <option value="all"><FormattedMessage id="filter.all" defaultMessage="All" /></option>
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -109,7 +110,7 @@ class ArmorList extends Component {
           </div>
         </section>
         <section className="list">
-          {this.state.armors.map(armor => <Armor key={armor._id} armor={armor} equipItem={this.props.equipItem} />)}
+          {this.state.armors.map(armor => <Armor key={armor._id} lang={this.props.lang} armor={armor} equipItem={this.props.equipItem} />)}
         </section>
       </div>
     );

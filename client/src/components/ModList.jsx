@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import Mod from './Mod';
-import { getModsByFilter } from '../api';
+import { MOD_SLOT } from '../utils/const';
+import { getModsByFilter } from '../utils/api';
 import '../css/ModList.css';
-
-const MOD_SLOT = 'https://www.bungie.net/common/destiny2_content/icons/9e38278ce140054bbf9d6990f671382a.png';
 
 class ModList extends Component {
   constructor(props) {
@@ -45,7 +44,7 @@ class ModList extends Component {
   render() {
     if (this.props.mod) {
       return (
-        <Mod mod={this.props.mod} unequipMod={this.props.unequipMod} />
+        <Mod lang={this.props.lang} mod={this.props.mod} unequipMod={this.props.unequipMod} />
       );
     }
     return (
@@ -55,7 +54,7 @@ class ModList extends Component {
           <div className="ModListModal">
             <div className="ModListModal_background" onClick={this.handleClick} />
             <div className="ModListModal_content">
-              {this.state.mods.map(m => <Mod key={m._id} mod={m} equipMod={this.props.equipMod} />)}
+              {this.state.mods.map(m => <Mod key={m._id} lang={this.props.lang} mod={m} equipMod={this.props.equipMod} />)}
             </div>
           </div>
                     : ''}
