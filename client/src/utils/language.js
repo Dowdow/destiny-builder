@@ -1,7 +1,7 @@
 const LANGS_SUPPORTED = ['de', 'en', 'es', 'fr', 'it', 'ja', 'pl', 'ru'];
 
 function getUserLanguage() {
-  const lang = navigator.language.split('-')[0];
+  const lang = navigator.language.split('-')[0] || 'en';
   if (LANGS_SUPPORTED.includes(lang)) {
     return lang;
   }
