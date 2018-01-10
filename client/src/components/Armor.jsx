@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { EMPTY_SLOT } from '../utils/const';
+import EmptySlot from '../img/empty_slot.png';
 import '../css/Armor.css';
 
 class Armor extends Component {
@@ -114,7 +114,7 @@ class Armor extends Component {
     }
     return (
       <div className="Armor">
-        <img className="Armor_img" src={EMPTY_SLOT} alt="Empty" />
+        <img className="Armor_img" src={EmptySlot} alt="Empty" />
         {this.props.mods ? emptyMods : ''}
       </div>);
   }

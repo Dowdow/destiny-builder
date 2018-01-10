@@ -9,7 +9,7 @@ const CACHE_DIR = 'app/worker/cache';
 const ARMOR_DIR = `${CACHE_DIR}/armor`;
 
 const HASH_SOCKET_STAT = 4076485920;
-const HASH_FAT_SOCKET_STAT = 3497077129;
+const HASH_FAT_SOCKET_STAT = [3497077129, 635551670];
 const HASH_STAT_DEFENSE = 3897883278;
 const HASH_STAT_POWER = 1935470627;
 const HASH_STAT_MOBILITY = 2996146975;
@@ -97,7 +97,7 @@ function parseArmor(armor, id, lang) {
     }
     if (armor.sockets !== undefined && armor.sockets.socketEntries) {
       armor.sockets.socketEntries.forEach((socket) => {
-        if (socket.socketTypeHash === HASH_FAT_SOCKET_STAT && socket.reusablePlugItems !== undefined) {
+        if (HASH_FAT_SOCKET_STAT.includes(socket.socketTypeHash) && socket.reusablePlugItems !== undefined) {
           socket.reusablePlugItems.forEach(async (modHash) => {
             const existingFatMod = cacheMods.find(element => element.hash === `${modHash.plugItemHash}`);
             if (existingFatMod) {

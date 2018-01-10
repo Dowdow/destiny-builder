@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Mod from './Mod';
-import { MOD_SLOT } from '../utils/const';
 import { getModsByFilter } from '../utils/api';
+import ModSlot from '../img/mod_slot.png';
 import '../css/ModList.css';
 
 class ModList extends Component {
@@ -49,7 +49,7 @@ class ModList extends Component {
     }
     return (
       <div className="ModList">
-        <img className="ModList_img" src={MOD_SLOT} alt="Empty" onClick={this.handleClick} />
+        <img className="ModList_img" src={ModSlot} alt="Empty" onClick={this.handleClick} />
         {this.state.show ?
           <div className="ModListModal">
             <div className="ModListModal_background" onClick={this.handleClick} />

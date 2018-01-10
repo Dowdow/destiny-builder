@@ -11,7 +11,3 @@ export const MOD_LEG = 'enhancements.legs';
 export const MOD_CLASS_ITEM_TITAN = 'enhancements.class_titan';
 export const MOD_CLASS_ITEM_HUNTER = 'enhancements.class_hunter';
 export const MOD_CLASS_ITEM_WARLOCK = 'enhancements.class_warlock';
-
-export const EMPTY_SLOT = 'https://www.bungie.net/common/destiny2_content/icons/a6bd6251c114762042b4c4231bd7505c.png';
-
-export const MOD_SLOT = 'https://www.bungie.net/common/destiny2_content/icons/9e38278ce140054bbf9d6990f671382a.png';
