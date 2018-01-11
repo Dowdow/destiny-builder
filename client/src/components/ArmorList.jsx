@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Armor from './Armor';
-import { getAllArmors, getArmorsByFilter } from '../utils/api';
+import { getAllArmors, getArmorsByFilter } from '../actions/armor';
 import '../css/ArmorList.css';
 
 class ArmorList extends Component {
@@ -14,22 +15,18 @@ class ArmorList extends Component {
       mobility: 'all',
       resilience: 'all',
       recovery: 'all',
-      armors: [],
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
-  async componentWillMount() {
-    const armors = await getAllArmors();
-    this.setState({
-      armors,
-    });
+  componentWillMount() {
+    this.props.getAllArmors();
   }
 
   async handleChange(event) {
     const selectName = event.target.name;
     const selectValue = event.target.value;
-    const armors = await getArmorsByFilter({
+    this.props.getArmorsByFilter({
       class: selectName === 'class' ? selectValue : this.state.class,
       type: selectName === 'type' ? selectValue : this.state.type,
       tier: selectName === 'tier' ? selectValue : this.state.tier,
@@ -44,7 +41,6 @@ class ArmorList extends Component {
       mobility: selectName === 'mobility' ? selectValue : prevState.mobility,
       resilience: selectName === 'resilience' ? selectValue : prevState.resilience,
       recovery: selectName === 'recovery' ? selectValue : prevState.recovery,
-      armors,
     }));
   }
 
@@ -53,8 +49,8 @@ class ArmorList extends Component {
       <div className="ArmorList">
         <section className="filter">
           <div>
-            <label><FormattedMessage id="filter.class" defaultMessage="Class" /></label>
-            <select name="class" onChange={this.handleChange}>
+            <label htmlFor="class"><FormattedMessage id="filter.class" defaultMessage="Class" /></label>
+            <select id="class" name="class" onChange={this.handleChange}>
               <FormattedMessage id="filter.all" defaultMessage="All">
                 {message => <option value="all">{message}</option>}
               </FormattedMessage>
@@ -70,8 +66,8 @@ class ArmorList extends Component {
             </select>
           </div>
           <div>
-            <label><FormattedMessage id="filter.type" defaultMessage="Type" /></label>
-            <select name="type" onChange={this.handleChange}>
+            <label htmlFor="type"><FormattedMessage id="filter.type" defaultMessage="Type" /></label>
+            <select id="type" name="type" onChange={this.handleChange}>
               <FormattedMessage id="filter.all" defaultMessage="All">
                 {message => <option value="all">{message}</option>}
               </FormattedMessage>
@@ -96,8 +92,8 @@ class ArmorList extends Component {
             </select>
           </div>
           <div>
-            <label><FormattedMessage id="filter.tier" defaultMessage="Tier" /></label>
-            <select name="tier" onChange={this.handleChange}>
+            <label htmlFor="tier"><FormattedMessage id="filter.tier" defaultMessage="Tier" /></label>
+            <select id="tier" name="tier" onChange={this.handleChange}>
               <FormattedMessage id="filter.all" defaultMessage="All">
                 {message => <option value="all">{message}</option>}
               </FormattedMessage>
@@ -110,8 +106,8 @@ class ArmorList extends Component {
             </select>
           </div>
           <div>
-            <label><FormattedMessage id="stat.mobility" defaultMessage="Mobility" /></label>
-            <select name="mobility" onChange={this.handleChange}>
+            <label htmlFor="mobility"><FormattedMessage id="stat.mobility" defaultMessage="Mobility" /></label>
+            <select id="mobility" name="mobility" onChange={this.handleChange}>
               <FormattedMessage id="filter.all" defaultMessage="All">
                 {message => <option value="all">{message}</option>}
               </FormattedMessage>
@@ -121,8 +117,8 @@ class ArmorList extends Component {
             </select>
           </div>
           <div>
-            <label><FormattedMessage id="stat.resilience" defaultMessage="Resilience" /></label>
-            <select name="resilience" onChange={this.handleChange}>
+            <label htmlFor="resilience"><FormattedMessage id="stat.resilience" defaultMessage="Resilience" /></label>
+            <select id="resilience" name="resilience" onChange={this.handleChange}>
               <FormattedMessage id="filter.all" defaultMessage="All">
                 {message => <option value="all">{message}</option>}
               </FormattedMessage>
@@ -132,8 +128,8 @@ class ArmorList extends Component {
             </select>
           </div>
           <div>
-            <label><FormattedMessage id="stat.recovery" defaultMessage="Recovery" /></label>
-            <select name="recovery" onChange={this.handleChange}>
+            <label htmlFor="recovery"><FormattedMessage id="stat.recovery" defaultMessage="Recovery" /></label>
+            <select id="recovery" name="recovery" onChange={this.handleChange}>
               <FormattedMessage id="filter.all" defaultMessage="All">
                 {message => <option value="all">{message}</option>}
               </FormattedMessage>
@@ -144,11 +140,19 @@ class ArmorList extends Component {
           </div>
         </section>
         <section className="list">
-          {this.state.armors.map(armor => <Armor key={armor._id} lang={this.props.lang} armor={armor} equipItem={this.props.equipItem} />)}
+          {this.props.armors.map(armor => <Armor key={armor._id} lang={this.props.lang} armor={armor} equipItem={this.props.equipItem} />)}
         </section>
       </div>
     );
   }
 }
 
-export default ArmorList;
+function mapStateToProps(state) {
+  console.log(state);
+  console.log(state.armor);
+  return {
+    armors: state.armor.armors,
+  };
+}
+
+export default connect(mapStateToProps, { getAllArmors, getArmorsByFilter })(ArmorList);

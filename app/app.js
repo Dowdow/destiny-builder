@@ -28,11 +28,11 @@ app.get('/armors', async (req, res) => {
       .populate('bucket')
       .populate('mods')
       .exec((err, armors) => {
-        if (err) res.send([]);
-        else res.send(armors);
+        if (err) res.json([]);
+        else res.json(armors);
       });
   } catch (err) {
-    res.send([]);
+    res.json([]);
   }
 });
 
@@ -40,11 +40,11 @@ app.get('/mods', async (req, res) => {
   try {
     const query = await helpers.buildQueryMod(req.query);
     dbManager.Mod.find(query, (err, mods) => {
-      if (err) res.send([]);
-      else res.send(mods);
+      if (err) res.json([]);
+      else res.json(mods);
     });
   } catch (err) {
-    res.send([]);
+    res.json([]);
   }
 });
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Mod from './Mod';
-import { getModsByFilter } from '../utils/api';
+import { getAllMods, getModsByFilter } from '../actions/mod';
 import ModSlot from '../img/mod_slot.png';
 import '../css/ModList.css';
 
@@ -14,19 +15,15 @@ class ModList extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  async componentWillMount() {
-    const mods = await getModsByFilter({ type: this.props.type, tier: this.props.tier });
-    this.setState({
-      mods,
-    });
+  componentWillMount() {
+    this.props.getModsByFilter({ type: this.props.type, tier: this.props.tier });
   }
 
   async componentWillReceiveProps(nextProps) {
     if (this.props.type !== nextProps.type || this.props.tier !== nextProps.tier) {
-      const mods = await getModsByFilter({ type: nextProps.type, tier: nextProps.tier });
+      this.props.getModsByFilter({ type: nextProps.type, tier: nextProps.tier });
       this.setState({
         show: false,
-        mods,
       });
     } else {
       this.setState({
@@ -54,7 +51,7 @@ class ModList extends Component {
           <div className="ModListModal">
             <div className="ModListModal_background" onClick={this.handleClick} />
             <div className="ModListModal_content">
-              {this.state.mods.map(m => <Mod key={m._id} lang={this.props.lang} mod={m} equipMod={this.props.equipMod} />)}
+              {this.props.mods.map(m => <Mod key={m._id} lang={this.props.lang} mod={m} equipMod={this.props.equipMod} />)}
             </div>
           </div>
                     : ''}
@@ -63,4 +60,11 @@ class ModList extends Component {
   }
 }
 
-export default ModList;
+function mapStateToProps(state) {
+  return {
+    mods: state.mod.mods,
+  };
+}
+
+export default connect(mapStateToProps, { getAllMods, getModsByFilter })(ModList);
+
