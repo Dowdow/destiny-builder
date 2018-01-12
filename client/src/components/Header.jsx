@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { changeLanguage } from '../actions/language';
 import '../css/Header.css';
 
 class Header extends Component {
@@ -37,4 +39,10 @@ class Header extends Component {
   }
 }
 
-export default Header;
+function mapStateToProps(state) {
+  return {
+    lang: state.language,
+  };
+}
+
+export default connect(mapStateToProps, { changeLanguage })(Header);

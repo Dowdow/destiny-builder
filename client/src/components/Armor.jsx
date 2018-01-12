@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import EmptySlot from '../img/empty_slot.png';
 import '../css/Armor.css';
@@ -120,4 +121,10 @@ class Armor extends Component {
   }
 }
 
-export default Armor;
+function mapStateToProps(state) {
+  return {
+    lang: state.language,
+  };
+}
+
+export default connect(mapStateToProps)(Armor);

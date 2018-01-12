@@ -9,7 +9,6 @@ class ModList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mods: [],
       show: false,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -41,7 +40,7 @@ class ModList extends Component {
   render() {
     if (this.props.mod) {
       return (
-        <Mod lang={this.props.lang} mod={this.props.mod} unequipMod={this.props.unequipMod} />
+        <Mod mod={this.props.mod} unequipMod={this.props.unequipMod} />
       );
     }
     return (
@@ -51,7 +50,7 @@ class ModList extends Component {
           <div className="ModListModal">
             <div className="ModListModal_background" onClick={this.handleClick} />
             <div className="ModListModal_content">
-              {this.props.mods.map(m => <Mod key={m._id} lang={this.props.lang} mod={m} equipMod={this.props.equipMod} />)}
+              {this.props.mods.map(m => <Mod key={m._id} mod={m} equipMod={this.props.equipMod} />)}
             </div>
           </div>
                     : ''}
@@ -62,7 +61,7 @@ class ModList extends Component {
 
 function mapStateToProps(state) {
   return {
-    mods: state.mod.mods,
+    mods: state.mod,
   };
 }
 

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import Header from './Header';
 import ArmorBuilder from './ArmorBuilder';
 import ArmorList from './ArmorList';
 import Footer from './Footer';
-import { getUserLanguage } from '../utils/language';
 import messages from '../utils/messages';
 import {
   TYPE_HELMET,
@@ -26,7 +26,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lang: getUserLanguage(),
       helmet: null,
       gauntlet: null,
       chest: null,
@@ -42,20 +41,12 @@ class App extends Component {
       chestMiniMod: null,
       legsMiniMod: null,
       classArmorMiniMod: null,
-
     };
-    this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
     this.handleEquipItem = this.handleEquipItem.bind(this);
     this.handleUnequipItem = this.handleUnequipItem.bind(this);
     this.handleEquipMod = this.handleEquipMod.bind(this);
     this.handleUnequipMod = this.handleUnequipMod.bind(this);
     this.handleEquipMiniMod = this.handleEquipMiniMod.bind(this);
-  }
-
-  handleChangeLanguage(lang) {
-    this.setState({
-      lang,
-    });
   }
 
   handleEquipItem(item) {
@@ -122,18 +113,17 @@ class App extends Component {
 
   render() {
     return (
-      <IntlProvider locale={this.state.lang} messages={messages[this.state.lang]}>
+      <IntlProvider locale={this.props.lang} messages={messages[this.props.lang]}>
         <div className="App">
-          <Header lang={this.state.lang} changeLanguage={this.handleChangeLanguage} />
+          <Header />
           <ArmorBuilder
-            lang={this.state.lang}
             build={this.state}
             unequipItem={this.handleUnequipItem}
             equipMod={this.handleEquipMod}
             unequipMod={this.handleUnequipMod}
             equipMiniMod={this.handleEquipMiniMod}
           />
-          <ArmorList lang={this.state.lang} equipItem={this.handleEquipItem} />
+          <ArmorList equipItem={this.handleEquipItem} />
           <Footer />
         </div>
       </IntlProvider>
@@ -141,4 +131,11 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    lang: state.language,
+  };
+}
+
+export default connect(mapStateToProps)(App);

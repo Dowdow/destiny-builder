@@ -75,7 +75,6 @@ class ArmorBuilder extends Component {
         <h2><FormattedMessage id={id} defaultMessage={title} /></h2>
         <div>
           <Armor
-            lang={this.props.lang}
             armor={armor}
             miniMod={miniMod}
             unequipItem={this.props.unequipItem}
@@ -83,7 +82,6 @@ class ArmorBuilder extends Component {
             mods
           />
           <ModList
-            lang={this.props.lang}
             mod={mod}
             equipMod={this.props.equipMod}
             unequipMod={this.props.unequipMod}

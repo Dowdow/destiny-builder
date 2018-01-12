@@ -140,7 +140,7 @@ class ArmorList extends Component {
           </div>
         </section>
         <section className="list">
-          {this.props.armors.map(armor => <Armor key={armor._id} lang={this.props.lang} armor={armor} equipItem={this.props.equipItem} />)}
+          {this.props.armors.map(armor => <Armor key={armor._id} armor={armor} equipItem={this.props.equipItem} />)}
         </section>
       </div>
     );
@@ -148,10 +148,8 @@ class ArmorList extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
-  console.log(state.armor);
   return {
-    armors: state.armor.armors,
+    armors: state.armor,
   };
 }
 
