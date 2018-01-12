@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Armor from '../components/Armor';
+import MiniMod from './MiniMod';
 import ModList from './ModList';
 import '../css/ArmorBuilder.css';
 
@@ -15,6 +17,19 @@ class ArmorBuilder extends Component {
       resilience += prop.resilience;
       recovery += prop.recovery;
     }
+  }
+
+  static renderArmorBuilderEntry(id, title, armor, mod, miniMod, type, tier) {
+    return (
+      <div>
+        <h2><FormattedMessage id={id} defaultMessage={title} /></h2>
+        <div>
+          <Armor armor={armor} miniMod={miniMod} mods />
+          <MiniMod />
+          <ModList mod={mod} type={type} tier={tier} />
+        </div>
+      </div>
+    );
   }
 
   constructor(props) {
@@ -69,39 +84,15 @@ class ArmorBuilder extends Component {
     }
   }
 
-  renderArmorBuilderEntry(id, title, armor, mod, miniMod, type, tier) {
-    return (
-      <div>
-        <h2><FormattedMessage id={id} defaultMessage={title} /></h2>
-        <div>
-          <Armor
-            armor={armor}
-            miniMod={miniMod}
-            unequipItem={this.props.unequipItem}
-            equipMiniMod={this.props.equipMiniMod}
-            mods
-          />
-          <ModList
-            mod={mod}
-            equipMod={this.props.equipMod}
-            unequipMod={this.props.unequipMod}
-            type={type}
-            tier={tier}
-          />
-        </div>
-      </div>
-    );
-  }
-
   render() {
     return (
       <div className="ArmorBuilder">
         <section className="ArmorBuilder_armors">
-          {this.renderArmorBuilderEntry('build.helmet', 'Helmet', this.props.build.helmet, this.props.build.helmetMod, this.props.build.helmetMiniMod, 'helmet', 'legendary')}
-          {this.renderArmorBuilderEntry('build.gauntlets', 'Gauntlets', this.props.build.gauntlet, this.props.build.gauntletMod, this.props.build.gauntletMiniMod, 'gauntlet', 'legendary')}
-          {this.renderArmorBuilderEntry('build.chest', 'Chest Armor', this.props.build.chest, this.props.build.chestMod, this.props.build.chestMiniMod, 'chest', 'legendary')}
-          {this.renderArmorBuilderEntry('build.legs', 'Leg Armor', this.props.build.legs, this.props.build.legsMod, this.props.build.legsMiniMod, 'legs', 'legendary')}
-          {this.renderArmorBuilderEntry('build.classArmor', 'Class Armor', this.props.build.classArmor, this.props.build.classArmorMod, this.props.build.classArmorMiniMod, this.state.typeClassArmor, 'legendary')}
+          {ArmorBuilder.renderArmorBuilderEntry('build.helmet', 'Helmet', this.props.build.helmet, this.props.build.helmetMod, this.props.build.helmetMiniMod, 'helmet', 'legendary')}
+          {ArmorBuilder.renderArmorBuilderEntry('build.gauntlets', 'Gauntlets', this.props.build.gauntlet, this.props.build.gauntletMod, this.props.build.gauntletMiniMod, 'gauntlet', 'legendary')}
+          {ArmorBuilder.renderArmorBuilderEntry('build.chest', 'Chest Armor', this.props.build.chest, this.props.build.chestMod, this.props.build.chestMiniMod, 'chest', 'legendary')}
+          {ArmorBuilder.renderArmorBuilderEntry('build.legs', 'Leg Armor', this.props.build.legs, this.props.build.legsMod, this.props.build.legsMiniMod, 'legs', 'legendary')}
+          {ArmorBuilder.renderArmorBuilderEntry('build.classArmor', 'Class Armor', this.props.build.classArmor, this.props.build.classArmorMod, this.props.build.classArmorMiniMod, this.state.typeClassArmor, 'legendary')}
         </section>
         <section className="ArmorBuilder_stats">
           <h2><FormattedMessage id="stat.mobility" defaultMessage="Mobility" /> {mobility}</h2>
@@ -113,4 +104,10 @@ class ArmorBuilder extends Component {
   }
 }
 
-export default ArmorBuilder;
+function mapStateToProps(state) {
+  return {
+    build: state.build,
+  };
+}
+
+export default connect(mapStateToProps)(ArmorBuilder);
