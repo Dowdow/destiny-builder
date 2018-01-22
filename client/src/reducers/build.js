@@ -16,56 +16,122 @@ import {
   SET_CLASS_ARMOR_MINI_MOD,
 } from '../actions/build';
 
-const payload = {
-  helmet: null,
-  gauntlet: null,
-  chest: null,
-  legs: null,
-  classArmor: null,
-  helmetMod: null,
-  gauntletMod: null,
-  chestMod: null,
-  legsMod: null,
-  classArmorMod: null,
-  helmetMiniMod: null,
-  gauntletMiniMod: null,
-  chestMiniMod: null,
-  legsMiniMod: null,
-  classArmorMiniMod: null,
-};
-
-export default function build(state = payload, action = {}) {
+export function buildHelmet(state = null, action = {}) {
   switch (action.type) {
     case SET_HELMET:
-      return Object.assign(state, { helmet: action.helmet });
+      return action.helmet;
+    default: return state;
+  }
+}
+
+export function buildGauntlet(state = null, action = {}) {
+  switch (action.type) {
     case SET_GAUNTLET:
-      return Object.assign(state, { gauntlet: action.gauntlet });
+      return action.gauntlet;
+    default: return state;
+  }
+}
+
+export function buildChest(state = null, action = {}) {
+  switch (action.type) {
     case SET_CHEST:
-      return Object.assign(state, { chest: action.chest });
+      return action.chest;
+    default: return state;
+  }
+}
+
+export function buildLegs(state = null, action = {}) {
+  switch (action.type) {
     case SET_LEGS:
-      return Object.assign(state, { legs: action.legs });
+      return action.legs;
+    default: return state;
+  }
+}
+
+export function buildClassArmor(state = null, action = {}) {
+  switch (action.type) {
     case SET_CLASS_ARMOR:
-      return Object.assign(state, { classArmor: action.classArmor });
+      return action.classArmor;
+    default: return state;
+  }
+}
+
+export function buildHelmetMod(state = null, action = {}) {
+  switch (action.type) {
     case SET_HELMET_MOD:
-      return Object.assign(state, { helmetMod: action.helmetMod });
+      return action.helmetMod;
+    default: return state;
+  }
+}
+
+export function buildGauntletMod(state = null, action = {}) {
+  switch (action.type) {
     case SET_GAUNTLET_MOD:
-      return Object.assign(state, { gauntletMod: action.gauntletMod });
+      return action.gauntletMod;
+    default: return state;
+  }
+}
+
+export function buildChestMod(state = null, action = {}) {
+  switch (action.type) {
     case SET_CHEST_MOD:
-      return Object.assign(state, { chestMod: action.chestMod });
+      return action.chestMod;
+    default: return state;
+  }
+}
+
+export function buildLegsMod(state = null, action = {}) {
+  switch (action.type) {
     case SET_LEGS_MOD:
-      return Object.assign(state, { legsMod: action.legsMod });
+      return action.legsMod;
+    default: return state;
+  }
+}
+
+export function buildClassArmorMod(state = null, action = {}) {
+  switch (action.type) {
     case SET_CLASS_ARMOR_MOD:
-      return Object.assign(state, { classArmorMod: action.classArmorMod });
+      return action.classArmorMod;
+    default: return state;
+  }
+}
+
+export function buildHelmetMiniMod(state = null, action = {}) {
+  switch (action.type) {
     case SET_HELMET_MINI_MOD:
-      return Object.assign(state, { helmetMiniMod: action.helmetMiniMod });
+      return action.helmetMiniMod;
+    default: return state;
+  }
+}
+
+export function buildGauntletMiniMod(state = null, action = {}) {
+  switch (action.type) {
     case SET_GAUNTLET_MINI_MOD:
-      return Object.assign(state, { gauntletMiniMod: action.gauntletMiniMod });
+      return action.gauntletMiniMod;
+    default: return state;
+  }
+}
+
+export function buildChestMiniMod(state = null, action = {}) {
+  switch (action.type) {
     case SET_CHEST_MINI_MOD:
-      return Object.assign(state, { chestMiniMod: action.chestMiniMod });
+      return action.chestMiniMod;
+    default: return state;
+  }
+}
+
+export function buildLegsMiniMod(state = null, action = {}) {
+  switch (action.type) {
     case SET_LEGS_MINI_MOD:
-      return Object.assign(state, { legsMiniMod: action.legsMiniMod });
+      return action.legsMiniMod;
+    default: return state;
+  }
+}
+
+export function buildClassArmorMiniMod(state = null, action = {}) {
+  switch (action.type) {
     case SET_CLASS_ARMOR_MINI_MOD:
-      return Object.assign(state, { classArmorMiniMod: action.classArmorMiniMod });
+      return action.classArmorMiniMod;
     default: return state;
   }
 }

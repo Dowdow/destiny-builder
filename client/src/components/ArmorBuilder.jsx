@@ -43,23 +43,23 @@ class ArmorBuilder extends Component {
     mobility = 0;
     resilience = 0;
     recovery = 0;
-    ArmorBuilder.buildStat(nextProps.build.helmet);
-    ArmorBuilder.buildStat(nextProps.build.gauntlet);
-    ArmorBuilder.buildStat(nextProps.build.chest);
-    ArmorBuilder.buildStat(nextProps.build.legs);
-    ArmorBuilder.buildStat(nextProps.build.classArmor);
-    ArmorBuilder.buildStat(nextProps.build.helmetMod);
-    ArmorBuilder.buildStat(nextProps.build.gauntletMod);
-    ArmorBuilder.buildStat(nextProps.build.chestMod);
-    ArmorBuilder.buildStat(nextProps.build.legsMod);
-    ArmorBuilder.buildStat(nextProps.build.classArmorMod);
-    ArmorBuilder.buildStat(nextProps.build.helmetMiniMod);
-    ArmorBuilder.buildStat(nextProps.build.gauntletMiniMod);
-    ArmorBuilder.buildStat(nextProps.build.chestMiniMod);
-    ArmorBuilder.buildStat(nextProps.build.legsMiniMod);
-    ArmorBuilder.buildStat(nextProps.build.classArmorMiniMod);
-    if (nextProps.build.classArmor) {
-      switch (nextProps.build.classArmor.class.class) {
+    ArmorBuilder.buildStat(nextProps.helmet);
+    ArmorBuilder.buildStat(nextProps.gauntlet);
+    ArmorBuilder.buildStat(nextProps.chest);
+    ArmorBuilder.buildStat(nextProps.legs);
+    ArmorBuilder.buildStat(nextProps.classArmor);
+    ArmorBuilder.buildStat(nextProps.helmetMod);
+    ArmorBuilder.buildStat(nextProps.gauntletMod);
+    ArmorBuilder.buildStat(nextProps.chestMod);
+    ArmorBuilder.buildStat(nextProps.legsMod);
+    ArmorBuilder.buildStat(nextProps.classArmorMod);
+    ArmorBuilder.buildStat(nextProps.helmetMiniMod);
+    ArmorBuilder.buildStat(nextProps.gauntletMiniMod);
+    ArmorBuilder.buildStat(nextProps.chestMiniMod);
+    ArmorBuilder.buildStat(nextProps.legsMiniMod);
+    ArmorBuilder.buildStat(nextProps.classArmorMiniMod);
+    if (nextProps.classArmor) {
+      switch (nextProps.classArmor.class.class) {
         case 0:
           this.setState({
             typeClassArmor: 'classitem_titan',
@@ -88,11 +88,11 @@ class ArmorBuilder extends Component {
     return (
       <div className="ArmorBuilder">
         <section className="ArmorBuilder_armors">
-          {ArmorBuilder.renderArmorBuilderEntry('build.helmet', 'Helmet', this.props.build.helmet, this.props.build.helmetMod, this.props.build.helmetMiniMod, 'helmet', 'legendary')}
-          {ArmorBuilder.renderArmorBuilderEntry('build.gauntlets', 'Gauntlets', this.props.build.gauntlet, this.props.build.gauntletMod, this.props.build.gauntletMiniMod, 'gauntlet', 'legendary')}
-          {ArmorBuilder.renderArmorBuilderEntry('build.chest', 'Chest Armor', this.props.build.chest, this.props.build.chestMod, this.props.build.chestMiniMod, 'chest', 'legendary')}
-          {ArmorBuilder.renderArmorBuilderEntry('build.legs', 'Leg Armor', this.props.build.legs, this.props.build.legsMod, this.props.build.legsMiniMod, 'legs', 'legendary')}
-          {ArmorBuilder.renderArmorBuilderEntry('build.classArmor', 'Class Armor', this.props.build.classArmor, this.props.build.classArmorMod, this.props.build.classArmorMiniMod, this.state.typeClassArmor, 'legendary')}
+          {ArmorBuilder.renderArmorBuilderEntry('build.helmet', 'Helmet', this.props.helmet, this.props.helmetMod, this.props.helmetMiniMod, 'helmet', 'legendary')}
+          {ArmorBuilder.renderArmorBuilderEntry('build.gauntlets', 'Gauntlets', this.props.gauntlet, this.props.gauntletMod, this.props.gauntletMiniMod, 'gauntlet', 'legendary')}
+          {ArmorBuilder.renderArmorBuilderEntry('build.chest', 'Chest Armor', this.props.chest, this.props.chestMod, this.props.chestMiniMod, 'chest', 'legendary')}
+          {ArmorBuilder.renderArmorBuilderEntry('build.legs', 'Leg Armor', this.props.legs, this.props.legsMod, this.props.legsMiniMod, 'legs', 'legendary')}
+          {ArmorBuilder.renderArmorBuilderEntry('build.classArmor', 'Class Armor', this.props.classArmor, this.props.classArmorMod, this.props.classArmorMiniMod, this.state.typeClassArmor, 'legendary')}
         </section>
         <section className="ArmorBuilder_stats">
           <h2><FormattedMessage id="stat.mobility" defaultMessage="Mobility" /> {mobility}</h2>
@@ -106,7 +106,21 @@ class ArmorBuilder extends Component {
 
 function mapStateToProps(state) {
   return {
-    build: state.build,
+    helmet: state.buildHelmet,
+    gauntlet: state.buildGauntlet,
+    chest: state.buildChest,
+    legs: state.buildLegs,
+    classArmor: state.buildClassArmor,
+    helmetMod: state.buildHelmetMod,
+    gauntletMod: state.buildGauntletMod,
+    chestMod: state.buildChestMod,
+    legsMod: state.buildLegsMod,
+    classArmorMod: state.buildClassArmorMod,
+    helmetMiniMod: state.buildHelmetMiniMod,
+    gauntletMiniMod: state.buildGauntletMiniMod,
+    chestMiniMod: state.buildChestMiniMod,
+    legsMiniMod: state.buildLegsMiniMod,
+    classArmorMiniMod: state.buildClassArmorMiniMod,
   };
 }
 
