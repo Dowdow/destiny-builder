@@ -1,0 +1,46 @@
+.MiniMod {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.MiniMod div {
+    box-sizing: border-box;
+    border: 1px solid white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.MiniMod img {
+    display: block;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid white;
+    border-radius: 50%;
+}
+
+.MiniMod_selected {
+    background-color: #ceae33;
+}
+
+@media screen and (max-width: 768px) {
+    .MiniMod {
+        flex-direction: column;
+        width: auto;
+        margin: 0;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    .MiniMod img, .MiniMod div {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+}

@@ -23,7 +23,7 @@ class ArmorList extends Component {
     this.props.getAllArmors();
   }
 
-  async handleChange(event) {
+  handleChange(event) {
     const selectName = event.target.name;
     const selectValue = event.target.value;
     this.props.getArmorsByFilter({

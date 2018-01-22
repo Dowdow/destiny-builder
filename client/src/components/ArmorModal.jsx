@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { equipItem, unequipItem } from '../actions/build';
+import '../css/ArmorModal.css';
 
 class ArmorModal extends Component {
   constructor(props) {

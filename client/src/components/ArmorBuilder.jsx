@@ -24,8 +24,8 @@ class ArmorBuilder extends Component {
       <div>
         <h2><FormattedMessage id={id} defaultMessage={title} /></h2>
         <div>
-          <Armor armor={armor} miniMod={miniMod} mods />
-          <MiniMod />
+          <Armor armor={armor} />
+          <MiniMod armor={armor} miniMod={miniMod} />
           <ModList mod={mod} type={type} tier={tier} />
         </div>
       </div>

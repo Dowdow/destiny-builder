@@ -18,7 +18,7 @@ class ModList extends Component {
     this.props.getModsByFilter({ type: this.props.type, tier: this.props.tier });
   }
 
-  async componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.props.type !== nextProps.type || this.props.tier !== nextProps.tier) {
       this.props.getModsByFilter({ type: nextProps.type, tier: nextProps.tier });
       this.setState({
