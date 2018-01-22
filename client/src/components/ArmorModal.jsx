@@ -1,7 +1,30 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { equipItem, unequipItem } from '../actions/build';
 
 class ArmorModal extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleEquipItem = this.handleEquipItem.bind(this);
+    this.handleUnequipItem = this.handleUnequipItem.bind(this);
+  }
+
+  handleClick() {
+    this.props.handleShow();
+  }
+
+  handleEquipItem() {
+    this.handleClick();
+    this.props.equipItem(this.props.armor);
+  }
+
+  handleUnequipItem() {
+    this.handleClick();
+    this.props.unequipItem(this.props.armor);
+  }
+
   render() {
     return (
       <div className="ArmorModal">
@@ -43,4 +66,10 @@ class ArmorModal extends Component {
   }
 }
 
-export default ArmorModal;
+function mapStateToProps(state) {
+  return {
+    lang: state.language,
+  };
+}
+
+export default connect(mapStateToProps, { equipItem, unequipItem })(ArmorModal);

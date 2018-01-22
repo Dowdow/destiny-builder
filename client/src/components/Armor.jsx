@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { equipItem, unequipItem, equipMiniMod } from '../actions/build';
+import { equipMiniMod } from '../actions/build';
 import ArmorModal from './ArmorModal';
 import EmptySlot from '../img/empty_slot.png';
 import '../css/Armor.css';
@@ -8,13 +8,10 @@ import '../css/Armor.css';
 class Armor extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       show: false,
     };
     this.handleClick = this.handleClick.bind(this);
-    this.handleEquipItem = this.handleEquipItem.bind(this);
-    this.handleUnequipItem = this.handleUnequipItem.bind(this);
     this.handleEquipMiniMod = this.handleEquipMiniMod.bind(this);
   }
 
@@ -22,16 +19,6 @@ class Armor extends Component {
     this.setState(prevState => ({
       show: !prevState.show,
     }));
-  }
-
-  handleEquipItem() {
-    this.handleClick();
-    this.props.equipItem(this.props.armor);
-  }
-
-  handleUnequipItem() {
-    this.handleClick();
-    this.props.unequipItem(this.props.armor);
   }
 
   handleEquipMiniMod(mod) {
@@ -75,7 +62,7 @@ class Armor extends Component {
         <div className="Armor">
           <img className="Armor_img" src={this.props.armor.img} alt={this.props.armor.names[this.props.lang]} onClick={this.handleClick} />
           {mods}
-          {this.state.show ? <ArmorModal /> : ''}
+          {this.state.show ? <ArmorModal armor={this.props.armor} handleShow={this.handleClick} /> : ''}
         </div>
       );
     }
@@ -93,4 +80,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { equipItem, unequipItem, equipMiniMod })(Armor);
+export default connect(mapStateToProps, { equipMiniMod })(Armor);

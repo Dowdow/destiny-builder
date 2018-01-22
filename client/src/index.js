@@ -25,14 +25,7 @@ const store = createStore(
 );
 
 // INTL
-addLocaleData(en);
-addLocaleData(es);
-addLocaleData(de);
-addLocaleData(fr);
-addLocaleData(it);
-addLocaleData(ja);
-addLocaleData(pl);
-addLocaleData(ru);
+addLocaleData([...en, ...es, ...de, ...fr, ...it, ...ja, ...pl, ...ru]);
 
 // GA
 ReactGA.initialize('UA-111738679-1');
