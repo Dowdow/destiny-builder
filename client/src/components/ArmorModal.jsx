@@ -53,7 +53,7 @@ class ArmorModal extends Component {
               <div>
                 {this.props.armor.mods.map(mod => (<img key={mod._id} className="ArmorModalContent_mod" src={mod.img} alt={mod.names[this.props.lang]} />))}
               </div>
-                  : ''}
+              : ''}
             <div>
               {this.props.equipItem ? <button onClick={this.handleEquipItem}><FormattedMessage id="button.equip" defaultMessage="Equip" /></button> : ''}
               {this.props.unequipItem ? <button onClick={this.handleUnequipItem}><FormattedMessage id="button.unequip" defaultMessage="Unequip" /></button> : ''}

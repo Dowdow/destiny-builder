@@ -18,7 +18,13 @@ import {
   buildClassArmorMiniMod,
 } from './build';
 import language from './language';
-import mod from './mod';
+import {
+  modHelmet,
+  modGauntlet,
+  modChest,
+  modLegs,
+  modClassArmor,
+} from './mod';
 
 const destinyReducer = combineReducers({
   armor,
@@ -38,7 +44,11 @@ const destinyReducer = combineReducers({
   buildLegsMiniMod,
   buildClassArmorMiniMod,
   language,
-  mod,
+  modHelmet,
+  modGauntlet,
+  modChest,
+  modLegs,
+  modClassArmor,
 });
 
 export default destinyReducer;

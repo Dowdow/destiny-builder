@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Mod from './Mod';
-import { getAllMods, getModsByFilter } from '../actions/mod';
+import { equipMod, unequipMod } from '../actions/build';
 import ModSlot from '../img/mod_slot.png';
 import '../css/ModList.css';
 
@@ -12,23 +12,6 @@ class ModList extends Component {
       show: false,
     };
     this.handleClick = this.handleClick.bind(this);
-  }
-
-  componentWillMount() {
-    this.props.getModsByFilter({ type: this.props.type, tier: this.props.tier });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.type !== nextProps.type || this.props.tier !== nextProps.tier) {
-      this.props.getModsByFilter({ type: nextProps.type, tier: nextProps.tier });
-      this.setState({
-        show: false,
-      });
-    } else {
-      this.setState({
-        show: false,
-      });
-    }
   }
 
   handleClick() {
@@ -59,11 +42,8 @@ class ModList extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    mods: state.mod,
-  };
+function mapStateToProps() {
+  return {};
 }
 
-export default connect(mapStateToProps, { getAllMods, getModsByFilter })(ModList);
-
+export default connect(mapStateToProps, { equipMod, unequipMod })(ModList);

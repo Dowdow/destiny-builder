@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import Armor from '../components/Armor';
 import MiniMod from './MiniMod';
 import ModList from './ModList';
+import { getHelmetMods, getGauntletMods, getChestMods, getLegsMods, getClassArmorMods } from '../actions/mod';
 import '../css/ArmorBuilder.css';
 
 let mobility = 0;
@@ -19,14 +20,14 @@ class ArmorBuilder extends Component {
     }
   }
 
-  static renderArmorBuilderEntry(id, title, armor, mod, miniMod, type, tier) {
+  static renderArmorBuilderEntry(id, title, armor, mod, mods, miniMod) {
     return (
       <div>
         <h2><FormattedMessage id={id} defaultMessage={title} /></h2>
         <div>
           <Armor armor={armor} />
           <MiniMod armor={armor} miniMod={miniMod} />
-          <ModList mod={mod} type={type} tier={tier} />
+          <ModList mod={mod} mods={mods} />
         </div>
       </div>
     );
@@ -37,6 +38,14 @@ class ArmorBuilder extends Component {
     this.state = {
       typeClassArmor: 'classitem_titan:classitem_hunter:classitem_warlock',
     };
+  }
+
+  componentWillMount() {
+    this.props.getHelmetMods();
+    this.props.getGauntletMods();
+    this.props.getChestMods();
+    this.props.getLegsMods();
+    this.props.getClassArmorMods(this.state.typeClassArmor);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -84,15 +93,21 @@ class ArmorBuilder extends Component {
     }
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    if (this.state.typeClassArmor !== nextState.typeClassArmor) {
+      this.props.getClassArmorMods(nextState.typeClassArmor);
+    }
+  }
+
   render() {
     return (
       <div className="ArmorBuilder">
         <section className="ArmorBuilder_armors">
-          {ArmorBuilder.renderArmorBuilderEntry('build.helmet', 'Helmet', this.props.helmet, this.props.helmetMod, this.props.helmetMiniMod, 'helmet', 'legendary')}
-          {ArmorBuilder.renderArmorBuilderEntry('build.gauntlets', 'Gauntlets', this.props.gauntlet, this.props.gauntletMod, this.props.gauntletMiniMod, 'gauntlet', 'legendary')}
-          {ArmorBuilder.renderArmorBuilderEntry('build.chest', 'Chest Armor', this.props.chest, this.props.chestMod, this.props.chestMiniMod, 'chest', 'legendary')}
-          {ArmorBuilder.renderArmorBuilderEntry('build.legs', 'Leg Armor', this.props.legs, this.props.legsMod, this.props.legsMiniMod, 'legs', 'legendary')}
-          {ArmorBuilder.renderArmorBuilderEntry('build.classArmor', 'Class Armor', this.props.classArmor, this.props.classArmorMod, this.props.classArmorMiniMod, this.state.typeClassArmor, 'legendary')}
+          {ArmorBuilder.renderArmorBuilderEntry('build.helmet', 'Helmet', this.props.helmet, this.props.helmetMod, this.props.helmetMods, this.props.helmetMiniMod)}
+          {ArmorBuilder.renderArmorBuilderEntry('build.gauntlets', 'Gauntlets', this.props.gauntlet, this.props.gauntletMod, this.props.gauntletMods, this.props.gauntletMiniMod)}
+          {ArmorBuilder.renderArmorBuilderEntry('build.chest', 'Chest Armor', this.props.chest, this.props.chestMod, this.props.chestMods, this.props.chestMiniMod)}
+          {ArmorBuilder.renderArmorBuilderEntry('build.legs', 'Leg Armor', this.props.legs, this.props.legsMod, this.props.legsMods, this.props.legsMiniMod)}
+          {ArmorBuilder.renderArmorBuilderEntry('build.classArmor', 'Class Armor', this.props.classArmor, this.props.classArmorMod, this.props.classArmorMods, this.props.classArmorMiniMod)}
         </section>
         <section className="ArmorBuilder_stats">
           <h2><FormattedMessage id="stat.mobility" defaultMessage="Mobility" /> {mobility}</h2>
@@ -121,7 +136,14 @@ function mapStateToProps(state) {
     chestMiniMod: state.buildChestMiniMod,
     legsMiniMod: state.buildLegsMiniMod,
     classArmorMiniMod: state.buildClassArmorMiniMod,
+    helmetMods: state.modHelmet,
+    gauntletMods: state.modGauntlet,
+    chestMods: state.modChest,
+    legsMods: state.modLegs,
+    classArmorMods: state.modClassArmor,
   };
 }
 
-export default connect(mapStateToProps)(ArmorBuilder);
+export default connect(mapStateToProps, {
+  getHelmetMods, getGauntletMods, getChestMods, getLegsMods, getClassArmorMods,
+})(ArmorBuilder);
