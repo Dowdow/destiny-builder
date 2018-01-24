@@ -1,0 +1,158 @@
+.ArmorModal {}
+
+.ArmorModal_background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000000;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.ArmorModal_content {
+    position: fixed;
+    width: 30%;
+    top: 100px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    background: white;
+    z-index: 10;
+    cursor: default;
+}
+
+.ArmorModalContent_header {
+    width: 100%;
+}
+
+.ArmorModalContent_header div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 8px;
+}
+
+.ArmorModalContent_header h2 {
+    color: rgba(255, 255, 255, .8) !important;
+    margin: 0;
+    padding-top: 8px;
+    padding-left: 10px;
+    text-transform: uppercase;
+    text-align: left !important;
+}
+
+.ArmorModalContent_header h3 {
+    color: rgba(255, 255, 255, .8) !important;
+    margin: 0;
+    padding-top: 5px;
+    padding-left: 10px;
+}
+
+.ArmorModalContent_header h4 {
+    color: rgba(255, 255, 255, .8) !important;
+    margin: 0;
+    padding-right: 10px;
+    padding-top: 8px;
+}
+
+.ArmorModalContent_body {
+    background-color: rgba(0, 0, 0, .7);
+}
+
+.ArmorModalContent_body h3 {
+    margin: 0;
+    color: rgba(255, 255, 255, .8) !important;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+.ArmorModalContent_body h4 {
+    margin: 0;
+    color: rgba(255, 255, 255, .8) !important;
+}
+
+.ArmorModalContent_body div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.ArmorModalContent_body .large {
+    font-size: 40px;
+}
+
+.ArmorModalContent_body p {
+    margin: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    color: rgba(255, 255, 255, .8) !important;
+}
+
+.ArmorModalContent_body button {
+    display: block;
+    border: 0;
+    border-radius: 3px;
+    padding: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #000000d2;
+    background-color: #ffffff;
+    outline: none;
+}
+
+.ArmorModalContent_screenshot {
+    display: block;
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 97%;
+    height: auto;
+}
+
+.ArmorModalContent_mod {
+    display: block;
+    height: 50px;
+    width: 50px;
+}
+
+.exotic {
+    background-color: #ceae33 !important;
+}
+
+.legendary {
+    background-color: #522f65 !important;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1280px) {
+    .ArmorModal_content {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .ArmorModal_content {
+        top: 20px;
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .ArmorModalContent_body h4 {
+        margin-top: 5px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}

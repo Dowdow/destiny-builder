@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Mod from './Mod';
-import { getModsByFilter } from '../utils/api';
+import { equipMod, unequipMod } from '../actions/build';
 import ModSlot from '../img/mod_slot.png';
 import '../css/ModList.css';
 
@@ -8,27 +9,13 @@ class ModList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mods: [],
       show: false,
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
-  async componentWillMount() {
-    const mods = await getModsByFilter({ type: this.props.type, tier: this.props.tier });
-    this.setState({
-      mods,
-    });
-  }
-
-  async componentWillReceiveProps(nextProps) {
-    if (this.props.type !== nextProps.type || this.props.tier !== nextProps.tier) {
-      const mods = await getModsByFilter({ type: nextProps.type, tier: nextProps.tier });
-      this.setState({
-        show: false,
-        mods,
-      });
-    } else {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.mod === null) {
       this.setState({
         show: false,
       });
@@ -44,7 +31,7 @@ class ModList extends Component {
   render() {
     if (this.props.mod) {
       return (
-        <Mod lang={this.props.lang} mod={this.props.mod} unequipMod={this.props.unequipMod} />
+        <Mod mod={this.props.mod} locale={this.props.locale} unequipMod={this.props.unequipMod} />
       );
     }
     return (
@@ -54,7 +41,7 @@ class ModList extends Component {
           <div className="ModListModal">
             <div className="ModListModal_background" onClick={this.handleClick} />
             <div className="ModListModal_content">
-              {this.state.mods.map(m => <Mod key={m._id} lang={this.props.lang} mod={m} equipMod={this.props.equipMod} />)}
+              {this.props.mods.map(m => <Mod key={m._id} mod={m} locale={this.props.locale} equipMod={this.props.equipMod} />)}
             </div>
           </div>
                     : ''}
@@ -63,4 +50,8 @@ class ModList extends Component {
   }
 }
 
-export default ModList;
+function mapStateToProps() {
+  return {};
+}
+
+export default connect(mapStateToProps, { equipMod, unequipMod })(ModList);
