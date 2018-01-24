@@ -91,7 +91,7 @@ class ArmorBuilder extends Component {
       <div>
         <h2><FormattedMessage id={id} defaultMessage={title} /></h2>
         <div>
-          <Armor locale={this.props.locale} armor={armor} />
+          <Armor locale={this.props.locale} armor={armor} build />
           <MiniMod locale={this.props.locale} armor={armor} miniMod={miniMod} />
           <ModList locale={this.props.locale} mod={mod} mods={mods} />
         </div>

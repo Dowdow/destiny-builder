@@ -55,8 +55,8 @@ class ArmorModal extends Component {
               </div>
               : ''}
             <div>
-              {this.props.equipItem ? <button onClick={this.handleEquipItem}><FormattedMessage id="button.equip" defaultMessage="Equip" /></button> : ''}
-              {this.props.unequipItem ? <button onClick={this.handleUnequipItem}><FormattedMessage id="button.unequip" defaultMessage="Unequip" /></button> : ''}
+              {this.props.equipItem && !this.props.build ? <button onClick={this.handleEquipItem}><FormattedMessage id="button.equip" defaultMessage="Equip" /></button> : ''}
+              {this.props.unequipItem && this.props.build ? <button onClick={this.handleUnequipItem}><FormattedMessage id="button.unequip" defaultMessage="Unequip" /></button> : ''}
               <button onClick={this.handleClick}><FormattedMessage id="button.hide" defaultMessage="Hide" /></button>
             </div>
             <img className="ArmorModalContent_screenshot" src={this.props.armor.screenshot} alt={this.props.armor.names[this.props.locale]} />

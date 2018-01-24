@@ -14,6 +14,14 @@ class ModList extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.mod === null) {
+      this.setState({
+        show: false,
+      });
+    }
+  }
+
   handleClick() {
     this.setState(prevState => ({
       show: !prevState.show,
@@ -23,7 +31,7 @@ class ModList extends Component {
   render() {
     if (this.props.mod) {
       return (
-        <Mod mod={this.props.mod} unequipMod={this.props.unequipMod} />
+        <Mod mod={this.props.mod} locale={this.props.locale} unequipMod={this.props.unequipMod} />
       );
     }
     return (
