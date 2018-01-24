@@ -67,10 +67,8 @@ class ArmorModal extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    locale: state.intlReducer.locale,
-  };
+function mapStateToProps() {
+  return {};
 }
 
 export default connect(mapStateToProps, { equipItem, unequipItem })(ArmorModal);

@@ -25,7 +25,7 @@ import './css/index.css';
 addLocaleData([...en, ...es, ...de, ...fr, ...it, ...ja, ...pl, ...ru]);
 const locale = computeLocale();
 const initialState = {
-  intlReducer: {
+  intl: {
     defaultLocale: 'en',
     locale,
     messages: messages[locale],

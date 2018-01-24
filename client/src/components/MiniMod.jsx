@@ -43,10 +43,8 @@ class MiniMod extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    locale: state.intlReducer.locale,
-  };
+function mapStateToProps() {
+  return {};
 }
 
 export default connect(mapStateToProps, { equipMiniMod })(MiniMod);

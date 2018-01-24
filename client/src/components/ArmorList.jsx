@@ -140,7 +140,7 @@ class ArmorList extends Component {
           </div>
         </section>
         <section className="list">
-          {this.props.armors.map(armor => <Armor key={armor._id} armor={armor} equipItem={this.props.equipItem} />)}
+          {this.props.armors.map(armor => <Armor key={armor._id} locale={this.props.locale} armor={armor} equipItem={this.props.equipItem} />)}
         </section>
       </div>
     );

@@ -33,7 +33,7 @@ class ModList extends Component {
           <div className="ModListModal">
             <div className="ModListModal_background" onClick={this.handleClick} />
             <div className="ModListModal_content">
-              {this.props.mods.map(m => <Mod key={m._id} mod={m} equipMod={this.props.equipMod} />)}
+              {this.props.mods.map(m => <Mod key={m._id} mod={m} locale={this.props.locale} equipMod={this.props.equipMod} />)}
             </div>
           </div>
                     : ''}

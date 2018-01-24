@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import '../css/Mod.css';
 
 class Mod extends Component {
@@ -29,10 +28,4 @@ class Mod extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    locale: state.intlReducer.locale,
-  };
-}
-
-export default connect(mapStateToProps)(Mod);
+export default Mod;

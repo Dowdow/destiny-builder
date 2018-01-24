@@ -43,7 +43,7 @@ const destinyReducer = combineReducers({
   buildChestMiniMod,
   buildLegsMiniMod,
   buildClassArmorMiniMod,
-  intlReducer,
+  intl: intlReducer,
   modHelmet,
   modGauntlet,
   modChest,

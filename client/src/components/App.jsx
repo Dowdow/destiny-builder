@@ -1,17 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Header from './Header';
 import ArmorBuilder from './ArmorBuilder';
 import ArmorList from './ArmorList';
 import Footer from './Footer';
 import '../css/App.css';
 
-const App = () => (
+const App = props => (
   <div className="App">
-    <Header />
-    <ArmorBuilder />
-    <ArmorList />
+    <Header locale={props.locale} />
+    <ArmorBuilder locale={props.locale} />
+    <ArmorList locale={props.locale} />
     <Footer />
   </div>
 );
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    locale: state.intl.locale,
+  };
+}
+
+export default connect(mapStateToProps)(App);

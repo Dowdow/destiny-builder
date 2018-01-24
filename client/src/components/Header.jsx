@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import changeLocale from '../actions/locale';
+import { LOCALES_SUPPORTED } from '../utils/locale';
 import '../css/Header.css';
 
 class Header extends Component {
@@ -14,35 +15,20 @@ class Header extends Component {
     this.props.changeLocale(locale);
   }
 
-  renderButtonLocale(locale) {
-    return (
-      <button className={this.props.locale === locale ? 'selected' : ''} onClick={() => this.handleChangeLocale(locale)}>{locale}</button>
-    );
-  }
-
   render() {
     return (
       <header>
         <h1><FormattedMessage id="nav.title" defaultMessage="Destiny 2 Build Generator" /></h1>
         <div>
-          {this.renderButtonLocale('de')}
-          {this.renderButtonLocale('en')}
-          {this.renderButtonLocale('es')}
-          {this.renderButtonLocale('fr')}
-          {this.renderButtonLocale('it')}
-          {this.renderButtonLocale('ja')}
-          {this.renderButtonLocale('pl')}
-          {this.renderButtonLocale('ru')}
+          {LOCALES_SUPPORTED.map(locale => <button key={locale} className={this.props.locale === locale ? 'selected' : ''} onClick={() => this.handleChangeLocale(locale)}>{locale}</button>)}
         </div>
       </header>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    locale: state.intlReducer.locale,
-  };
+function mapStateToProps() {
+  return {};
 }
 
 export default connect(mapStateToProps, { changeLocale })(Header);

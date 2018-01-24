@@ -20,19 +20,6 @@ class ArmorBuilder extends Component {
     }
   }
 
-  static renderArmorBuilderEntry(id, title, armor, mod, mods, miniMod) {
-    return (
-      <div>
-        <h2><FormattedMessage id={id} defaultMessage={title} /></h2>
-        <div>
-          <Armor armor={armor} />
-          <MiniMod armor={armor} miniMod={miniMod} />
-          <ModList mod={mod} mods={mods} />
-        </div>
-      </div>
-    );
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -99,15 +86,28 @@ class ArmorBuilder extends Component {
     }
   }
 
+  renderArmorBuilderEntry(id, title, armor, mod, mods, miniMod) {
+    return (
+      <div>
+        <h2><FormattedMessage id={id} defaultMessage={title} /></h2>
+        <div>
+          <Armor locale={this.props.locale} armor={armor} />
+          <MiniMod locale={this.props.locale} armor={armor} miniMod={miniMod} />
+          <ModList locale={this.props.locale} mod={mod} mods={mods} />
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="ArmorBuilder">
         <section className="ArmorBuilder_armors">
-          {ArmorBuilder.renderArmorBuilderEntry('build.helmet', 'Helmet', this.props.helmet, this.props.helmetMod, this.props.helmetMods, this.props.helmetMiniMod)}
-          {ArmorBuilder.renderArmorBuilderEntry('build.gauntlets', 'Gauntlets', this.props.gauntlet, this.props.gauntletMod, this.props.gauntletMods, this.props.gauntletMiniMod)}
-          {ArmorBuilder.renderArmorBuilderEntry('build.chest', 'Chest Armor', this.props.chest, this.props.chestMod, this.props.chestMods, this.props.chestMiniMod)}
-          {ArmorBuilder.renderArmorBuilderEntry('build.legs', 'Leg Armor', this.props.legs, this.props.legsMod, this.props.legsMods, this.props.legsMiniMod)}
-          {ArmorBuilder.renderArmorBuilderEntry('build.classArmor', 'Class Armor', this.props.classArmor, this.props.classArmorMod, this.props.classArmorMods, this.props.classArmorMiniMod)}
+          {this.renderArmorBuilderEntry('build.helmet', 'Helmet', this.props.helmet, this.props.helmetMod, this.props.helmetMods, this.props.helmetMiniMod)}
+          {this.renderArmorBuilderEntry('build.gauntlets', 'Gauntlets', this.props.gauntlet, this.props.gauntletMod, this.props.gauntletMods, this.props.gauntletMiniMod)}
+          {this.renderArmorBuilderEntry('build.chest', 'Chest Armor', this.props.chest, this.props.chestMod, this.props.chestMods, this.props.chestMiniMod)}
+          {this.renderArmorBuilderEntry('build.legs', 'Leg Armor', this.props.legs, this.props.legsMod, this.props.legsMods, this.props.legsMiniMod)}
+          {this.renderArmorBuilderEntry('build.classArmor', 'Class Armor', this.props.classArmor, this.props.classArmorMod, this.props.classArmorMods, this.props.classArmorMiniMod)}
         </section>
         <section className="ArmorBuilder_stats">
           <h2><FormattedMessage id="stat.mobility" defaultMessage="Mobility" /> {mobility}</h2>
