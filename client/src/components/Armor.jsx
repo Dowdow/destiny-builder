@@ -23,7 +23,7 @@ class Armor extends Component {
     return (
       <div className="Armor">
         {this.props.armor !== null ?
-          <img className="Armor_img" src={this.props.armor.img} alt={this.props.armor.names[this.props.lang]} onClick={this.handleClick} />
+          <img className="Armor_img" src={this.props.armor.img} alt={this.props.armor.names[this.props.locale]} onClick={this.handleClick} />
           : <img className="Armor_img" src={EmptySlot} alt="Empty" />}
         {this.state.show ? <ArmorModal armor={this.props.armor} handleShow={this.handleClick} /> : ''}
       </div>
@@ -33,7 +33,7 @@ class Armor extends Component {
 
 function mapStateToProps(state) {
   return {
-    lang: state.language,
+    locale: state.intlReducer.locale,
   };
 }
 

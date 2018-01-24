@@ -19,10 +19,10 @@ class Mod extends Component {
   render() {
     return (
       <div className="Mod" onClick={this.handleClick}>
-        <img className="Mod_img" src={this.props.mod.img} alt={this.props.mod.names[this.props.lang]} />
+        <img className="Mod_img" src={this.props.mod.img} alt={this.props.mod.names[this.props.locale]} />
         <div className="Mod_tooltip">
-          <h4>{this.props.mod.names[this.props.lang]}</h4>
-          <p>{this.props.mod.descriptions[this.props.lang]}</p>
+          <h4>{this.props.mod.names[this.props.locale]}</h4>
+          <p>{this.props.mod.descriptions[this.props.locale]}</p>
         </div>
       </div>
     );
@@ -31,7 +31,7 @@ class Mod extends Component {
 
 function mapStateToProps(state) {
   return {
-    lang: state.language,
+    locale: state.intlReducer.locale,
   };
 }
 

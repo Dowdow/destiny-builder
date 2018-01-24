@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { changeLanguage } from '../actions/language';
+import changeLocale from '../actions/locale';
 import '../css/Header.css';
 
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
+    this.handleChangeLocale = this.handleChangeLocale.bind(this);
   }
 
-  handleChangeLanguage(lang) {
-    this.props.changeLanguage(lang);
+  handleChangeLocale(locale) {
+    this.props.changeLocale(locale);
   }
 
-  renderButtonLanguage(lang) {
+  renderButtonLocale(locale) {
     return (
-      <button className={this.props.lang === lang ? 'selected' : ''} onClick={() => this.handleChangeLanguage(lang)}>{lang}</button>
+      <button className={this.props.locale === locale ? 'selected' : ''} onClick={() => this.handleChangeLocale(locale)}>{locale}</button>
     );
   }
 
@@ -25,14 +25,14 @@ class Header extends Component {
       <header>
         <h1><FormattedMessage id="nav.title" defaultMessage="Destiny 2 Build Generator" /></h1>
         <div>
-          {this.renderButtonLanguage('de')}
-          {this.renderButtonLanguage('en')}
-          {this.renderButtonLanguage('es')}
-          {this.renderButtonLanguage('fr')}
-          {this.renderButtonLanguage('it')}
-          {this.renderButtonLanguage('ja')}
-          {this.renderButtonLanguage('pl')}
-          {this.renderButtonLanguage('ru')}
+          {this.renderButtonLocale('de')}
+          {this.renderButtonLocale('en')}
+          {this.renderButtonLocale('es')}
+          {this.renderButtonLocale('fr')}
+          {this.renderButtonLocale('it')}
+          {this.renderButtonLocale('ja')}
+          {this.renderButtonLocale('pl')}
+          {this.renderButtonLocale('ru')}
         </div>
       </header>
     );
@@ -41,8 +41,8 @@ class Header extends Component {
 
 function mapStateToProps(state) {
   return {
-    lang: state.language,
+    locale: state.intlReducer.locale,
   };
 }
 
-export default connect(mapStateToProps, { changeLanguage })(Header);
+export default connect(mapStateToProps, { changeLocale })(Header);

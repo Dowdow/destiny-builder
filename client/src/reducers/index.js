@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { intlReducer } from 'react-intl-redux';
 import armor from './armor';
 import {
   buildHelmet,
@@ -17,7 +18,6 @@ import {
   buildLegsMiniMod,
   buildClassArmorMiniMod,
 } from './build';
-import language from './language';
 import {
   modHelmet,
   modGauntlet,
@@ -43,7 +43,7 @@ const destinyReducer = combineReducers({
   buildChestMiniMod,
   buildLegsMiniMod,
   buildClassArmorMiniMod,
-  language,
+  intlReducer,
   modHelmet,
   modGauntlet,
   modChest,

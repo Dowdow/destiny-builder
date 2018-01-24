@@ -27,7 +27,7 @@ class MiniMod extends Component {
             (<img
               key={mod._id}
               src={mod.img}
-              alt={mod.names[this.props.lang]}
+              alt={mod.names[this.props.locale]}
               className={this.props.miniMod && this.props.miniMod._id === mod._id ? 'MiniMod_selected' : ''}
               onClick={() => this.handleEquipMiniMod(mod)}
             />))}
@@ -45,7 +45,7 @@ class MiniMod extends Component {
 
 function mapStateToProps(state) {
   return {
-    lang: state.language,
+    locale: state.intlReducer.locale,
   };
 }
 
