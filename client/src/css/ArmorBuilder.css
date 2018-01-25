@@ -40,23 +40,83 @@
     flex-direction: column;
 }
 
-.ArmorBuilder_stats {
-    flex-wrap: wrap;
+.ArmorBuilder_actions {
+    display: flex;
+    flex-direction: column !important;
     margin-top: 10px;
-    width: 40%;
+    width: 70%;
 }
 
-.ArmorBuilder_stats h2 {
+.ArmorBuilder_actions p {
+    font-size: 20px;
+    margin: 0;
+    align-self: center;
+    color: #ffffff8c;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.ArmorBuilderActions_stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 70%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ArmorBuilderActions_stats h2 {
     margin-left: 10px !important;
     margin-right: 10px !important;
+}
+
+.ArmorBuilderActions_actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 70%;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ArmorBuilderActions_actions button {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    border: none;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.button_red {
+    background-color: #c59898;
+}
+
+.button_green {
+    background-color: #9bc789;
+}
+
+.button_blue {
+    background-color: #859ab6;
 }
 
 @media screen and (max-width: 1024px) {
     .ArmorBuilder_armors {
         width: 100%;
     }
-    .ArmorBuilder_stats {
-        width: 90%;
+    .ArmorBuilder_actions {
+        width: 100%;
+    }
+    .ArmorBuilderActions_actions {
+        width: 95%;
     }
 }
 

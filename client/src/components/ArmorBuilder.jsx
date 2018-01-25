@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import Armor from '../components/Armor';
 import MiniMod from './MiniMod';
 import ModList from './ModList';
+import LoadBuildModal from './LoadBuildModal';
+import { addBuildToSave, resetBuild, saveBuild } from '../actions/build';
 import { getHelmetMods, getGauntletMods, getChestMods, getLegsMods, getClassArmorMods } from '../actions/mod';
 import '../css/ArmorBuilder.css';
 
@@ -23,8 +25,13 @@ class ArmorBuilder extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showLoadBuildModal: false,
       typeClassArmor: 'classitem_titan:classitem_hunter:classitem_warlock',
     };
+    this.handleOverrideBuild = this.handleOverrideBuild.bind(this);
+    this.handleShowModal = this.handleShowModal.bind(this);
+    this.handleSaveBuild = this.handleSaveBuild.bind(this);
+    this.handeResetBuild = this.handeResetBuild.bind(this);
   }
 
   componentWillMount() {
@@ -86,6 +93,51 @@ class ArmorBuilder extends Component {
     }
   }
 
+  saveBuild(id, name) {
+    const build = {};
+    build[id] = {
+      id,
+      name,
+      helmet: this.props.helmet,
+      gauntlet: this.props.gauntlet,
+      chest: this.props.chest,
+      legs: this.props.legs,
+      classArmor: this.props.classArmor,
+      helmetMod: this.props.helmetMod,
+      gauntletMod: this.props.gauntletMod,
+      chestMod: this.props.chestMod,
+      legsMod: this.props.legsMod,
+      classArmorMod: this.props.classArmorMod,
+      helmetMiniMod: this.props.helmetMiniMod,
+      gauntletMiniMod: this.props.gauntletMiniMod,
+      chestMiniMod: this.props.chestMiniMod,
+      legsMiniMod: this.props.legsMiniMod,
+      classArmorMiniMod: this.props.classArmorMiniMod,
+    };
+    this.props.addBuildToSave(build);
+  }
+
+  handleOverrideBuild() {
+    this.saveBuild(this.props.currentLoadedBuild.id, this.props.currentLoadedBuild.name);
+  }
+
+  handleSaveBuild() {
+    const name = prompt('Build name');
+    if (name !== null && name.trim() !== '') {
+      this.saveBuild(`${name}-${Date.now()}`, name);
+    }
+  }
+
+  handleShowModal() {
+    this.setState(prevState => ({
+      showLoadBuildModal: !prevState.showLoadBuildModal,
+    }));
+  }
+
+  handeResetBuild() {
+    this.props.resetBuild();
+  }
+
   renderArmorBuilderEntry(id, title, armor, mod, mods, miniMod) {
     return (
       <div>
@@ -109,11 +161,21 @@ class ArmorBuilder extends Component {
           {this.renderArmorBuilderEntry('build.legs', 'Leg Armor', this.props.legs, this.props.legsMod, this.props.legsMods, this.props.legsMiniMod)}
           {this.renderArmorBuilderEntry('build.classArmor', 'Class Armor', this.props.classArmor, this.props.classArmorMod, this.props.classArmorMods, this.props.classArmorMiniMod)}
         </section>
-        <section className="ArmorBuilder_stats">
-          <h2><FormattedMessage id="stat.mobility" defaultMessage="Mobility" /> {mobility}</h2>
-          <h2><FormattedMessage id="stat.resilience" defaultMessage="Resilience" /> {resilience}</h2>
-          <h2><FormattedMessage id="stat.recovery" defaultMessage="Recovery" /> {recovery}</h2>
+        <section className="ArmorBuilder_actions">
+          <div className="ArmorBuilderActions_stats">
+            <h2><FormattedMessage id="stat.mobility" defaultMessage="Mobility" /> {mobility}</h2>
+            <h2><FormattedMessage id="stat.resilience" defaultMessage="Resilience" /> {resilience}</h2>
+            <h2><FormattedMessage id="stat.recovery" defaultMessage="Recovery" /> {recovery}</h2>
+          </div>
+          {this.props.currentLoadedBuild !== null ? <p>{this.props.currentLoadedBuild.name}</p> : ''}
+          <div className="ArmorBuilderActions_actions">
+            {this.props.currentLoadedBuild !== null ? <button onClick={this.handleOverrideBuild}>Ecraser build</button> : ''}
+            <button className="button_blue" onClick={this.handleShowModal}>Charger un build</button>
+            <button className="button_green" onClick={this.handleSaveBuild}>Sauve un build</button>
+            <button className="button_red" onClick={this.handeResetBuild}>Reset le build</button>
+          </div>
         </section>
+        { this.state.showLoadBuildModal ? <LoadBuildModal toggleModal={this.handleShowModal} /> : '' }
       </div>
     );
   }
@@ -121,6 +183,7 @@ class ArmorBuilder extends Component {
 
 function mapStateToProps(state) {
   return {
+    currentLoadedBuild: state.currentLoadedBuild,
     helmet: state.buildHelmet,
     gauntlet: state.buildGauntlet,
     chest: state.buildChest,
@@ -145,5 +208,11 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  getHelmetMods, getGauntletMods, getChestMods, getLegsMods, getClassArmorMods,
+  addBuildToSave,
+  resetBuild,
+  getHelmetMods,
+  getGauntletMods,
+  getChestMods,
+  getLegsMods,
+  getClassArmorMods,
 })(ArmorBuilder);

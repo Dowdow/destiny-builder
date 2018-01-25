@@ -13,6 +13,9 @@ import {
   MOD_CLASS_ITEM_WARLOCK,
 } from '../utils/const';
 
+export const ADD_BUILD_TO_SAVE = 'ADD_BUILD_TO_SAVE';
+export const DELETE_BUILD = 'DELETE_BUILD';
+export const SET_BUILD = 'SET_BUILD';
 export const SET_HELMET = 'SET_HELMET';
 export const SET_GAUNTLET = 'SET_GAUNTLET';
 export const SET_CHEST = 'SET_CHEST';
@@ -28,6 +31,28 @@ export const SET_GAUNTLET_MINI_MOD = 'SET_GAUNTLET_MINI_MOD';
 export const SET_CHEST_MINI_MOD = 'SET_CHEST_MINI_MOD';
 export const SET_LEGS_MINI_MOD = 'SET_LEGS_MINI_MOD';
 export const SET_CLASS_ARMOR_MINI_MOD = 'SET_CLASS_ARMOR_MINI_MOD';
+export const RESET_CURRENT_LOADED_BUILD = 'RESET_CURRENT_LOADED_BUILD';
+
+export function addBuildToSave(build) {
+  return {
+    type: ADD_BUILD_TO_SAVE,
+    build,
+  };
+}
+
+export function deleteBuild(key) {
+  return {
+    type: DELETE_BUILD,
+    key,
+  };
+}
+
+export function setBuild(build) {
+  return {
+    type: SET_BUILD,
+    build,
+  };
+}
 
 export function setHelmet(helmet) {
   return {
@@ -131,6 +156,12 @@ export function setClassArmorMiniMod(classArmorMiniMod) {
   return {
     type: SET_CLASS_ARMOR_MINI_MOD,
     classArmorMiniMod,
+  };
+}
+
+export function resetCurrentLoadedBuild() {
+  return {
+    type: RESET_CURRENT_LOADED_BUILD,
   };
 }
 
@@ -251,5 +282,44 @@ export function equipMiniMod(miniMod) {
     if (miniMod.hash === TYPE_CLASS_ITEM) {
       dispatch(setClassArmorMiniMod(miniMod));
     }
+  };
+}
+
+export function saveBuild(build) {
+  return (dispatch) => {
+    dispatch(addBuildToSave(build));
+  };
+}
+
+export function removeBuild(key) {
+  return (dispatch) => {
+    dispatch(deleteBuild(key));
+  };
+}
+
+export function loadBuild(build) {
+  return (dispatch) => {
+    dispatch(setBuild(build));
+  };
+}
+
+export function resetBuild() {
+  return (dispatch) => {
+    dispatch(resetCurrentLoadedBuild());
+    dispatch(setHelmet(null));
+    dispatch(setHelmetMod(null));
+    dispatch(setHelmetMiniMod(null));
+    dispatch(setGauntlet(null));
+    dispatch(setGauntletMod(null));
+    dispatch(setGauntletMiniMod(null));
+    dispatch(setChest(null));
+    dispatch(setChestMod(null));
+    dispatch(setChestMiniMod(null));
+    dispatch(setLegs(null));
+    dispatch(setLegsMod(null));
+    dispatch(setLegsMiniMod(null));
+    dispatch(setClassArmor(null));
+    dispatch(setClassArmorMod(null));
+    dispatch(setClassArmorMiniMod(null));
   };
 }

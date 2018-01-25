@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import { Provider } from 'react-redux';
 import { addLocaleData } from 'react-intl';
 import { IntlProvider } from 'react-intl-redux';
@@ -16,6 +16,7 @@ import pl from 'react-intl/locale-data/pl';
 import ru from 'react-intl/locale-data/ru';
 import ReactGA from 'react-ga';
 import App from './components/App';
+import { loadState, subscribeLocalStorage } from './utils/localStorage';
 import destinyReducer from './reducers/index';
 import computeLocale from './utils/locale';
 import messages from './utils/messages';
@@ -24,7 +25,7 @@ import './css/index.css';
 // INTL
 addLocaleData([...en, ...es, ...de, ...fr, ...it, ...ja, ...pl, ...ru]);
 const locale = computeLocale();
-const initialState = {
+const initialIntl = {
   intl: {
     defaultLocale: 'en',
     locale,
@@ -33,11 +34,13 @@ const initialState = {
 };
 
 // REDUX
+const initialState = Object.assign({}, loadState(), initialIntl);
 const store = createStore(
   destinyReducer,
   initialState,
   composeWithDevTools(applyMiddleware(thunkMiddleware)),
 );
+subscribeLocalStorage(store);
 
 // GA
 ReactGA.initialize('UA-111738679-1');
