@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import SmallBuild from './SmallBuild';
 import { loadBuild, removeBuild } from '../actions/build';
 import '../css/LoadBuildModal.css';
@@ -19,7 +20,7 @@ class LoadBuildModal extends Component {
       <div className="LoadBuildModal">
         <div className="LoadBuildModal_background" onClick={this.handleToggleModal} />
         <div className="LoadBuildModal_modal">
-          <h2>Changer un build</h2>
+          <h2><FormattedMessage id="button.load" defaultMessage="" /></h2>
           <div>
             {Object.keys(this.props.builds).map(i =>
               (<SmallBuild

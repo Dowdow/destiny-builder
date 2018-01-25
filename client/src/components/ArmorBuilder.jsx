@@ -122,7 +122,7 @@ class ArmorBuilder extends Component {
   }
 
   handleSaveBuild() {
-    const name = prompt('Build name');
+    const name = prompt();
     if (name !== null && name.trim() !== '') {
       this.saveBuild(`${name}-${Date.now()}`, name);
     }
@@ -169,10 +169,19 @@ class ArmorBuilder extends Component {
           </div>
           {this.props.currentLoadedBuild !== null ? <p>{this.props.currentLoadedBuild.name}</p> : ''}
           <div className="ArmorBuilderActions_actions">
-            {this.props.currentLoadedBuild !== null ? <button onClick={this.handleOverrideBuild}>Ecraser build</button> : ''}
-            <button className="button_blue" onClick={this.handleShowModal}>Charger un build</button>
-            <button className="button_green" onClick={this.handleSaveBuild}>Sauve un build</button>
-            <button className="button_red" onClick={this.handeResetBuild}>Reset le build</button>
+            {this.props.currentLoadedBuild !== null ?
+              <button onClick={this.handleOverrideBuild}>
+                <FormattedMessage id="button.override" defaultMessage="" />
+              </button> : ''}
+            <button className="button_blue" onClick={this.handleShowModal}>
+              <FormattedMessage id="button.load" defaultMessage="" />
+            </button>
+            <button className="button_green" onClick={this.handleSaveBuild}>
+              <FormattedMessage id="button.save" defaultMessage="" />
+            </button>
+            <button className="button_red" onClick={this.handeResetBuild}>
+              <FormattedMessage id="button.reset" defaultMessage="" />
+            </button>
           </div>
         </section>
         { this.state.showLoadBuildModal ? <LoadBuildModal toggleModal={this.handleShowModal} /> : '' }
