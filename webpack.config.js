@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -22,8 +21,11 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+  optimization: {
+    minimize: true,
+  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -58,13 +60,6 @@ module.exports = {
       filename: 'index.html',
       inject: 'body',
       favicon: `${PUBLIC_DIR}/favicon.png`,
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      compress: {
-        drop_debugger: true,
-        drop_console: true,
-      },
     }),
   ],
 };

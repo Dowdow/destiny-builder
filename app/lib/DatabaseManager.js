@@ -40,9 +40,7 @@ class DatabaseManager {
 
   connectMongo() {
     return mongoose
-      .connect(this.mongoURL, {
-        useMongoClient: true,
-      })
+      .connect(this.mongoURL)
       .then(() => {
         console.log('Mongo connection establised.');
       });
